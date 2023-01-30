@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:khulasa/Views/apicall.dart';
+import 'package:khulasa/Views/Entrance/login.dart';
 import 'package:khulasa/constants/colors.dart';
 import 'package:khulasa/constants/fonts.dart';
 import 'package:http/http.dart';
@@ -56,13 +57,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => const ApiCall()),
+      MaterialPageRoute(builder: (context) => const Login()),
     );
   }
 
   Widget build(BuildContext context) {
     return const Scaffold(
-      backgroundColor: Blue,
+      backgroundColor: background,
       body: Center(
           child: (Text("خلاصہ",
               style: TextStyle(color: Colors.white, fontSize: large_font)))),

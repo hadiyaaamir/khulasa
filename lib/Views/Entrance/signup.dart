@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:khulasa/Controllers/navigation.dart';
 import 'package:khulasa/Views/Entrance/button.dart';
 import 'package:khulasa/Views/Entrance/login.dart';
 import 'package:khulasa/Views/Entrance/textfield.dart';
@@ -77,10 +78,7 @@ class _SignUpState extends State<SignUp> {
             Btn(
                 label: "SIGN UP",
                 onPress: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => const Option()),
-                  );
+                  Navigation().navigationReplace(context, const Option());
                 }),
 
             RichText(
@@ -89,11 +87,7 @@ class _SignUpState extends State<SignUp> {
                     style: const TextStyle(color: text),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () => {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const Login()),
-                            )
+                            Navigation().navigation(context, const Login()),
                           }))
           ],
         ),

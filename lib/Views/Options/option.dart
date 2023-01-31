@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:khulasa/Controllers/navigation.dart';
 import 'package:khulasa/Views/Entrance/button.dart';
+import 'package:khulasa/Views/Summary/summary.dart';
 import 'package:khulasa/constants/colors.dart';
 import 'package:khulasa/constants/sizes.dart';
 
@@ -31,7 +33,7 @@ class _OptionState extends State<Option> {
             ),
             Btn(
               label: "Summary",
-              onPress: () {},
+              onPress: () => Navigation().navigation(context, const Summary()),
               background: primary,
               foreground: text,
               height: 160,

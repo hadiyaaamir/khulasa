@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:khulasa/Controllers/navigation.dart';
 import 'package:khulasa/Views/apicall.dart';
 import 'package:khulasa/Views/Entrance/login.dart';
 import 'package:khulasa/constants/colors.dart';
@@ -54,11 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   route() async {
     // bool result = await InternetConnectionChecker().hasConnection;
-
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => const Login()),
-    );
+    Navigation().navigationReplace(context, const Login());
   }
 
   Widget build(BuildContext context) {

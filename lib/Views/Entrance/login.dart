@@ -52,16 +52,19 @@ class _LoginState extends State<Login> {
             ),
 
             //button
-            Btn(label: "LOGIN", onPress: () {Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const Option()),
-                            );}),
+            Btn(
+                label: "LOGIN",
+                onPress: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => const Option()),
+                  );
+                }),
 
             RichText(
                 text: TextSpan(
-                    text: "Dont have an acount? Sign Up!",
-                    style:  const TextStyle(color: text),
+                    text: "Don't have an acount? Sign Up!",
+                    style: const TextStyle(color: text),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () => {
                             Navigator.pushReplacement(

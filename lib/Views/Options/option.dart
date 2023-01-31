@@ -17,22 +17,26 @@ class _OptionState extends State<Option> {
     return Scaffold(
       backgroundColor: background,
       body: Center(
-          child: Column(children: [
-        Btn(
-          label: "RSS Feed",
-          onPress: () {},
-          background: primary,
-          foreground: background,
-          height: 100,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Btn(
+              label: "RSS Feed",
+              onPress: () {},
+              background: primary,
+              foreground: background,
+              height: 100,
+            ),
+            Btn(
+              label: "Summary",
+              onPress: () {},
+              background: primary,
+              foreground: background,
+              height: 100,
+            )
+          ],
         ),
-        Btn(
-          label: "Summary",
-          onPress: () {},
-          background: primary,
-          foreground: background,
-          height: 100,
-        )
-      ])),
+      ),
     );
   }
 }

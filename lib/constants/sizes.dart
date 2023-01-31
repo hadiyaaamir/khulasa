@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 //font sizes
-const double titleFont = 40;
+const double titleFont = 50;
 const double largeFont = 25;
 const double headingFont = 18;
 const double buttonFont = 16;

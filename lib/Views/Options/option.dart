@@ -38,6 +38,14 @@ class _OptionState extends State<Option> {
               foreground: text,
               height: 160,
               font: largeFont,
+            ),
+            Btn(
+              label: "Saved Summary",
+              onPress: () {},
+              background: primary,
+              foreground: text,
+              height: 160,
+              font: largeFont,
             )
           ],
         ),

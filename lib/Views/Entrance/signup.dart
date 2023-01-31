@@ -1,20 +1,22 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:khulasa/Views/Entrance/button.dart';
-import 'package:khulasa/Views/Entrance/signup.dart';
+import 'package:khulasa/Views/Entrance/login.dart';
 import 'package:khulasa/Views/Entrance/textfield.dart';
 import 'package:khulasa/constants/colors.dart';
 
-class Login extends StatefulWidget {
-  const Login({super.key});
+class SignUp extends StatefulWidget {
+  const SignUp({super.key});
 
   @override
-  State<Login> createState() => _LoginState();
+  State<SignUp> createState() => _SignUpState();
 }
 
-class _LoginState extends State<Login> {
+class _SignUpState extends State<SignUp> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController firstNameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +26,26 @@ class _LoginState extends State<Login> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            //first name textfield
+            textField(
+              label: "First Name",
+              controller: firstNameController,
+              validate: (value) {
+                return (value == null || value.isEmpty)
+                    ? 'Invalid First Name'
+                    : null;
+              },
+            ),
+            //last name textfield
+            textField(
+              label: "Last Name",
+              controller: lastNameController,
+              validate: (value) {
+                return (value == null || value.isEmpty)
+                    ? 'Invalid Last Name'
+                    : null;
+              },
+            ),
             //email textfield
             textField(
               label: "Email",
@@ -51,18 +73,18 @@ class _LoginState extends State<Login> {
             ),
 
             //button
-            Btn(label: "LOGIN", onPress: () {}),
+            Btn(label: "SIGN UP", onPress: () {}),
 
             RichText(
                 text: TextSpan(
-                    text: "Dont have an acount? Sign Up!",
-                    style:  const TextStyle(color: text),
+                    text: "Already have an acount? Login!",
+                    style: const TextStyle(color: text),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () => {
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const SignUp()),
+                                  builder: (context) => const Login()),
                             )
                           }))
           ],

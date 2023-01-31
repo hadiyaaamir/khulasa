@@ -5,6 +5,7 @@ const double titleFont = 50;
 const double largeFont = 25;
 const double headingFont = 18;
 const double buttonFont = 16;
+const double smallFont = 10;
 
 //button
 const double buttonWidth = 200;

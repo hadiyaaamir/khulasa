@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:khulasa/Controllers/navigation.dart';
 import 'package:khulasa/Models/summary.dart';
+import 'package:khulasa/Views/Saved/savedSummary.dart';
 import 'package:khulasa/constants/colors.dart';
 import 'package:khulasa/constants/sizes.dart';
 
@@ -35,16 +37,30 @@ class _SavedState extends State<Saved> {
             ),
             Expanded(
               child: ListView.builder(
-                padding: const EdgeInsets.symmetric(vertical: 15),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                 itemCount: items.length,
                 itemBuilder: (context, index) => Card(
                   color: primary,
                   child: ListTile(
-                    title: Text('${items[index].title}'),
+                    title: Text(
+                      items[index].title,
+                      style: const TextStyle(color: secondary),
+                    ),
                     subtitle: Text(
-                        'Saved on: ${items[index].savedOn.day}/${items[index].savedOn.month}/${items[index].savedOn.year}'),
-                    trailing: const Icon(Icons.keyboard_arrow_right_rounded),
-                    onTap: () {},
+                      'Saved on: ${items[index].savedOn.day}/${items[index].savedOn.month}/${items[index].savedOn.year}',
+                      style: const TextStyle(color: secondary),
+                    ),
+                    trailing: const Icon(
+                      Icons.keyboard_arrow_right_rounded,
+                      color: secondary,
+                    ),
+                    onTap: () => Navigation().navigation(
+                      context,
+                      SavedSummary(
+                        summary: items[index],
+                      ),
+                    ),
                   ),
                 ),
               ),

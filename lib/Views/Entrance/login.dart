@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:khulasa/Views/Entrance/button.dart';
 import 'package:khulasa/Views/Entrance/signup.dart';
 import 'package:khulasa/Views/Entrance/textfield.dart';
+import 'package:khulasa/Views/Options/option.dart';
 import 'package:khulasa/constants/colors.dart';
 
 class Login extends StatefulWidget {
@@ -51,7 +52,11 @@ class _LoginState extends State<Login> {
             ),
 
             //button
-            Btn(label: "LOGIN", onPress: () {}),
+            Btn(label: "LOGIN", onPress: () {Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const Option()),
+                            );}),
 
             RichText(
                 text: TextSpan(

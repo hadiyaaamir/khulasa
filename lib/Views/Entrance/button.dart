@@ -9,10 +9,14 @@ class Btn extends StatelessWidget {
     required this.onPress,
     this.width,
     this.height = buttonHeight,
+    this.foreground = text,
+    this.background = secondary,
   });
 
   final Function() onPress;
   final String label;
+  Color foreground;
+  Color background;
   double? width;
   double height;
 
@@ -26,8 +30,8 @@ class Btn extends StatelessWidget {
         child: ElevatedButton(
           onPressed: onPress,
           style: ButtonStyle(
-            foregroundColor: MaterialStateProperty.all<Color>(text),
-            backgroundColor: MaterialStateProperty.all<Color>(secondary),
+            foregroundColor: MaterialStateProperty.all<Color>(foreground),
+            backgroundColor: MaterialStateProperty.all<Color>(background),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(5.0),

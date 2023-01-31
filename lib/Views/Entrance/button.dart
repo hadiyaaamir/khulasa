@@ -8,6 +8,7 @@ class Btn extends StatelessWidget {
     required this.label,
     required this.onPress,
     this.width,
+    this.font = buttonFont,
     this.height = buttonHeight,
     this.foreground = text,
     this.background = secondary,
@@ -15,6 +16,7 @@ class Btn extends StatelessWidget {
 
   final Function() onPress;
   final String label;
+  double font;
   Color foreground;
   Color background;
   double? width;
@@ -41,7 +43,7 @@ class Btn extends StatelessWidget {
           ),
           child: Text(
             label,
-            style: const TextStyle(fontSize: buttonFont),
+            style: TextStyle(fontSize: font),
           ),
         ),
       ),

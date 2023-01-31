@@ -66,7 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
       backgroundColor: background,
       body: Center(
           child: (Text("خلاصہ",
-              style: TextStyle(color: text, fontSize: largeFont)))),
+              style: TextStyle(color: text, fontSize: titleFont)))),
     );
   }
 }

@@ -11,4 +11,4 @@ const background = blue;
 const primary = lightBlue;
 const secondary = darkBlue;
 const text = white; // used for headings
-const text2 = grey; 
+const text2 = grey;

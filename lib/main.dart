@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:khulasa/Views/apicall.dart';
 import 'package:khulasa/Views/Entrance/login.dart';
 import 'package:khulasa/constants/colors.dart';
-import 'package:khulasa/constants/fonts.dart';
+import 'package:khulasa/constants/sizes.dart';
 import 'package:http/http.dart';
 
 void main() {
@@ -21,9 +21,9 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        // textTheme: GoogleFonts.notoNastaliqUrduTextTheme(
-        //   Theme.of(context).textTheme,
-        // ),
+        textTheme: GoogleFonts.openSansTextTheme(
+          Theme.of(context).textTheme,
+        ),
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -66,7 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
       backgroundColor: background,
       body: Center(
           child: (Text("خلاصہ",
-              style: TextStyle(color: Colors.white, fontSize: large_font)))),
+              style: TextStyle(color: text, fontSize: largeFont)))),
     );
   }
 }

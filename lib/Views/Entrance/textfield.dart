@@ -2,16 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:khulasa/constants/colors.dart';
 
 class textField extends StatelessWidget {
-  const textField({super.key, required this.label, required this.controller});
+  const textField({
+    super.key,
+    required this.label,
+    required this.controller,
+    required this.validate,
+    this.password = false,
+    this.icon,
+  });
+
   final TextEditingController controller;
   final String label;
+  final Function(String?) validate;
+  final bool password;
+  final IconData? icon;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: const EdgeInsets.fromLTRB(50, 0, 50, 5),
+        padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
         child: TextFormField(
           cursorColor: text,
           autovalidateMode: AutovalidateMode.onUserInteraction,
+          obscureText: password,
           controller: controller,
           decoration: InputDecoration(
             border: OutlineInputBorder(
@@ -20,7 +33,7 @@ class textField extends StatelessWidget {
             ),
             filled: true,
             fillColor: primary,
-            icon: const Icon(Icons.email, color: text),
+            // icon: Icon(icon, color: text),
             labelText: label,
             labelStyle: const TextStyle(color: text),
           ),
@@ -28,10 +41,11 @@ class textField extends StatelessWidget {
             // This optional block of code can be used to run
             // code when the user saves the form.
           },
-          validator: (String? value) {
-            return (value != null && value.contains('@'))
-                ? 'Do not use the @ char.'
-                : null;
+          validator: (value) {
+            if (value != null && value.isEmpty) {
+              return "Field cannot be empty";
+            }
+            return validate(value);
           },
           style: (const TextStyle(
             color: text,

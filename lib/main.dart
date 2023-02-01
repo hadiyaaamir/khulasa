@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:khulasa/Controllers/RSS/categoryprovider.dart';
 import 'package:khulasa/Controllers/darkMode.dart';
 import 'package:khulasa/Controllers/languageprovider.dart';
 import 'package:khulasa/Controllers/navigation.dart';
@@ -18,6 +19,9 @@ void main() {
       ),
       ChangeNotifierProvider(
         create: (context) => DarkMode(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => catprovider(),
       ),
     ], child: const MyApp()),
   );

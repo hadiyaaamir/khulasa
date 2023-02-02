@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:khulasa/Controllers/RSS/articleprovider.dart';
 import 'package:khulasa/Models/article.dart';
+import 'package:khulasa/Views/RSS/article.dart';
 import 'package:khulasa/constants/colors.dart';
 import 'package:khulasa/constants/sizes.dart';
 import 'package:provider/provider.dart';
@@ -44,7 +45,12 @@ class _articleListState extends State<articleList> {
                     itemBuilder: (context, index) => Card(
                           color: primary,
                           child: ListTile(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => Article(
+                                        i: index,
+                                      )));
+                            },
                             shape: const RoundedRectangleBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(5)),

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:khulasa/Models/summary.dart';
 import 'package:khulasa/constants/colors.dart';
 import 'package:khulasa/constants/sizes.dart';
@@ -23,7 +21,7 @@ class SavedSummary extends StatelessWidget {
                   padding: const EdgeInsets.fromLTRB(130, 0, 70, 0),
                   child: Text(
                     summary.title,
-                    style: const TextStyle(fontSize: headingFont, color: text),
+                    style: const TextStyle(fontSize: headingFont, color: text, fontWeight: FontWeight.bold),
                   ),
                 ),
                 Row(children: [

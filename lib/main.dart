@@ -2,15 +2,34 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:khulasa/Controllers/RSS/articleprovider.dart';
+import 'package:khulasa/Controllers/RSS/categoryprovider.dart';
+
+import 'package:khulasa/Controllers/darkMode.dart';
+import 'package:khulasa/Controllers/languageprovider.dart';
 import 'package:khulasa/Controllers/navigation.dart';
-import 'package:khulasa/Views/apicall.dart';
 import 'package:khulasa/Views/Entrance/login.dart';
 import 'package:khulasa/constants/colors.dart';
 import 'package:khulasa/constants/sizes.dart';
-import 'package:http/http.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(providers: [
+      ChangeNotifierProvider(
+        create: (context) => Language(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => DarkMode(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => catprovider(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => articleprovider(),
+      ),
+    ], child: const MyApp()),
+  );
 }
 
 class MyApp extends StatelessWidget {

@@ -1,6 +1,11 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:khulasa/Controllers/navigation.dart';
+<<<<<<< Updated upstream
+=======
+import 'package:khulasa/Controllers/usercontroller.dart';
+import 'package:khulasa/Models/user.dart';
+>>>>>>> Stashed changes
 import 'package:khulasa/Views/Entrance/button.dart';
 import 'package:khulasa/Views/Entrance/login.dart';
 import 'package:khulasa/Views/Entrance/textfield.dart';
@@ -74,12 +79,31 @@ class _SignUpState extends State<SignUp> {
               },
             ),
 
+<<<<<<< Updated upstream
             //button
             Btn(
                 label: "SIGN UP",
                 onPress: () {
                   Navigation().navigationReplace(context, const Option());
                 }),
+=======
+              //button
+              Btn(
+                  label: "SIGN UP",
+                  onPress: () async {
+                    final FormState form = _formKey.currentState as FormState;
+                    if (form.validate()) {
+                      User user = User(
+                          firstName: firstNameController.text,
+                          lastName: lastNameController.text,
+                          email: emailController.text,
+                          password: passwordController.text);
+                      //add to Database
+                      // UserController().addToDB(user);
+                      Navigation().navigationReplace(context, const Option());
+                    }
+                  }),
+>>>>>>> Stashed changes
 
             RichText(
                 text: TextSpan(

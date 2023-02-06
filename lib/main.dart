@@ -2,6 +2,16 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+<<<<<<< Updated upstream
+=======
+import 'package:khulasa/Controllers/RSS/articleprovider.dart';
+import 'package:khulasa/Controllers/RSS/categoryprovider.dart';
+
+import 'package:firebase_core/firebase_core.dart';
+
+import 'package:khulasa/Controllers/darkMode.dart';
+import 'package:khulasa/Controllers/languageprovider.dart';
+>>>>>>> Stashed changes
 import 'package:khulasa/Controllers/navigation.dart';
 import 'package:khulasa/Views/apicall.dart';
 import 'package:khulasa/Views/Entrance/login.dart';
@@ -9,8 +19,30 @@ import 'package:khulasa/constants/colors.dart';
 import 'package:khulasa/constants/sizes.dart';
 import 'package:http/http.dart';
 
+<<<<<<< Updated upstream
 void main() {
   runApp(const MyApp());
+=======
+Future<void> main()  async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(
+    MultiProvider(providers: [
+      ChangeNotifierProvider(
+        create: (context) => Language(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => DarkMode(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => catprovider(),
+      ),
+      ChangeNotifierProvider(
+        create: (context) => articleprovider(),
+      ),
+    ], child: const MyApp()),
+  );
+>>>>>>> Stashed changes
 }
 
 class MyApp extends StatelessWidget {

@@ -1,13 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:khulasa/Views/Widgets/labelIcon.dart';
 import 'package:khulasa/constants/colors.dart';
 import 'package:khulasa/constants/sizes.dart';
 
 class GeneratedSummary extends StatelessWidget {
-  GeneratedSummary({super.key, required this.summaryText});
+  const GeneratedSummary({super.key, required this.summaryText});
 
   final String summaryText;
 
@@ -20,21 +17,36 @@ class GeneratedSummary extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                "Summary",
-                style: TextStyle(
+              Row(
+                children: [
+                  const Text(
+                    "Summary",
+                    style: TextStyle(
+                        color: text,
+                        fontSize: largeFont,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(width: 5),
+                  IconButton(
+                    icon: const Icon(Icons.volume_up_rounded),
+                    onPressed: () {},
                     color: text,
-                    fontSize: largeFont,
-                    fontWeight: FontWeight.bold),
+                    iconSize: largeFont,
+                  ),
+                ],
               ),
               Row(
                 children: [
-                  Row(
-                    children: const [
-                      LabelIcon(icon: Icons.save, label: "Save"),
-                      SizedBox(width: 10),
-                      LabelIcon(icon: Icons.share_rounded, label: "Share")
-                    ],
+                  LabelIcon(
+                    icon: Icons.save,
+                    label: "Save",
+                    onPress: () {},
+                  ),
+                  const SizedBox(width: 10),
+                  LabelIcon(
+                    icon: Icons.share_rounded,
+                    label: "Share",
+                    onPress: () {},
                   )
                 ],
               )

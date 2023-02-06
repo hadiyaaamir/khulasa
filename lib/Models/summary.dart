@@ -1,10 +1,21 @@
-class savedSummary {
-  String title;
-  DateTime savedOn;
+import 'package:flutter/cupertino.dart';
+
+class Summary {
   String summary;
-  savedSummary({
-    required this.title,
-    required this.savedOn,
+
+  Summary({
     required this.summary,
   });
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = {};
+    data['summary'] = summary;
+    return data;
+  }
+
+  static Summary fromJson(Map<String, dynamic> json) {
+    return Summary(
+      summary: json['name'],
+    );
+  }
 }

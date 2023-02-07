@@ -34,4 +34,17 @@ class Api {
     return s;
     // return
   }
+  Future<String> rssFeed() async {
+    var url = Uri.parse("${apiUrl}/rssfeed");
+    final headers = {'Content-Type': 'application/json'};
+    var response = await http.post(
+      url,
+      headers: headers,
+    );
+
+  //  final parsed = json.decode(response.body);
+  //  Summary s = Summary.fromJson(parsed as Map<String, dynamic>);
+    return response.body;
+    // return
+  }
 }

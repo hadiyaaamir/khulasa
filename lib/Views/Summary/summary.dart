@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:khulasa/Views/NavBar/AppBarPage.dart';
 import 'package:khulasa/Views/Summary/linkSummary.dart';
 import 'package:khulasa/Views/Summary/textSummary.dart';
 import 'package:khulasa/constants/colors.dart';
@@ -17,6 +18,14 @@ class _SummaryState extends State<Summary> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+       appBar: AppBar(
+        title: Text(""),
+        backgroundColor: background,
+      ),
+     
+     drawer: Drawer(
+      child: Draw(),
+     ),
       backgroundColor: background,
       body: Center(
         child: DefaultTabController(

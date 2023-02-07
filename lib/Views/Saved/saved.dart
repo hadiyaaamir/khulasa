@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:khulasa/Controllers/navigation.dart';
 import 'package:khulasa/Models/savedSummary.dart';
+import 'package:khulasa/Views/NavBar/AppBarPage.dart';
 import 'package:khulasa/Views/Saved/savedSummary.dart';
 import 'package:khulasa/constants/colors.dart';
 import 'package:khulasa/constants/sizes.dart';
@@ -26,6 +27,14 @@ class _SavedState extends State<Saved> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+       appBar: AppBar(
+        title: Text(""),
+        backgroundColor: background,
+      ),
+     
+     drawer: Drawer(
+      child: Draw(),
+     ),
       backgroundColor: background,
       body: Center(
         child: Column(

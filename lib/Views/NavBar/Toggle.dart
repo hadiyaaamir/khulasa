@@ -3,7 +3,7 @@ import 'package:khulasa/constants/colors.dart';
 
 const List<Widget> options= <Widget>[
   Text('English'),
-  Text('اردو'),
+  Text('اردو', style: TextStyle(fontWeight: FontWeight.bold) ,),
 
 ];
 

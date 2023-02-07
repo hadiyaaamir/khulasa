@@ -1,16 +1,19 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:khulasa/Controllers/navigation.dart';
-<<<<<<< Updated upstream
-=======
+
 import 'package:khulasa/Controllers/usercontroller.dart';
 import 'package:khulasa/Models/user.dart';
->>>>>>> Stashed changes
+
+import 'package:khulasa/Models/user.dart';
+
 import 'package:khulasa/Views/Entrance/button.dart';
 import 'package:khulasa/Views/Entrance/login.dart';
 import 'package:khulasa/Views/Entrance/textfield.dart';
 import 'package:khulasa/Views/Options/option.dart';
 import 'package:khulasa/constants/colors.dart';
+
+final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
 class SignUp extends StatefulWidget {
   const SignUp({super.key});
@@ -30,63 +33,57 @@ class _SignUpState extends State<SignUp> {
     return Scaffold(
       backgroundColor: background,
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            //first name textfield
-            textField(
-              label: "First Name",
-              controller: firstNameController,
-              validate: (value) {
-                return (value == null || value.isEmpty)
-                    ? 'Invalid First Name'
-                    : null;
-              },
-            ),
-            //last name textfield
-            textField(
-              label: "Last Name",
-              controller: lastNameController,
-              validate: (value) {
-                return (value == null || value.isEmpty)
-                    ? 'Invalid Last Name'
-                    : null;
-              },
-            ),
-            //email textfield
-            textField(
-              label: "Email",
-              icon: Icons.email,
-              controller: emailController,
-              validate: (value) {
-                return (value == null ||
-                        value.isEmpty ||
-                        !value.contains('@') ||
-                        !value.contains('.'))
-                    ? 'Invalid Email'
-                    : null;
-              },
-            ),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              //first name textfield
+              textField(
+                label: "First Name",
+                controller: firstNameController,
+                validate: (value) {
+                  return (value == null || value.isEmpty)
+                      ? 'Invalid First Name'
+                      : null;
+                },
+              ),
+              //last name textfield
+              textField(
+                label: "Last Name",
+                controller: lastNameController,
+                validate: (value) {
+                  return (value == null || value.isEmpty)
+                      ? 'Invalid Last Name'
+                      : null;
+                },
+              ),
+              //email textfield
+              textField(
+                label: "Email",
+                icon: Icons.email,
+                controller: emailController,
+                validate: (value) {
+                  return (value == null ||
+                          value.isEmpty ||
+                          !value.contains('@') ||
+                          !value.contains('.'))
+                      ? 'Invalid Email'
+                      : null;
+                },
+              ),
 
-            //password textfield
-            textField(
-              label: "Password",
-              controller: passwordController,
-              icon: Icons.password_rounded,
-              password: true,
-              validate: (value) {
-                return null;
-              },
-            ),
+              //password textfield
+              textField(
+                label: "Password",
+                controller: passwordController,
+                icon: Icons.password_rounded,
+                password: true,
+                validate: (value) {
+                  return null;
+                },
+              ),
 
-<<<<<<< Updated upstream
-            //button
-            Btn(
-                label: "SIGN UP",
-                onPress: () {
-                  Navigation().navigationReplace(context, const Option());
-                }),
-=======
               //button
               Btn(
                   label: "SIGN UP",
@@ -99,21 +96,22 @@ class _SignUpState extends State<SignUp> {
                           email: emailController.text,
                           password: passwordController.text);
                       //add to Database
+
                       // UserController().addToDB(user);
                       Navigation().navigationReplace(context, const Option());
                     }
                   }),
->>>>>>> Stashed changes
 
-            RichText(
-                text: TextSpan(
-                    text: "Already have an acount? Login!",
-                    style: const TextStyle(color: text),
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = () => {
-                            Navigation().navigation(context, const Login()),
-                          }))
-          ],
+              RichText(
+                  text: TextSpan(
+                      text: "Already have an acount? Login!",
+                      style: const TextStyle(color: text),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () => {
+                              Navigation().navigation(context, const Login()),
+                            }))
+            ],
+          ),
         ),
       ),
     );

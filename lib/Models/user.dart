@@ -1,3 +1,4 @@
+import 'package:khulasa/Models/savedSummary.dart';
 import 'package:khulasa/Models/summary.dart';
 
 class User {
@@ -13,7 +14,9 @@ class User {
   String firstName;
   String lastName;
   String password;
+
   List<savedSummary> savedSummaries;
+
   String email;
   bool isLoggedIn;
 

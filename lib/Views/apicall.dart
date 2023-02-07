@@ -2,8 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:khulasa/Models/apiObject.dart';
-import 'package:khulasa/constants/url.dart';
+import 'package:khulasa/Controllers/api.dart';
+import 'package:khulasa/Models/summary.dart';
+import 'package:khulasa/constants/api.dart';
 
 class ApiCall extends StatefulWidget {
   const ApiCall({super.key});
@@ -25,7 +26,7 @@ class _ApiCallState extends State<ApiCall> {
             Text(text),
             ElevatedButton(
                 onPressed: () async {
-                  text = await fetchData();
+                  text = await Api().rssFeed();
                   setState(() {});
                 },
                 child: Text("Call API"))
@@ -35,13 +36,5 @@ class _ApiCallState extends State<ApiCall> {
     );
   }
 
-  Future<String> fetchData() async {
-    var url = Uri.parse("$apiUrl/api?name=faiza");
-    var response = await http.get(url);
-
-    final parsed = jsonDecode(response.body);
-    ApiObject a = ApiObject.fromJson(parsed as Map<String, dynamic>);
-    return a.name;
-    // return
-  }
+  
 }

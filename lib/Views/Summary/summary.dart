@@ -17,7 +17,6 @@ class _SummaryState extends State<Summary> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
       backgroundColor: background,
       body: Center(
         child: DefaultTabController(

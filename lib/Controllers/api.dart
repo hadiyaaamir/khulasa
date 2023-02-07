@@ -12,17 +12,26 @@ class Api {
 
   // }
 
-  Future<String> generateSummary({
+  Future<Summary> generateSummary({
     required String algo,
     required String text,
     required double ratio,
   }) async {
-    var url = Uri.parse("$apiUrl/api?name=faiza");
-    var response = await http.get(url);
+    var url = Uri.parse("${apiUrl}/api");
+    final headers = {'Content-Type': 'application/json'};
+    var response = await http.post(
+      url,
+      headers: headers,
+      body: json.encode(<String, dynamic>{
+        'text': text,
+        'algo': algo,
+        'ratio': ratio,
+      }),
+    );
 
-    final parsed = jsonDecode(response.body);
-    ApiObject a = ApiObject.fromJson(parsed as Map<String, dynamic>);
-    return a.name;
+    final parsed = json.decode(response.body);
+    Summary s = Summary.fromJson(parsed as Map<String, dynamic>);
+    return s;
     // return
   }
 }

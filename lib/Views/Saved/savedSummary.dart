@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:khulasa/Models/summary.dart';
+import 'package:khulasa/Models/savedSummary.dart';
 import 'package:khulasa/constants/colors.dart';
 import 'package:khulasa/constants/sizes.dart';
 

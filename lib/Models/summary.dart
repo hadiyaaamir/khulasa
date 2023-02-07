@@ -15,7 +15,7 @@ class Summary {
 
   static Summary fromJson(Map<String, dynamic> json) {
     return Summary(
-      summary: json['name'],
+      summary: json['summary'],
     );
   }
 }

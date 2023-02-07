@@ -6,6 +6,7 @@ import 'package:khulasa/Views/Entrance/button.dart';
 import 'package:khulasa/Views/Entrance/signup.dart';
 import 'package:khulasa/Views/Entrance/textfield.dart';
 import 'package:khulasa/Views/Options/option.dart';
+import 'package:khulasa/Views/apicall.dart';
 import 'package:khulasa/constants/colors.dart';
 
 final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -74,7 +75,7 @@ class _LoginState extends State<Login> {
                     style: const TextStyle(color: text),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
-                        Navigation().navigation(context, const SignUp());
+                        Navigation().navigation(context, const ApiCall());
                       }))
           ],
         ),

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:khulasa/Controllers/api.dart';
+import 'package:khulasa/Models/summary.dart';
 import 'package:khulasa/Views/Entrance/button.dart';
 import 'package:khulasa/Views/Entrance/textfield.dart';
 import 'package:khulasa/Views/Summary/generatedSummary.dart';
 import 'package:khulasa/Views/Summary/summarySize.dart';
 import 'package:khulasa/Views/Widgets/dropdown.dart';
+import 'package:khulasa/constants/api.dart';
 import 'package:khulasa/constants/colors.dart';
 import 'package:khulasa/constants/sizes.dart';
 
@@ -52,13 +55,19 @@ class _TextSummaryState extends State<TextSummary> {
               SummarySize(),
               Btn(
                 label: "GENERATE SUMMARY",
-                onPress: () {
+                onPress: () async {
                   final FormState form =
                       _summaryFormKey.currentState as FormState;
                   if (form.validate()) {
-                    //generate summary
-                    summaryText =
-                        "ہر روز ایسا لگتا ہے کہ اب اس سے زیادہ ڈراما کیا ہوسکتا ہے لیکن ہر دن فیفا ورلڈ کپ مجھے غلط ثابت کررہا ہے۔ جب ایک گروپ کے 2 میچ بیک وقت کھیلے جانے سے متعلق شیڈول سامنے آیا تو مجھے الجھن ہورہی تھی کہ انہیں دیکھنا کتنا مشکل ہوگا لیکن کل جب یہ مرحلہ اپنے اختتام کو پہنچا تب مجھے اندازہ ہوا کہ اس عالمی کپ کا سب سے دلچسپ حصہ یہی تھا جب ٹیمیں میدان میں دوسرے میچ کے نتیجےکا انتظار کر رہی ہوتی ہیں۔ اس وقت جو دل کی کیفیت ہوتی ہے، سچ پوچھیےتو مجھے یہ کیفیت بہت یاد آئے گی۔ جب گروپ ڈراز منعقد ہوئے اور گھانا اور یوروگوئے ایک ہی گروپ";
+                    // generate summary
+                    var summary = await Api().generateSummary(
+                        algo: summary_type2,
+                        text: textController.text,
+                        ratio: 0.2);
+//                     summaryText = """
+// تندرستی بڑی نعمت ہے۔ لیکن آدمی جب تک تندرست رہتا ہے اس نعمت کی قدر نہیں کرتا۔ جب کوئی معمولی بیماری بھی اسے  آ کر گھیر لے تو اس کی قدر معلوم ہو جاتی ہے۔ اگر جسم کے کسی حصے میں تکلیف ہو جاتی ہےتو سارا جسم اثر قبول کرتا ہے۔ تندرستی ہو تو کھانے پینے، چلنے پھرنے اور کام کرنے میں جی لگتا ہے۔ صحت خراب ہو جائے تو کسی چیز میں مزہ نہیں آتا۔جو لوگ اکثر بیمار رہتے ہیں ان کی زندگی خود ان کے اور ان کے دوسرے متعلقین کے لیے وبالِ جان بن جاتی ہے۔
+// """;
+                    summaryText = summary.summary;
                     setState(() {});
                   }
                 },

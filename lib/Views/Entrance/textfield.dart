@@ -11,6 +11,7 @@ class textField extends StatelessWidget {
     this.icon,
     this.lines = 1,
     this.paddingVert = 10,
+    this.textAlign = TextAlign.left,
   });
 
   final TextEditingController controller;
@@ -20,12 +21,14 @@ class textField extends StatelessWidget {
   final IconData? icon;
   final int lines;
   final double paddingVert;
+  final TextAlign textAlign;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
         padding: EdgeInsets.symmetric(horizontal: 50, vertical: paddingVert),
         child: TextFormField(
+          textAlign: textAlign,
           cursorColor: text,
           autovalidateMode: AutovalidateMode.onUserInteraction,
           obscureText: password,

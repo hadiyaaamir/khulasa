@@ -14,3 +14,18 @@ getAlgorithm(String selected) {
     return summaryType2;
   }
 }
+
+//ratios
+double short = 0.2;
+double medium = 0.4;
+double long = 0.7;
+
+getRatio(String size) {
+  if (size == "Short") {
+    return short;
+  } else if (size == "Medium") {
+    return medium;
+  } else if (size == "Long") {
+    return long;
+  }
+}

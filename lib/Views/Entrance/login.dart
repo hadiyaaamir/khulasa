@@ -5,6 +5,7 @@ import 'package:khulasa/Models/user.dart';
 import 'package:khulasa/Views/Entrance/button.dart';
 import 'package:khulasa/Views/Entrance/signup.dart';
 import 'package:khulasa/Views/Entrance/textfield.dart';
+import 'package:khulasa/Views/NavBar/AppBarPage.dart';
 import 'package:khulasa/Views/Options/option.dart';
 import 'package:khulasa/Views/apicall.dart';
 import 'package:khulasa/constants/colors.dart';
@@ -61,12 +62,14 @@ class _LoginState extends State<Login> {
             //button
             Btn(
                 label: "LOGIN",
+
                 onPress: () async {
                   final FormState form = _formKey.currentState as FormState;
                   if (form.validate()) {
                     //check database
                     Navigation().navigationReplace(context, const Option());
                   }
+
                 }),
 
             RichText(
@@ -75,7 +78,7 @@ class _LoginState extends State<Login> {
                     style: const TextStyle(color: text),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
-                        Navigation().navigation(context, const ApiCall());
+                        Navigation().navigation(context, const SignUp());
                       }))
           ],
         ),

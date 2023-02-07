@@ -4,6 +4,7 @@ import 'package:khulasa/Controllers/navigation.dart';
 import 'package:khulasa/Views/Entrance/button.dart';
 import 'package:khulasa/Views/Entrance/signup.dart';
 import 'package:khulasa/Views/Entrance/textfield.dart';
+import 'package:khulasa/Views/NavBar/AppBarPage.dart';
 import 'package:khulasa/Views/Options/option.dart';
 import 'package:khulasa/constants/colors.dart';
 
@@ -57,6 +58,7 @@ class _LoginState extends State<Login> {
                 label: "LOGIN",
                 onPress: () {
                   Navigation().navigationReplace(context, const Option());
+                //  Navigation().navigationReplace(context, const Draw());
                 }),
 
             RichText(

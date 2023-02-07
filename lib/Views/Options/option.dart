@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:khulasa/Controllers/navigation.dart';
 import 'package:khulasa/Views/Entrance/button.dart';
+import 'package:khulasa/Views/NavBar/AppBarPage.dart';
 import 'package:khulasa/Views/Saved/saved.dart';
 import 'package:khulasa/Views/Summary/summary.dart';
 import 'package:khulasa/constants/colors.dart';
@@ -19,11 +20,21 @@ class _OptionState extends State<Option> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text(""),
+        backgroundColor: background,
+      ),
+     
+     drawer: Drawer(
+      child: Draw(),
+     ),
       backgroundColor: background,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+          children: 
+          [
+            
             Btn(
               label: "RSS Feed",
               onPress: () {},

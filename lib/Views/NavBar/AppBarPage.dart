@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:khulasa/Models/category.dart';
 import 'package:khulasa/Views/NavBar/Toggle.dart';
+import 'package:khulasa/Views/RSS/categories.dart';
 import 'package:khulasa/Views/Saved/saved.dart';
+import 'package:khulasa/Views/Summary/summary.dart';
 import 'package:khulasa/constants/colors.dart';
 import 'package:khulasa/Controllers/navigation.dart';
 import 'package:khulasa/constants/sizes.dart';
@@ -34,6 +37,7 @@ class _DrawState extends State<Draw> {
               color: primary,
             ),
             child: ToggleButton(),
+            
             //toggle button here
           ),
           ListTile(
@@ -44,7 +48,7 @@ class _DrawState extends State<Draw> {
       ),
 
             onTap: () {
-              Navigator.pop(context);
+              Navigation().navigationReplace(context, const Categories());
             },
           ),
 
@@ -55,6 +59,7 @@ class _DrawState extends State<Draw> {
             color: text,)  
           ),
             onTap: () {
+               Navigation().navigationReplace(context, const Summary());
             },
           ),
            ListTile(

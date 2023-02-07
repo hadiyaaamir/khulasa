@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:khulasa/Controllers/RSS/categoryprovider.dart';
 import 'package:khulasa/Controllers/RSS/categoryprovider.dart';
+import 'package:khulasa/Views/NavBar/AppBarPage.dart';
 import 'package:khulasa/Views/RSS/articlelist.dart';
 import 'package:khulasa/constants/colors.dart';
 import 'package:khulasa/constants/sizes.dart';
@@ -21,6 +22,14 @@ class _CategoriesState extends State<Categories> {
   Widget build(BuildContext context) {
     List<category> categorylist = context.watch<catprovider>().categoryList;
     return Scaffold(
+       appBar: AppBar(
+        title: Text(""),
+        backgroundColor: background,
+      ),
+     
+     drawer: Drawer(
+      child: Draw(),
+     ),
         backgroundColor: background,
         body: Center(
           child: Column(

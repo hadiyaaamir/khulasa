@@ -62,14 +62,12 @@ class _LoginState extends State<Login> {
             //button
             Btn(
                 label: "LOGIN",
-
                 onPress: () async {
                   final FormState form = _formKey.currentState as FormState;
                   if (form.validate()) {
                     //check database
                     Navigation().navigationReplace(context, const Option());
                   }
-
                 }),
 
             RichText(

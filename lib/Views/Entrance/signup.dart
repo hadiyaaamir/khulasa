@@ -97,7 +97,7 @@ class _SignUpState extends State<SignUp> {
                           password: passwordController.text);
                       //add to Database
 
-                      // UserController().addToDB(user);
+                      UserController().addToDB(user);
                       Navigation().navigationReplace(context, const Option());
                     }
                   }),

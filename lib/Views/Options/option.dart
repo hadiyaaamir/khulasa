@@ -5,6 +5,7 @@ import 'package:khulasa/Controllers/navigation.dart';
 import 'package:khulasa/Views/Entrance/button.dart';
 import 'package:khulasa/Views/NavBar/AppBarPage.dart';
 import 'package:khulasa/Views/Saved/saved.dart';
+import 'package:khulasa/Views/RSS/categories.dart';
 import 'package:khulasa/Views/Summary/summary.dart';
 import 'package:khulasa/constants/colors.dart';
 import 'package:khulasa/constants/sizes.dart';
@@ -37,7 +38,8 @@ class _OptionState extends State<Option> {
             
             Btn(
               label: "RSS Feed",
-              onPress: () {},
+              onPress: () =>
+                  Navigation().navigation(context, const Categories()),
               background: primary,
               foreground: text,
               height: 160,

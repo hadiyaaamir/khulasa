@@ -12,6 +12,10 @@ class Btn extends StatelessWidget {
     this.height = buttonHeight,
     this.foreground = text,
     this.background = secondary,
+    this.icon,
+    this.paddingVert = 30,
+    this.paddingHor = 50,
+    this.align = Alignment.center,
   });
 
   final Function() onPress;
@@ -21,29 +25,40 @@ class Btn extends StatelessWidget {
   Color background;
   double? width;
   double height;
+  final IconData? icon;
+  double paddingVert;
+  double paddingHor;
+  Alignment align;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 50),
-      child: SizedBox(
-        width: width ?? screenWidth,
-        height: height,
-        child: ElevatedButton(
-          onPressed: onPress,
-          style: ButtonStyle(
-            foregroundColor: MaterialStateProperty.all<Color>(foreground),
-            backgroundColor: MaterialStateProperty.all<Color>(background),
-            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5.0),
-                side: const BorderSide(color: secondary),
+    return Align(
+      alignment: align,
+      child: Padding(
+        padding:
+            EdgeInsets.symmetric(vertical: paddingVert, horizontal: paddingHor),
+        child: SizedBox(
+          width: width ?? screenWidth,
+          height: height,
+          child: ElevatedButton(
+            onPressed: onPress,
+            style: ButtonStyle(
+              foregroundColor: MaterialStateProperty.all<Color>(foreground),
+              backgroundColor: MaterialStateProperty.all<Color>(background),
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5.0),
+                  side: const BorderSide(color: secondary),
+                ),
               ),
             ),
-          ),
-          child: Text(
-            label,
-            style: TextStyle(fontSize: font),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                if (icon != null) ...[Icon(icon, size: font + 2)],
+                Text(label, style: TextStyle(fontSize: font)),
+              ],
+            ),
           ),
         ),
       ),

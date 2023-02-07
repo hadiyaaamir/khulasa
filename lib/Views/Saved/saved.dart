@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:khulasa/Controllers/navigation.dart';
-import 'package:khulasa/Models/summary.dart';
+import 'package:khulasa/Models/savedSummary.dart';
 import 'package:khulasa/Views/Saved/savedSummary.dart';
 import 'package:khulasa/constants/colors.dart';
 import 'package:khulasa/constants/sizes.dart';
@@ -33,7 +33,10 @@ class _SavedState extends State<Saved> {
           children: [
             const Text(
               "Saved Summaries",
-              style: TextStyle(fontSize: headingFont, color: text),
+              style: TextStyle(
+                  fontSize: headingFont,
+                  color: text,
+                  fontWeight: FontWeight.bold),
             ),
             Expanded(
               child: ListView.builder(
@@ -45,7 +48,8 @@ class _SavedState extends State<Saved> {
                   child: ListTile(
                     title: Text(
                       items[index].title,
-                      style: const TextStyle(color: secondary),
+                      style: const TextStyle(
+                          color: secondary, fontWeight: FontWeight.bold),
                     ),
                     subtitle: Text(
                       'Saved on: ${items[index].savedOn.day}/${items[index].savedOn.month}/${items[index].savedOn.year}',

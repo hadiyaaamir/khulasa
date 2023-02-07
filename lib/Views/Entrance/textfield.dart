@@ -6,26 +6,34 @@ class textField extends StatelessWidget {
     super.key,
     required this.label,
     required this.controller,
-    required this.validate,
+    this.validate,
     this.password = false,
     this.icon,
+    this.lines = 1,
+    this.paddingVert = 10,
   });
 
   final TextEditingController controller;
   final String label;
-  final Function(String?) validate;
+  final Function(String?)? validate;
   final bool password;
   final IconData? icon;
+  final int lines;
+  final double paddingVert;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
+        padding: EdgeInsets.symmetric(horizontal: 50, vertical: paddingVert),
         child: TextFormField(
           cursorColor: text,
           autovalidateMode: AutovalidateMode.onUserInteraction,
           obscureText: password,
           controller: controller,
+          keyboardType:
+              lines > 1 ? TextInputType.multiline : TextInputType.text,
+          minLines: lines,
+          maxLines: lines,
           decoration: InputDecoration(
             border: OutlineInputBorder(
               borderSide: const BorderSide(width: 0, style: BorderStyle.none),
@@ -45,7 +53,7 @@ class textField extends StatelessWidget {
             if (value != null && value.isEmpty) {
               return "Field cannot be empty";
             }
-            return validate(value);
+            return validate == null ? null : validate!(value);
           },
           style: (const TextStyle(
             color: text,

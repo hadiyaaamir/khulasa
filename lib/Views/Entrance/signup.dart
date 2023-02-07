@@ -1,7 +1,12 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:khulasa/Controllers/navigation.dart';
+
+import 'package:khulasa/Controllers/usercontroller.dart';
 import 'package:khulasa/Models/user.dart';
+
+import 'package:khulasa/Models/user.dart';
+
 import 'package:khulasa/Views/Entrance/button.dart';
 import 'package:khulasa/Views/Entrance/login.dart';
 import 'package:khulasa/Views/Entrance/textfield.dart';
@@ -91,6 +96,8 @@ class _SignUpState extends State<SignUp> {
                           email: emailController.text,
                           password: passwordController.text);
                       //add to Database
+
+                      // UserController().addToDB(user);
                       Navigation().navigationReplace(context, const Option());
                     }
                   }),

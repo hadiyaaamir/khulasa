@@ -1,15 +1,22 @@
+import 'package:khulasa/Models/savedSummary.dart';
+import 'package:khulasa/Models/summary.dart';
+
 class User {
   User({
-    required this.firstName,
-    required this.lastName,
-    required this.email,
-    required this.password,
+    this.firstName = "",
+    this.lastName = "",
+    this.email = "",
+    this.password = "",
+    this.savedSummaries = const [],
     this.isLoggedIn = true,
   });
 
   String firstName;
   String lastName;
   String password;
+
+  List<savedSummary> savedSummaries;
+
   String email;
   bool isLoggedIn;
 

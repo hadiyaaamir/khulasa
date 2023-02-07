@@ -6,7 +6,9 @@ import 'package:khulasa/constants/colors.dart';
 import 'package:khulasa/constants/sizes.dart';
 
 class SummarySize extends StatefulWidget {
-  SummarySize({super.key});
+  SummarySize({super.key, this.setSize});
+
+  final Function(String)? setSize;
 
   @override
   State<SummarySize> createState() => _SummarySizeState();
@@ -17,6 +19,8 @@ class _SummarySizeState extends State<SummarySize> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.setSize != null) widget.setSize!(size);
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 50),
       child: Container(

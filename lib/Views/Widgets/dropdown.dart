@@ -9,12 +9,14 @@ class Dropdown extends StatefulWidget {
     required this.label,
     required this.categories,
     this.paddingVert = 10,
+    this.setAlgo,
   }) : super(key: key);
 
   final Function(String?)? validate;
   final String label;
   final List<String> categories;
   final double paddingVert;
+  final Function(String)? setAlgo;
 
   @override
   State<Dropdown> createState() => _DropdownState();
@@ -54,6 +56,7 @@ class _DropdownState extends State<Dropdown> {
           }).toList(),
           onChanged: (newValue) {
             // user.gender = newValue.toString();
+            if (widget.setAlgo != null) widget.setAlgo!(newValue.toString());
             setState(() {
               _category = newValue;
             });

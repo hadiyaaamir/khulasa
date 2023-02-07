@@ -23,6 +23,8 @@ class _TextSummaryState extends State<TextSummary> {
   final GlobalKey<FormState> _summaryFormKey = GlobalKey<FormState>();
 
   String summaryText = "";
+  String algo = "";
+  double ratio = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -33,9 +35,11 @@ class _TextSummaryState extends State<TextSummary> {
           child: Column(
             children: [
               textField(
-                  label: "Enter text here",
-                  controller: textController,
-                  lines: 5),
+                label: "Enter text here",
+                controller: textController,
+                lines: 5,
+                textAlign: TextAlign.right,
+              ),
               Btn(
                 label: "Attach file",
                 onPress: () {},
@@ -47,12 +51,15 @@ class _TextSummaryState extends State<TextSummary> {
                 align: Alignment.centerRight,
                 font: largerSmallFont,
               ),
-              const Dropdown(
+              Dropdown(
                 label: "Summarising Algorithm",
-                categories: ["Summary 1", "Summary 2"],
+                categories: [summaryChoice1, summaryChoice2],
                 paddingVert: 20,
+                setAlgo: (algorithm) => algo = algorithm,
               ),
-              SummarySize(),
+              SummarySize(
+                setSize: (String size) => ratio = getRatio(size),
+              ),
               Btn(
                 label: "GENERATE SUMMARY",
                 onPress: () async {
@@ -61,9 +68,10 @@ class _TextSummaryState extends State<TextSummary> {
                   if (form.validate()) {
                     // generate summary
                     var summary = await Api().generateSummary(
-                        algo: summary_type2,
-                        text: textController.text,
-                        ratio: 0.3);
+                      algo: getAlgorithm(algo),
+                      text: textController.text,
+                      ratio: ratio,
+                    );
 //                     summaryText = """
 // تندرستی بڑی نعمت ہے۔ لیکن آدمی جب تک تندرست رہتا ہے اس نعمت کی قدر نہیں کرتا۔ جب کوئی معمولی بیماری بھی اسے  آ کر گھیر لے تو اس کی قدر معلوم ہو جاتی ہے۔ اگر جسم کے کسی حصے میں تکلیف ہو جاتی ہےتو سارا جسم اثر قبول کرتا ہے۔ تندرستی ہو تو کھانے پینے، چلنے پھرنے اور کام کرنے میں جی لگتا ہے۔ صحت خراب ہو جائے تو کسی چیز میں مزہ نہیں آتا۔جو لوگ اکثر بیمار رہتے ہیں ان کی زندگی خود ان کے اور ان کے دوسرے متعلقین کے لیے وبالِ جان بن جاتی ہے۔
 // """;

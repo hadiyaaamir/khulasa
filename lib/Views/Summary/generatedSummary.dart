@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:khulasa/Controllers/tts.dart';
 import 'package:khulasa/Views/Widgets/labelIcon.dart';
 import 'package:khulasa/constants/colors.dart';
 import 'package:khulasa/constants/sizes.dart';
@@ -29,7 +30,11 @@ class GeneratedSummary extends StatelessWidget {
                   const SizedBox(width: 5),
                   IconButton(
                     icon: const Icon(Icons.volume_up_rounded),
-                    onPressed: () {},
+                    onPressed: () {
+                      setTtsConfig();
+                      flutterTts.setLanguage("ur-PK");
+                      flutterTts.speak(summaryText);
+                    },
                     color: text,
                     iconSize: largeFont,
                   ),

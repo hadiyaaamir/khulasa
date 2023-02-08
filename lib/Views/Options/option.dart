@@ -25,17 +25,14 @@ class _OptionState extends State<Option> {
         title: Text(""),
         backgroundColor: background,
       ),
-     
-     drawer: Drawer(
-      child: Draw(),
-     ),
+      drawer: Drawer(
+        child: Draw(),
+      ),
       backgroundColor: background,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: 
-          [
-            
+          children: [
             Btn(
               label: "RSS Feed",
               onPress: () =>
@@ -53,14 +50,14 @@ class _OptionState extends State<Option> {
               height: 160,
               font: largeFont,
             ),
-            Btn(
-              label: "Saved Summary",
-              onPress: () => Navigation().navigation(context, const Saved()),
-              background: primary,
-              foreground: text,
-              height: 60,
-              font: largeFont,
-            )
+            // Btn(
+            //   label: "Saved Summary",
+            //   onPress: () => Navigation().navigation(context, const Saved()),
+            //   background: primary,
+            //   foreground: text,
+            //   height: 60,
+            //   font: largeFont,
+            // )
           ],
         ),
       ),

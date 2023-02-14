@@ -6,12 +6,6 @@ import 'package:http/http.dart' as http;
 
 class Api {
   //get summary
-  // generateSummary({
-
-  // }) {
-
-  // }
-
   Future<Summary> generateSummary({
     required String algo,
     required String text,
@@ -34,6 +28,7 @@ class Api {
     return s;
     // return
   }
+
   Future<String> rssFeed() async {
     var url = Uri.parse("${apiUrl}/rssfeed");
     final headers = {'Content-Type': 'application/json'};
@@ -42,8 +37,8 @@ class Api {
       headers: headers,
     );
 
-  //  final parsed = json.decode(response.body);
-  //  Summary s = Summary.fromJson(parsed as Map<String, dynamic>);
+    //  final parsed = json.decode(response.body);
+    //  Summary s = Summary.fromJson(parsed as Map<String, dynamic>);
     return response.body;
     // return
   }

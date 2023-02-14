@@ -4,9 +4,10 @@ class article {
   String content;
   String category;
 
-  article(
-      {required this.title,
-      required this.summary,
-      required this.content,
-      required this.category});
+  article({
+    required this.title,
+    required this.summary,
+    required this.content,
+    this.category = "",
+  });
 }

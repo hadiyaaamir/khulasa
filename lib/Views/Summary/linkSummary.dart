@@ -74,7 +74,7 @@ class _LinkSummaryState extends State<LinkSummary> {
                           )
                           .then((value) => {summaryText = value.summary});
                       title = article.title;
-                      // summaryText = article;
+                      // summaryText = article.content;
                       setState(() {});
                     }
                   }),

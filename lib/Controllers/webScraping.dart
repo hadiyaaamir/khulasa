@@ -3,28 +3,40 @@ import 'package:http/http.dart' as http;
 import 'package:khulasa/Models/article.dart';
 
 class WebScraping {
-  // getArticleFromLink(String linkWebpage, String articleLink) async {
-  //   var webScraper = WebScraper(linkWebpage);
-  //   print("İm waiting");
+  //get article and title given link
 
-  //   if (await webScraper.loadWebPage(articleLink)) {
-  //     print("İ got in");
-  //     List<Map<String, dynamic>> results =
-  //         webScraper.getElement('div.center', ['title']);
-  //     // return results[0];
-  //     print(results);
-  //   }
-  // }
+  Future<article> getArticleFromLink({
+    required String source,
+    required String link,
+  }) async {
+    //constants: tags for each source
+    Map<String, String> sourceTags_title = {
+      'Dawn News': 'story__link',
+      'ARY News': 'post-title',
+    };
 
-  Future<article> getArticleFromLink(link) async {
-    final response = await http.Client().get(Uri.parse(link));
+    Map<String, String> sourceTags_article = {
+      'Dawn News': 'story__content',
+      'ARY News': 'entry-content clearfix single-post-content',
+    };
+
+    // api call
+    final response = await http.Client()
+        .get(Uri.parse(link), headers: {'User-Agent': 'Mozilla/5.0'});
 
     if (response.statusCode == 200) {
       var document = parser.parse(response.body);
       try {
         //Scraping the first article title
-        var title = document.getElementsByClassName('story__link')[0].text;
-        var content = document.getElementsByClassName('story__content')[0].text;
+        var title = sourceTags_title.containsKey(source)
+            ? document.getElementsByClassName(sourceTags_title[source]!)[0].text
+            : "";
+        var content = sourceTags_article.containsKey(source)
+            ? document
+                .getElementsByClassName(sourceTags_article[source]!)[0]
+                .text
+            : "";
+
         return article(title: title, summary: "", content: content.trim());
       } catch (e) {
         return article(title: "", summary: "", content: 'error!: $e');

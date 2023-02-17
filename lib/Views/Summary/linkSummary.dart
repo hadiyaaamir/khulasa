@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:khulasa/Controllers/api.dart';
 import 'package:khulasa/Controllers/webScraping.dart';
-import 'package:khulasa/Models/article.dart';
 import 'package:khulasa/Views/Entrance/button.dart';
 import 'package:khulasa/Views/Entrance/textfield.dart';
 import 'package:khulasa/Views/Summary/generatedSummary.dart';
 import 'package:khulasa/Views/Summary/summarySize.dart';
 import 'package:khulasa/Views/Widgets/dropdown.dart';
 import 'package:khulasa/constants/api.dart';
-import 'package:khulasa/constants/colors.dart';
-import 'package:khulasa/constants/sizes.dart';
 
 class LinkSummary extends StatefulWidget {
   LinkSummary({super.key});
@@ -29,51 +24,63 @@ class _LinkSummaryState extends State<LinkSummary> {
   String algo = "";
   double ratio = 0;
   String title = "";
+  String website = "";
   List<String> categoryList = ["Youtube", "Dawn News", "ARY News"];
+
+  final GlobalKey<FormState> _summaryFormKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Center(
-        child: Column(
-          children: [
-            Dropdown(
-              label: "Select Source",
-              categories: categoryList,
-              setAlgo: (algorithm) => algo = algorithm,
-            ),
-            textField(
-              label: "Link",
-              controller: linkController,
-              lines: 1,
-            ),
-            Dropdown(
-              label: "Summarising Algorithm",
-              categories: [summaryChoice1, summaryChoice2],
-              setAlgo: (algorithm) => algo = algorithm,
-            ),
-            SummarySize(
-              setSize: (String size) => ratio = getRatio(size),
-            ),
-            Btn(
-                label: "GENERATE SUMMARY",
-                onPress: () async {
-                  var article = await WebScraping()
-                      .getArticleFromLink(linkController.text);
-                  print(ratio);
-                  print(algo);
-                  var summary = await Api().generateSummary(
-                    algo: getAlgorithm(algo),
-                    text: article.content,
-                    ratio: ratio,
-                  );
-                  summaryText = summary.summary;
-                  title = article.title;
-                  // summaryText = article;
-                  setState(() {});
-                }),
-            GeneratedSummary(summaryText: summaryText, title: title),
-          ],
+      child: Form(
+        key: _summaryFormKey,
+        child: Center(
+          child: Column(
+            children: [
+              Dropdown(
+                label: "Select Source",
+                categories: ["Youtube", "Dawn News", "ARY News"],
+                setAlgo: (source) => website = source,
+              ),
+              textField(
+                label: "Link",
+                controller: linkController,
+                lines: 1,
+              ),
+              Dropdown(
+                label: "Summarising Algorithm",
+                categories: [summaryChoice1, summaryChoice2],
+                setAlgo: (algorithm) => algo = algorithm,
+              ),
+              SummarySize(
+                setSize: (String size) => ratio = getRatio(size),
+              ),
+              Btn(
+                  label: "GENERATE SUMMARY",
+                  onPress: () async {
+                    final FormState form =
+                        _summaryFormKey.currentState as FormState;
+                    if (form.validate()) {
+                      var article = await WebScraping().getArticleFromLink(
+                        link: linkController.text,
+                        source: website,
+                      );
+
+                      await Api()
+                          .generateSummary(
+                            algo: getAlgorithm(algo),
+                            text: article.content,
+                            ratio: ratio,
+                          )
+                          .then((value) => {summaryText = value.summary});
+                      title = article.title;
+                      // summaryText = article;
+                      setState(() {});
+                    }
+                  }),
+              GeneratedSummary(summaryText: summaryText, title: title),
+            ],
+          ),
         ),
       ),
     );

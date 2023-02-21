@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:khulasa/Controllers/api.dart';
+import 'package:khulasa/Controllers/webScraping.dart';
 import 'package:khulasa/Models/summary.dart';
 import 'package:khulasa/constants/api.dart';
 
@@ -26,8 +27,9 @@ class _ApiCallState extends State<ApiCall> {
             Text(text),
             ElevatedButton(
                 onPressed: () async {
-                  text = await Api().rssFeed();
-                  setState(() {});
+                  var links = await WebScraping()
+                      .getLinksFromLink("https://urdu.arynews.tv/");
+                  print(links);
                 },
                 child: Text("Call API"))
           ],
@@ -35,6 +37,4 @@ class _ApiCallState extends State<ApiCall> {
       ),
     );
   }
-
-  
 }

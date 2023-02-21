@@ -10,4 +10,8 @@ class article {
     required this.content,
     this.category = "",
   });
+
+  String toString() {
+    return content;
+  }
 }

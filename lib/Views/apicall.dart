@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:khulasa/Controllers/api.dart';
 import 'package:khulasa/Controllers/webScraping.dart';
+import 'package:khulasa/Models/link.dart';
+import 'package:khulasa/Models/source.dart';
 import 'package:khulasa/Models/summary.dart';
 import 'package:khulasa/constants/api.dart';
 
@@ -27,8 +29,13 @@ class _ApiCallState extends State<ApiCall> {
             Text(text),
             ElevatedButton(
                 onPressed: () async {
-                  var links = await WebScraping()
-                      .getLinksFromLink("https://urdu.arynews.tv/");
+                  List<String> links = [];
+                  List<Source> sources = WebScraping().sources;
+                  for (var element in sources) {
+                    var l = await WebScraping()
+                        .getLinksFromLink(element.webLink, element);
+                    // links.addAll(Link(link: l, source: element));
+                  }
                   print(links);
                 },
                 child: Text("Call API"))

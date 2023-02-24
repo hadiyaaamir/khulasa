@@ -18,6 +18,7 @@ class ApiCall extends StatefulWidget {
 
 class _ApiCallState extends State<ApiCall> {
   String text = "No Text";
+  List<Link> links = [];
 
   @override
   Widget build(BuildContext context) {
@@ -28,17 +29,28 @@ class _ApiCallState extends State<ApiCall> {
           children: [
             Text(text),
             ElevatedButton(
-                onPressed: () async {
-                  List<String> links = [];
-                  List<Source> sources = WebScraping().sources;
-                  for (var element in sources) {
-                    var l = await WebScraping()
-                        .getLinksFromLink(element.webLink, element);
-                    // links.addAll(Link(link: l, source: element));
-                  }
-                  print(links);
-                },
-                child: Text("Call API"))
+              onPressed: () async {
+                // List<String> links = [];
+                List<Source> sources = WebScraping().sources;
+                for (var element in sources) {
+                  var l = await WebScraping()
+                      .getLinksFromLink(element.webLink, element);
+                  // print(l);
+                  links.addAll(l);
+                }
+                setState(() {});
+              },
+              child: const Text("Call API"),
+            ),
+            if (links.isNotEmpty) ...[
+              Expanded(
+                child: ListView.builder(
+                  itemCount: links.length,
+                  itemBuilder: (context, index) =>
+                      ListTile(title: Text(links[index].link)),
+                ),
+              ),
+            ]
           ],
         ),
       ),

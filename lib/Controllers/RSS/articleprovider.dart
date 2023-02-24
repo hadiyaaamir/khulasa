@@ -91,29 +91,40 @@ class articleprovider extends ChangeNotifier {
       var l = await WebScraping().getLinksFromLink(element.webLink, element);
       links.addAll(l);
     }
-    print(links);
+    // print(links);
 
     // for (var element in links) {
     //   var a = await WebScraping().getArticleFromLink(
     //       source: element.source.source, link: element.link);
     //   arts.add(a);
     // }
-    for (int i = 1; i < 6; i++) {
+    for (int i = 0; i < links.length; i++) {
       var a = await WebScraping().getArticleFromLink(
           source: links[i].source.source, link: links[i].link);
-      arts.add(a);
-      await Api()
-          .generateSummary(
-            algo: summaryType1,
-            text: a.content,
-            ratio: 0.1,
-          )
-          .then((value) => {a.summary = value.summary});
+      // arts.add(a);
+      if (a.content.isNotEmpty && a.link != null && a.link!.link.isNotEmpty) {
+        await Api()
+            .generateSummary(
+              algo: summaryType1,
+              text: a.content,
+              ratio: a.link == null
+                  ? 0.1
+                  : a.link!.source.source == "Dawn News"
+                      ? 0.1
+                      : 0.2,
+            )
+            .then((value) => {
+                  a.summary = value.summary,
+                  _articleList.add(a),
+                  notifyListeners(),
+                });
+        notifyListeners();
+      }
     }
 
-    print(arts);
-    _articleList = arts;
-    notifyListeners();
+    // print(arts);
+    // _articleList = arts;
+    // notifyListeners();
   }
 
   int get count => _article.length;

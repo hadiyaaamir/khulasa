@@ -7,10 +7,10 @@ import 'package:khulasa/Models/link.dart';
 import 'package:khulasa/Models/source.dart';
 
 class WebScraping {
-  List<String> fixedlink = [
-    "https://www.dawnnews.tv/",
-    "https://urdu.arynews.tv/"
-  ];
+  // List<String> fixedlink = [
+  //   "https://www.dawnnews.tv/",
+  //   "https://urdu.arynews.tv/"
+  // ];
 
   List<Source> sources = [
     Source(
@@ -46,7 +46,12 @@ class WebScraping {
                 document.getElementsByClassName(sources[index].contentTag)[0])
             : "";
 
-        return article(title: title, summary: "", content: content.trim());
+        return article(
+          title: title,
+          summary: "",
+          content: content.trim(),
+          link: Link(link: link, source: sources[index]),
+        );
       } catch (e) {
         return article(title: "", summary: "", content: 'error!: $e');
       }
@@ -71,27 +76,38 @@ class WebScraping {
         var links = document.getElementsByTagName('a');
         links.forEach((element) {
           var l = element.attributes['href'].toString();
-          fixedlink.forEach((element) {
-            //ary
-            if (element == "https://urdu.arynews.tv/" &&
-                l != link &&
-                l.startsWith(element) &&
-                !l.contains("category") &&
-                !l.contains("prayer-timings") &&
-                !l.contains("latest-news")) {
+          // fixedlink.forEach((element) {
+          //ary
+          if (link == "https://urdu.arynews.tv/" &&
+              l != link &&
+              l.startsWith(link) &&
+              !RegExp(r"https://urdu.arynews.tv/tag(.*)").hasMatch(l) &&
+              !l.contains("category") &&
+              !l.contains("prayer-timings") &&
+              !l.contains("latest-news")) {
+            int index = articleLinks.indexWhere((element) => element.link == l);
+            if (index == -1) {
               articleLinks.add(Link(link: l, source: source));
             }
-            //dawn
-            if (element == "https://www.dawnnews.tv/" &&
-                l != link &&
-                l.startsWith(element) &&
-                !l.contains("authors") &&
-                !l.contains("watch-live") &&
-                l.contains("news")) {
+          }
+          //dawn
+          RegExp exp = RegExp(r"https://www.dawnnews.tv/news/(.*)",
+              multiLine: true, caseSensitive: true);
+          if (link == "https://www.dawnnews.tv/" && exp.hasMatch(l)
+              //     l != link &&
+              //     l.startsWith(link) &&
+              //     !l.contains("authors") &&
+              //     !l.contains("watch-live") &&
+              //     l.contains("news")
+              ) {
+            int index = articleLinks.indexWhere((element) => element.link == l);
+            if (index == -1) {
               articleLinks.add(Link(link: l, source: source));
             }
-          });
+          }
+          // });
         });
+
         return articleLinks;
       } catch (e) {
         return articleLinks;

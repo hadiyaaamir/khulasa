@@ -12,6 +12,7 @@ class textField extends StatelessWidget {
     this.lines = 1,
     this.paddingVert = 10,
     this.textAlign = TextAlign.left,
+    this.isLoading = false,
   });
 
   final TextEditingController controller;
@@ -22,6 +23,7 @@ class textField extends StatelessWidget {
   final int lines;
   final double paddingVert;
   final TextAlign textAlign;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +40,7 @@ class textField extends StatelessWidget {
           minLines: lines,
           maxLines: lines,
           decoration: InputDecoration(
+            suffix: isLoading ? const CircularProgressIndicator() : null,
             border: OutlineInputBorder(
               borderSide: const BorderSide(width: 0, style: BorderStyle.none),
               borderRadius: BorderRadius.circular(5),

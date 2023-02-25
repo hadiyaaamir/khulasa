@@ -47,7 +47,6 @@ class _TextSummaryState extends State<TextSummary> {
         child: Center(
           child: Column(
             children: [
-              // attach == true
               //     ? scanning == true
               //         ? const Center(child: CircularProgressIndicator())
               //         : Text(

@@ -47,13 +47,14 @@ class _TextSummaryState extends State<TextSummary> {
         child: Center(
           child: Column(
             children: [
-              //     ? scanning == true
-              //         ? const Center(child: CircularProgressIndicator())
-              //         : Text(
-              //             extractedText,
-              //             textAlign: TextAlign.right,
-              //           )
-              //     :
+             scanning == true
+                      ? textField(
+                label: "Loading",
+                controller: textController,
+                lines: 5,
+                textAlign: TextAlign.right,
+                isLoading: true,
+              ):
               textField(
                 label: "Enter text here",
                 controller: textController,
@@ -64,7 +65,6 @@ class _TextSummaryState extends State<TextSummary> {
                 label: "Attach file",
                 onPress: () async {
                   setState(() {
-                    // attach = false;
                     scanning = true;
                   });
 
@@ -79,6 +79,12 @@ class _TextSummaryState extends State<TextSummary> {
                   //       await TesseractOcr.extractText(p, language: 'urd'
                   //       );
                   // }
+
+                  String? extractedText = await getText();
+                  extractedText == null
+                      ? null
+                      : textController.text = extractedText;
+
                   setState(() {
                     scanning = false;
                   });
@@ -126,10 +132,10 @@ class _TextSummaryState extends State<TextSummary> {
     );
   }
 
-  Future<String> getText() async {
+  Future<String?> getText() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
-      allowedExtensions: ['jpg', 'pdf', 'png'],
+      allowedExtensions: ['jpg', 'pdf', 'png', 'docx', 'txt'],
     );
 
     if (result != null) {
@@ -148,9 +154,13 @@ class _TextSummaryState extends State<TextSummary> {
         PdfTextExtractor extractor = PdfTextExtractor(document);
 
         return extractor.extractText();
+      } else if ((file.extension == 'docx' ||
+              file.extension ==
+                  'txt') && //text or docx file read string using rootbundle
+          p != null) {
+        return await rootBundle.loadString(p);
       }
     }
-
-    return '';
+    return null;
   }
 }

@@ -42,19 +42,20 @@ class _TextSummaryState extends State<TextSummary> {
         child: Center(
           child: Column(
             children: [
-              attach == true
-                  ? scanning == true
-                      ? const Center(child: CircularProgressIndicator())
-                      : Text(
-                          extractedText,
-                          textAlign: TextAlign.right,
-                        )
-                  : textField(
-                      label: "Enter text here",
-                      controller: textController,
-                      lines: 5,
-                      textAlign: TextAlign.right,
-                    ),
+              // attach == true
+              //     ? scanning == true
+              //         ? const Center(child: CircularProgressIndicator())
+              //         : Text(
+              //             extractedText,
+              //             textAlign: TextAlign.right,
+              //           )
+              //     :
+              textField(
+                label: "Enter text here",
+                controller: textController,
+                lines: 5,
+                textAlign: TextAlign.right,
+              ),
               Btn(
                 label: "Attach file",
                 onPress: () async {
@@ -79,6 +80,8 @@ class _TextSummaryState extends State<TextSummary> {
                     extractedText = await FlutterTesseractOcr.extractText(p,
                         language: 'urd+eng');
                     print(extractedText);
+                    textController.text = extractedText;
+                    setState(() {});
                   }
                   setState(() {
                     scanning = false;

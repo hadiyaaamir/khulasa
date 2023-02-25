@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:khulasa/Models/article.dart';
 import 'package:khulasa/constants/colors.dart';
 import 'package:khulasa/constants/sizes.dart';
-import 'package:provider/provider.dart';
-
-import '../../Controllers/RSS/articleprovider.dart';
 
 class Article extends StatefulWidget {
   // final int i;
@@ -21,22 +19,35 @@ class _ArticleState extends State<Article> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: background,
+      appBar: AppBar(
+        backgroundColor: background,
+        elevation: 0,
+      ),
       body: SingleChildScrollView(
         child: Center(
-          child: Column(
-            children: [
-              Text(widget.art.title,
+          child: Padding(
+            padding:
+                const EdgeInsets.only(top: 10, bottom: 50, right: 30, left: 30),
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 30),
+                  child: Text(
+                    widget.art.title,
+                    textAlign: TextAlign.right,
+                    style: GoogleFonts.notoNastaliqUrdu(
+                        color: text,
+                        fontWeight: FontWeight.bold,
+                        fontSize: headingFont),
+                  ),
+                ),
+                Text(
+                  widget.art.content,
                   textAlign: TextAlign.right,
-                  style: const TextStyle(
-                      color: text,
-                      fontWeight: FontWeight.bold,
-                      fontSize: headingFont)),
-              Text(
-                widget.art.content,
-                textAlign: TextAlign.right,
-                style: const TextStyle(color: text, fontSize: smallFont),
-              ),
-            ],
+                  style: const TextStyle(color: text, fontSize: buttonFont),
+                ),
+              ],
+            ),
           ),
         ),
       ),

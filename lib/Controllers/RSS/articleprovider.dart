@@ -114,7 +114,8 @@ class articleprovider extends ChangeNotifier {
                       : 0.2,
             )
             .then((value) => {
-                  a.summary = value.summary,
+                  a.summary =
+                      value.summary.isNotEmpty ? value.summary : a.content,
                   _articleList.add(a),
                   notifyListeners(),
                 });

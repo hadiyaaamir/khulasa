@@ -1,6 +1,8 @@
 // import 'dart:html';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:khulasa/Controllers/api.dart';
 import 'package:khulasa/Views/Entrance/button.dart';
@@ -12,6 +14,9 @@ import 'package:khulasa/constants/api.dart';
 import 'package:khulasa/constants/colors.dart';
 import 'package:khulasa/constants/sizes.dart';
 import 'package:flutter_tesseract_ocr/flutter_tesseract_ocr.dart';
+
+import 'package:file_picker/file_picker.dart';
+import 'package:syncfusion_flutter_pdf/pdf.dart';
 
 class TextSummary extends StatefulWidget {
   TextSummary({super.key});
@@ -63,26 +68,18 @@ class _TextSummaryState extends State<TextSummary> {
                     // attach = false;
                     scanning = true;
                   });
-//                   FilePickerResult? result = await FilePicker.platform.pickFiles(
-//   type: FileType.custom,
-//   allowedExtensions: ['jpg', 'pdf', 'doc'],
-// );
 
-                  var i = await ImagePicker()
-                      .pickImage(source: ImageSource.gallery);
-                  if (i != null) {
-                    imagePicked = i;
-                    setState(() {
-                      attach = true;
-                    });
+                  // var result = await ImagePicker()
+                  //     .pickImage(source: ImageSource.gallery);
 
-                    var p = imagePicked.path;
-                    extractedText = await FlutterTesseractOcr.extractText(p,
-                        language: 'urd+eng');
-                    print(extractedText);
-                    textController.text = extractedText;
-                    setState(() {});
-                  }
+                  // if (result != null) {
+                  //   imagePicked = result;
+
+                  //   var p = imagePicked.path;
+                  //   extractedText =
+                  //       await TesseractOcr.extractText(p, language: 'urd'
+                  //       );
+                  // }
                   setState(() {
                     scanning = false;
                   });
@@ -128,5 +125,33 @@ class _TextSummaryState extends State<TextSummary> {
         ),
       ),
     );
+  }
+
+  Future<String> getText() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['jpg', 'pdf', 'png'],
+    );
+
+    if (result != null) {
+      PlatformFile file = result.files.first;
+      String? p = file.path;
+      //image using flutter tesseract ocr
+      if ((file.extension == 'png' || file.extension == 'jpg') && p != null) {
+        return await FlutterTesseractOcr.extractText(p, language: 'urd+eng');
+      } else if (file.extension == 'pdf' && p != null) {
+        //pdf reader using syncfusion flutter pdf
+        final ByteData data = await rootBundle.load(p);
+        PdfDocument document = PdfDocument(
+            inputBytes: data.buffer
+                .asUint8List(data.offsetInBytes, data.lengthInBytes));
+
+        PdfTextExtractor extractor = PdfTextExtractor(document);
+
+        return extractor.extractText();
+      }
+    }
+
+    return '';
   }
 }

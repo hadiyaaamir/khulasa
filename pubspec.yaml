@@ -45,7 +45,8 @@ dependencies:
   firebase_core: ^2.4.1
   flutter_tts: ^3.6.3
   web_scraper: ^0.1.4
-  tesseract_ocr: ^0.3.1
+  # tesseract_ocr: ^0.3.1
+  flutter_tesseract_ocr: ^0.4.20
   image_picker: ^0.8.6+3
   # file_picker: ^5.2.5
 
@@ -74,8 +75,8 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assests/
-    - assests/tessdata/
+    - assets/
+    - assets/tessdata/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

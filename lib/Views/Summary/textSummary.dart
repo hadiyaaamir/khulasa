@@ -1,4 +1,4 @@
-import 'dart:html';
+// import 'dart:html';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -11,7 +11,7 @@ import 'package:khulasa/Views/Widgets/dropdown.dart';
 import 'package:khulasa/constants/api.dart';
 import 'package:khulasa/constants/colors.dart';
 import 'package:khulasa/constants/sizes.dart';
-import 'package:tesseract_ocr/tesseract_ocr.dart';
+import 'package:flutter_tesseract_ocr/flutter_tesseract_ocr.dart';
 
 class TextSummary extends StatefulWidget {
   TextSummary({super.key});
@@ -45,7 +45,10 @@ class _TextSummaryState extends State<TextSummary> {
               attach == true
                   ? scanning == true
                       ? const Center(child: CircularProgressIndicator())
-                      : Text(extractedText, textAlign: TextAlign.right,)
+                      : Text(
+                          extractedText,
+                          textAlign: TextAlign.right,
+                        )
                   : textField(
                       label: "Enter text here",
                       controller: textController,
@@ -56,7 +59,7 @@ class _TextSummaryState extends State<TextSummary> {
                 label: "Attach file",
                 onPress: () async {
                   setState(() {
-                    attach = true;
+                    // attach = false;
                     scanning = true;
                   });
 //                   FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -68,11 +71,14 @@ class _TextSummaryState extends State<TextSummary> {
                       .pickImage(source: ImageSource.gallery);
                   if (i != null) {
                     imagePicked = i;
-                  
+                    setState(() {
+                      attach = true;
+                    });
+
                     var p = imagePicked.path;
-                    extractedText =
-                        await TesseractOcr.extractText(p, language: 'urd'
-                        );
+                    extractedText = await FlutterTesseractOcr.extractText(p,
+                        language: 'urd+eng');
+                    print(extractedText);
                   }
                   setState(() {
                     scanning = false;

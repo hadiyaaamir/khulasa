@@ -4,11 +4,13 @@ class Source {
   String source;
   String titleTag;
   String contentTag;
+  String webLink;
 
   Source({
     required this.source,
     required this.titleTag,
     required this.contentTag,
+    required this.webLink,
   });
 
   String cleanedupArticle(var article) {
@@ -20,5 +22,9 @@ class Source {
       return replace;
     }
     return article.text;
+  }
+
+  String toString() {
+    return "{source: $source, weblink: $webLink, titleTag: $titleTag, contentTag: $contentTag}\n";
   }
 }

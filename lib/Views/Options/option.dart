@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:khulasa/Controllers/navigation.dart';
 import 'package:khulasa/Views/Entrance/button.dart';
 import 'package:khulasa/Views/NavBar/AppBarPage.dart';
+import 'package:khulasa/Views/RSS/rssFeed.dart';
 import 'package:khulasa/Views/Saved/saved.dart';
 import 'package:khulasa/Views/RSS/categories.dart';
 import 'package:khulasa/Views/Summary/summary.dart';
@@ -35,8 +36,7 @@ class _OptionState extends State<Option> {
           children: [
             Btn(
               label: "RSS Feed",
-              onPress: () =>
-                  Navigation().navigation(context, const Categories()),
+              onPress: () => Navigation().navigation(context, const RssFeed()),
               background: primary,
               foreground: text,
               height: 160,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:khulasa/Controllers/tts.dart';
+import 'package:khulasa/Views/Widgets/iconButtons.dart';
 import 'package:khulasa/Views/Widgets/labelIcon.dart';
 import 'package:khulasa/constants/colors.dart';
 import 'package:khulasa/constants/sizes.dart';
@@ -19,43 +20,28 @@ class GeneratedSummary extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                children: [
-                  const Text(
-                    "Summary",
-                    style: TextStyle(
-                        color: text,
-                        fontSize: largeFont,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(width: 5),
-                  IconButton(
-                    icon: const Icon(Icons.volume_up_rounded),
-                    onPressed: () {
-                      setTtsConfig();
-                      flutterTts.setLanguage("ur-PK");
-                      flutterTts.speak(summaryText);
-                    },
-                    color: text,
-                    iconSize: largeFont,
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  LabelIcon(
-                    icon: Icons.save,
-                    label: "Save",
-                    onPress: () {},
-                  ),
-                  const SizedBox(width: 10),
-                  LabelIcon(
-                    icon: Icons.share_rounded,
-                    label: "Share",
-                    onPress: () {},
-                  )
-                ],
-              )
+              if (summaryText.isNotEmpty) ...[
+                Row(
+                  children: [
+                    const Text(
+                      "Summary",
+                      style: TextStyle(
+                          color: text,
+                          fontSize: largeFont,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(width: 5),
+                    SpeakIconButton(speakText: summaryText),
+                  ],
+                ),
+                Row(
+                  children: const [
+                    SaveButton(),
+                    SizedBox(width: 10),
+                    ShareButton(),
+                  ],
+                )
+              ],
             ],
           ),
           const SizedBox(height: 20),

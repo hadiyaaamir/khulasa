@@ -77,6 +77,7 @@ class articleprovider extends ChangeNotifier {
   getArticles() async {
     List<Link> links = [];
     List<Source> sources = WebScraping().sources;
+    _articleList = [];
 
     for (var element in sources) {
       var l = await WebScraping().getLinksFromLink(element.webLink, element);

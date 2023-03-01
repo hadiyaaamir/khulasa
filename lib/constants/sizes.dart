@@ -8,6 +8,10 @@ const double buttonFont = 16;
 const double smallFont = 10;
 const double largerSmallFont = 14;
 
+//icon sizes
+const double iconRegular = 25;
+const double iconLarge = 30;
+
 //button
 const double buttonWidth = 200;
 const double buttonHeight = 50;

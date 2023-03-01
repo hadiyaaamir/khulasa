@@ -2,6 +2,7 @@ import 'dart:collection';
 
 import 'package:html/parser.dart' as parser;
 import 'package:http/http.dart' as http;
+import 'package:khulasa/Controllers/dateFormat.dart';
 import 'package:khulasa/Models/article.dart';
 import 'package:khulasa/Models/link.dart';
 import 'package:khulasa/Models/source.dart';
@@ -45,19 +46,33 @@ class WebScraping {
             ? sources[index].cleanedupArticle(
                 document.getElementsByClassName(sources[index].contentTag)[0])
             : "";
+        DateTime date =
+            index != -1 ? sources[index].getDate(document) : DateTime.now();
 
         return article(
           title: title,
           summary: "",
           content: content.trim(),
           link: Link(link: link, source: sources[index]),
+          date: date,
         );
       } catch (e) {
-        return article(title: "", summary: "", content: 'error!: $e');
+        return article(
+          title: "",
+          summary: "",
+          content: 'error!: $e',
+          // date: "",
+          date: DateTime.now(),
+        );
       }
     } else {
       return article(
-          title: "", summary: "", content: 'error ${response.statusCode}');
+        title: "",
+        summary: "",
+        content: 'error ${response.statusCode}',
+        // date: "",
+        date: DateTime.now(),
+      );
     }
   }
 

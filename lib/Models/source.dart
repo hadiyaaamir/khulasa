@@ -1,4 +1,5 @@
 import 'package:html/dom.dart';
+import 'package:khulasa/Controllers/dateFormat.dart';
 
 class Source {
   String source;
@@ -22,6 +23,30 @@ class Source {
       return replace;
     }
     return article.text;
+  }
+
+  DateTime getDate(Document document) {
+    if (source == "Dawn News") {
+      String date =
+          document.getElementsByClassName('story__time text-4')[0].text;
+      return DateFormat().toDateTime(date);
+    } else if (source == "ARY News") {
+      // var element = document
+      //     .getElementsByClassName('post-published updated')[0]
+      //     .firstChild;
+      // var text = element != null ? element.text : "";
+      // return text ?? "";
+
+      String date = document
+              .getElementsByClassName('post-published updated')[0]
+              .attributes['datetime'] ??
+          "";
+      if (date.isNotEmpty) {
+        return DateTime.parse(date);
+      }
+      return DateTime(2000);
+    }
+    return DateTime(2000);
   }
 
   String toString() {

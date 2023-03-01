@@ -5,9 +5,18 @@ import 'package:khulasa/constants/colors.dart';
 import 'package:khulasa/constants/sizes.dart';
 
 class SpeakIconButton extends StatefulWidget {
-  SpeakIconButton({super.key, required this.speakText});
+  SpeakIconButton({
+    super.key,
+    required this.speakText,
+    this.vertPadding = 12,
+    this.iconColor = text,
+    this.iconSize = iconRegular,
+  });
 
   final String speakText;
+  final double vertPadding;
+  final Color iconColor;
+  final double iconSize;
 
   @override
   State<SpeakIconButton> createState() => _SpeakIconButtonState();
@@ -22,39 +31,45 @@ class _SpeakIconButtonState extends State<SpeakIconButton> {
     return Wrap(
       spacing: 0,
       children: [
-        IconButton(
-          icon: isSpeaking
-              ? const Icon(Icons.pause, color: text)
-              : started
-                  ? const Icon(Icons.play_arrow, color: text)
-                  : const Icon(Icons.volume_up_rounded, color: text),
-          onPressed: () async {
-            setTtsConfig();
-            flutterTts.setLanguage("ur-PK");
-            isSpeaking
-                ? flutterTts.pause()
-                : flutterTts.speak(widget.speakText);
-            setState(() {
-              started = true;
-              isSpeaking = !isSpeaking;
-            });
-            flutterTts.setCompletionHandler(() {
+        Padding(
+          padding:
+              EdgeInsets.symmetric(vertical: widget.vertPadding, horizontal: 5),
+          child: InkWell(
+            child: isSpeaking
+                ? Icon(Icons.pause,
+                    color: widget.iconColor, size: widget.iconSize)
+                : started
+                    ? Icon(Icons.play_arrow,
+                        color: widget.iconColor, size: widget.iconSize)
+                    : Icon(Icons.volume_up_rounded,
+                        color: widget.iconColor, size: widget.iconSize),
+            onTap: () async {
+              setTtsConfig();
+              flutterTts.setLanguage("ur-PK");
+              isSpeaking
+                  ? flutterTts.pause()
+                  : flutterTts.speak(widget.speakText);
               setState(() {
-                isSpeaking = false;
-                started = false;
+                started = true;
+                isSpeaking = !isSpeaking;
               });
-            });
-          },
-          color: text,
-          iconSize: largeFont,
+              flutterTts.setCompletionHandler(() {
+                setState(() {
+                  isSpeaking = false;
+                  started = false;
+                });
+              });
+            },
+          ),
         ),
 
         //stop button - only if speaking
         if (started) ...[
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12),
+            padding: EdgeInsets.symmetric(vertical: widget.vertPadding),
             child: InkWell(
-              child: const Icon(Icons.stop, color: text),
+              child: Icon(Icons.stop,
+                  color: widget.iconColor, size: widget.iconSize),
               onTap: () {
                 flutterTts.stop();
                 setState(() {

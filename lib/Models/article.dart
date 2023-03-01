@@ -8,6 +8,8 @@ class article {
   String content;
   String category;
   Link? link;
+  DateTime date;
+  // String date;
 
   article({
     required this.title,
@@ -15,6 +17,7 @@ class article {
     required this.content,
     this.category = "",
     this.link,
+    required this.date,
   });
 
   String toString() {

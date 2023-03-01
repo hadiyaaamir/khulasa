@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:khulasa/Controllers/api.dart';
-import 'package:khulasa/Models/summary.dart';
 import 'package:khulasa/Views/Entrance/button.dart';
 import 'package:khulasa/Views/Entrance/textfield.dart';
 import 'package:khulasa/Views/Summary/generatedSummary.dart';

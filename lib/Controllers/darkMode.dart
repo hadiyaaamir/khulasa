@@ -1,15 +1,43 @@
 import 'package:flutter/cupertino.dart';
+import 'package:khulasa/Models/colorTheme.dart';
+import 'package:khulasa/constants/colors.dart';
 
 class DarkMode extends ChangeNotifier {
-  bool darkMode = true;
+  bool isDarkMode = true;
 
-  void toLightMode() {
-    darkMode = false;
+  final ColorTheme _darkMode = ColorTheme(
+    background: blue,
+    primary: lightBlue,
+    secondary: darkBlue,
+    text: white,
+    text2: grey,
+    caution: red,
+  );
+
+  final ColorTheme _lightMode = ColorTheme(
+    background: lightBlue,
+    primary: white,
+    secondary: grey,
+    text: darkBlue,
+    text2: lightBlue,
+    caution: red,
+  );
+  // Color caution = red;
+
+  ColorTheme get mode => isDarkMode ? _darkMode : _lightMode;
+
+  void toggleMode() {
+    isDarkMode = !isDarkMode;
     notifyListeners();
   }
 
-  void toDarkMode() {
-    darkMode = true;
-    notifyListeners();
-  }
+  // void toLightMode() {
+  //   isDarkMode = false;
+  //   notifyListeners();
+  // }
+
+  // void toDarkMode() {
+  //   isDarkMode = true;
+  //   notifyListeners();
+  // }
 }

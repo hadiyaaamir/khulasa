@@ -1,11 +1,13 @@
 import 'dart:collection';
 
+import 'package:html/dom.dart';
 import 'package:html/parser.dart' as parser;
 import 'package:http/http.dart' as http;
 import 'package:khulasa/Controllers/dateFormat.dart';
 import 'package:khulasa/Models/article.dart';
 import 'package:khulasa/Models/link.dart';
 import 'package:khulasa/Models/source.dart';
+import 'package:khulasa/constants/sources.dart';
 
 class WebScraping {
   // List<String> fixedlink = [
@@ -13,18 +15,18 @@ class WebScraping {
   //   "https://urdu.arynews.tv/"
   // ];
 
-  List<Source> sources = [
-    Source(
-        source: 'Dawn News',
-        titleTag: 'story__link',
-        contentTag: 'story__content',
-        webLink: "https://www.dawnnews.tv/"),
-    Source(
-        source: 'ARY News',
-        titleTag: 'post-title',
-        contentTag: 'entry-content clearfix single-post-content',
-        webLink: "https://urdu.arynews.tv/"),
-  ];
+  // List<Source> sources = [
+  //   Source(
+  //       source: 'Dawn News',
+  //       titleTag: 'story__link',
+  //       contentTag: 'story__content',
+  //       webLink: "https://www.dawnnews.tv/"),
+  //   Source(
+  //       source: 'ARY News',
+  //       titleTag: 'tdb-title-text',
+  //       contentTag: 'tdb-block-inner td-fix-index',
+  //       webLink: "https://urdu.arynews.tv/"),
+  // ];
 
   Future<article> getArticleFromLink({
     required String source,
@@ -42,12 +44,9 @@ class WebScraping {
         String title = index != -1
             ? document.getElementsByClassName(sources[index].titleTag)[0].text
             : "";
-        String content = index != -1
-            ? sources[index].cleanedupArticle(
-                document.getElementsByClassName(sources[index].contentTag)[0])
-            : "";
+        String content = index != -1 ? sources[index].getArticle(document) : "";
         DateTime date =
-            index != -1 ? sources[index].getDate(document) : DateTime.now();
+            index != -1 ? sources[index].getDate(document) : DateTime(2001);
 
         return article(
           title: title,
@@ -76,13 +75,14 @@ class WebScraping {
     }
   }
 
-  Future<List<Link>> getLinksFromLink(String link, Source source) async {
+  Future<List<Link>> getLinksFromLink(Source source) async {
     final header = {
       "Access-Control-Allow-Origin": "*", // Required for CORS support to work
       "Access-Control-Allow-Credentials":
           "true", // Required for cookies, authorization headers with HTTPS
     };
-    final response = await http.Client().get(Uri.parse(link), headers: header);
+    final response =
+        await http.Client().get(Uri.parse(source.webLink), headers: header);
     List<Link> articleLinks = [];
     if (response.statusCode == 200) {
       var document = parser.parse(response.body);
@@ -93,9 +93,9 @@ class WebScraping {
           var l = element.attributes['href'].toString();
           // fixedlink.forEach((element) {
           //ary
-          if (link == "https://urdu.arynews.tv/" &&
-              l != link &&
-              l.startsWith(link) &&
+          if (source.source == "ARY News" &&
+              l != source.webLink &&
+              l.startsWith(source.webLink) &&
               !RegExp(r"https://urdu.arynews.tv/tag(.*)").hasMatch(l) &&
               !l.contains("category") &&
               !l.contains("prayer-timings") &&
@@ -108,13 +108,7 @@ class WebScraping {
           //dawn
           RegExp exp = RegExp(r"https://www.dawnnews.tv/news/(.*)",
               multiLine: true, caseSensitive: true);
-          if (link == "https://www.dawnnews.tv/" && exp.hasMatch(l)
-              //     l != link &&
-              //     l.startsWith(link) &&
-              //     !l.contains("authors") &&
-              //     !l.contains("watch-live") &&
-              //     l.contains("news")
-              ) {
+          if (source.source == "Dawn News" && exp.hasMatch(l)) {
             int index = articleLinks.indexWhere((element) => element.link == l);
             if (index == -1) {
               articleLinks.add(Link(link: l, source: source));

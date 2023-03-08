@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:khulasa/Controllers/darkMode.dart';
 import 'package:khulasa/Controllers/tts.dart';
+import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Views/Widgets/iconButtons.dart';
 import 'package:khulasa/Views/Widgets/labelIcon.dart';
-import 'package:khulasa/constants/colors.dart';
+import 'package:provider/provider.dart';
 import 'package:khulasa/constants/sizes.dart';
 
 class GeneratedSummary extends StatelessWidget {
@@ -13,6 +15,7 @@ class GeneratedSummary extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ColorTheme colors = context.watch<DarkMode>().mode;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
       child: Column(
@@ -23,10 +26,10 @@ class GeneratedSummary extends StatelessWidget {
               if (summaryText.isNotEmpty) ...[
                 Row(
                   children: [
-                    const Text(
+                    Text(
                       "Summary",
                       style: TextStyle(
-                          color: text,
+                          color: colors.text,
                           fontSize: largeFont,
                           fontWeight: FontWeight.bold),
                     ),
@@ -55,8 +58,8 @@ class GeneratedSummary extends StatelessWidget {
                     child: Text(
                       title!,
                       textAlign: TextAlign.right,
-                      style: const TextStyle(
-                        color: text,
+                      style: TextStyle(
+                        color: colors.text,
                         fontSize: headingFont,
                         fontWeight: FontWeight.bold,
                       ),
@@ -66,7 +69,7 @@ class GeneratedSummary extends StatelessWidget {
                 Text(
                   summaryText,
                   textAlign: TextAlign.right,
-                  style: const TextStyle(color: text, fontSize: buttonFont),
+                  style: TextStyle(color: colors.text, fontSize: buttonFont),
                 ),
               ],
             ),

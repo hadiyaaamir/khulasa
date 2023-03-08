@@ -6,6 +6,7 @@ import 'package:khulasa/Models/link.dart';
 import 'package:khulasa/Models/source.dart';
 import 'package:khulasa/Views/RSS/article.dart';
 import 'package:khulasa/constants/api.dart';
+import 'package:khulasa/constants/sources.dart';
 
 // ignore: camel_case_types
 class articleprovider extends ChangeNotifier {
@@ -76,11 +77,10 @@ class articleprovider extends ChangeNotifier {
 
   getArticles() async {
     List<Link> links = [];
-    List<Source> sources = WebScraping().sources;
     _articleList = [];
 
     for (var element in sources) {
-      var l = await WebScraping().getLinksFromLink(element.webLink, element);
+      var l = await WebScraping().getLinksFromLink(element);
       links.addAll(l);
     }
 

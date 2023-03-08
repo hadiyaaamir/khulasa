@@ -1,14 +1,13 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:khulasa/Controllers/darkMode.dart';
 import 'package:khulasa/Controllers/navigation.dart';
-import 'package:khulasa/Models/user.dart';
+import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Views/Entrance/button.dart';
-import 'package:khulasa/Views/Entrance/signup.dart';
 import 'package:khulasa/Views/Entrance/textfield.dart';
-import 'package:khulasa/Views/NavBar/AppBarPage.dart';
 import 'package:khulasa/Views/Options/option.dart';
 import 'package:khulasa/Views/apicall.dart';
-import 'package:khulasa/constants/colors.dart';
+import 'package:provider/provider.dart';
 
 final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -25,8 +24,9 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+    ColorTheme colors = context.watch<DarkMode>().mode;
     return Scaffold(
-      backgroundColor: background,
+      backgroundColor: colors.background,
       body: Center(
           child: Form(
         key: _formKey,
@@ -38,13 +38,16 @@ class _LoginState extends State<Login> {
               label: "Email",
               icon: Icons.email,
               controller: emailController,
+              allowEmpty: true,
               validate: (value) {
-                return (value == null ||
-                        value.isEmpty ||
-                        !value.contains('@') ||
-                        !value.contains('.'))
-                    ? 'Invalid Email'
-                    : null;
+                return
+                    // (value == null ||
+                    //         value.isEmpty ||
+                    //         !value.contains('@') ||
+                    //         !value.contains('.'))
+                    //     ? 'Invalid Email'
+                    //     :
+                    null;
               },
             ),
 
@@ -54,6 +57,7 @@ class _LoginState extends State<Login> {
               controller: passwordController,
               icon: Icons.password_rounded,
               password: true,
+              allowEmpty: true,
               validate: (value) {
                 return null;
               },
@@ -73,7 +77,7 @@ class _LoginState extends State<Login> {
             RichText(
                 text: TextSpan(
                     text: "Don't have an acount? Sign Up!",
-                    style: const TextStyle(color: text),
+                    style: TextStyle(color: colors.text),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
                         Navigation().navigation(context, const ApiCall());

@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:khulasa/Controllers/darkMode.dart';
+import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Views/NavBar/AppBarPage.dart';
 import 'package:khulasa/Views/Summary/linkSummary.dart';
 import 'package:khulasa/Views/Summary/textSummary.dart';
 import 'package:khulasa/constants/colors.dart';
 import 'package:khulasa/constants/sizes.dart';
+import 'package:provider/provider.dart';
 
 class Summary extends StatefulWidget {
   const Summary({super.key});
@@ -17,16 +20,16 @@ class Summary extends StatefulWidget {
 class _SummaryState extends State<Summary> {
   @override
   Widget build(BuildContext context) {
+    ColorTheme colors = context.watch<DarkMode>().mode;
     return Scaffold(
-       appBar: AppBar(
+      appBar: AppBar(
         title: Text(""),
-        backgroundColor: background,
+        backgroundColor: colors.background,
       ),
-     
-     drawer: Drawer(
-      child: Draw(),
-     ),
-      backgroundColor: background,
+      drawer: Drawer(
+        child: Draw(),
+      ),
+      backgroundColor: colors.background,
       body: Center(
         child: DefaultTabController(
           length: 2, // length of tabs
@@ -43,16 +46,16 @@ class _SummaryState extends State<Summary> {
                     color: Colors.white.withOpacity(0.0),
 
                     //This is for bottom border that is needed
-                    border: const Border(
-                      bottom: BorderSide(color: primary, width: 3),
+                    border: Border(
+                      bottom: BorderSide(color: colors.primary, width: 3),
                     ),
                   ),
-                  child: const TabBar(
+                  child: TabBar(
                       labelStyle: TextStyle(fontWeight: FontWeight.bold),
-                      labelColor: text,
-                      unselectedLabelColor: text2,
-                      tabs: [Tab(text: 'Text'), Tab(text: 'Link')],
-                      indicatorColor: text,
+                      labelColor: colors.text,
+                      unselectedLabelColor: colors.text2,
+                      tabs: const [Tab(text: 'Text'), Tab(text: 'Link')],
+                      indicatorColor: colors.text,
                       indicatorWeight: 3),
                 ),
               ),

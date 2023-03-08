@@ -1,8 +1,10 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:khulasa/Controllers/darkMode.dart';
 import 'package:khulasa/Controllers/navigation.dart';
 
 import 'package:khulasa/Controllers/usercontroller.dart';
+import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Models/user.dart';
 
 import 'package:khulasa/Models/user.dart';
@@ -11,7 +13,7 @@ import 'package:khulasa/Views/Entrance/button.dart';
 import 'package:khulasa/Views/Entrance/login.dart';
 import 'package:khulasa/Views/Entrance/textfield.dart';
 import 'package:khulasa/Views/Options/option.dart';
-import 'package:khulasa/constants/colors.dart';
+import 'package:provider/provider.dart';
 
 final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -30,8 +32,10 @@ class _SignUpState extends State<SignUp> {
 
   @override
   Widget build(BuildContext context) {
+    ColorTheme colors = context.watch<DarkMode>().mode;
+
     return Scaffold(
-      backgroundColor: background,
+      backgroundColor: colors.background,
       body: Center(
         child: Form(
           key: _formKey,
@@ -105,7 +109,7 @@ class _SignUpState extends State<SignUp> {
               RichText(
                   text: TextSpan(
                       text: "Already have an acount? Login!",
-                      style: const TextStyle(color: text),
+                      style: TextStyle(color: colors.text),
                       recognizer: TapGestureRecognizer()
                         ..onTap = () => {
                               Navigation().navigation(context, const Login()),

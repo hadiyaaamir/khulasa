@@ -14,15 +14,28 @@ class Source {
     required this.webLink,
   });
 
-  String cleanedupArticle(var article) {
+  // String cleanedupArticle(var article) {
+  //   if (source == 'ARY News') {
+  //     RegExp exp = RegExp(r"<img(.*)>", multiLine: true, caseSensitive: true);
+  //     String replace = article.text.replaceAll(exp, '');
+  //     exp = RegExp(r"Comments", multiLine: true, caseSensitive: true);
+  //     replace = replace.replaceAll(exp, '');
+  //     return replace;
+  //   }
+  //   return article.text;
+  // }
+
+  getArticle(Document document) {
     if (source == 'ARY News') {
-      RegExp exp = RegExp(r"<img(.*)>", multiLine: true, caseSensitive: true);
-      String replace = article.text.replaceAll(exp, '');
-      exp = RegExp(r"Comments", multiLine: true, caseSensitive: true);
-      replace = replace.replaceAll(exp, '');
-      return replace;
+      List paragraphs = document.getElementsByTagName('p');
+      String s = "";
+      for (var para in paragraphs) {
+        s += "${para.text}\n\n";
+      }
+      return s;
     }
-    return article.text;
+
+    return document.getElementsByClassName(contentTag)[0].text;
   }
 
   DateTime getDate(Document document) {
@@ -31,16 +44,9 @@ class Source {
           document.getElementsByClassName('story__time text-4')[0].text;
       return DateFormat().toDateTime(date);
     } else if (source == "ARY News") {
-      // var element = document
-      //     .getElementsByClassName('post-published updated')[0]
-      //     .firstChild;
-      // var text = element != null ? element.text : "";
-      // return text ?? "";
+      String date =
+          document.getElementsByTagName('time')[0].attributes['datetime'] ?? "";
 
-      String date = document
-              .getElementsByClassName('post-published updated')[0]
-              .attributes['datetime'] ??
-          "";
       if (date.isNotEmpty) {
         return DateTime.parse(date);
       }
@@ -49,6 +55,7 @@ class Source {
     return DateTime(2000);
   }
 
+  @override
   String toString() {
     return "{source: $source, weblink: $webLink, titleTag: $titleTag, contentTag: $contentTag}\n";
   }

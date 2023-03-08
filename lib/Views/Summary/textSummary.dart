@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:khulasa/Controllers/api.dart';
+import 'package:khulasa/Controllers/darkMode.dart';
+import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Views/Entrance/button.dart';
 import 'package:khulasa/Views/Entrance/textfield.dart';
 import 'package:khulasa/Views/Summary/generatedSummary.dart';
 import 'package:khulasa/Views/Summary/summarySize.dart';
 import 'package:khulasa/Views/Widgets/dropdown.dart';
 import 'package:khulasa/constants/api.dart';
-import 'package:khulasa/constants/colors.dart';
+import 'package:provider/provider.dart';
 import 'package:khulasa/constants/sizes.dart';
 
 class TextSummary extends StatefulWidget {
-  TextSummary({super.key});
+  const TextSummary({super.key});
 
   @override
   State<TextSummary> createState() => _TextSummaryState();
@@ -27,6 +29,8 @@ class _TextSummaryState extends State<TextSummary> {
 
   @override
   Widget build(BuildContext context) {
+    ColorTheme colors = context.watch<DarkMode>().mode;
+
     return SingleChildScrollView(
       child: Form(
         key: _summaryFormKey,
@@ -42,7 +46,7 @@ class _TextSummaryState extends State<TextSummary> {
               Btn(
                 label: "Attach file",
                 onPress: () {},
-                background: primary,
+                background: colors.primary,
                 height: 35,
                 width: 130,
                 icon: Icons.attach_file,

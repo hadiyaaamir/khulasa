@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:khulasa/Controllers/darkMode.dart';
 import 'package:khulasa/Controllers/navigation.dart';
+import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Models/savedSummary.dart';
 import 'package:khulasa/Views/NavBar/AppBarPage.dart';
 import 'package:khulasa/Views/Saved/savedSummary.dart';
-import 'package:khulasa/constants/colors.dart';
+import 'package:provider/provider.dart';
 import 'package:khulasa/constants/sizes.dart';
 
 class Saved extends StatefulWidget {
@@ -26,25 +28,26 @@ class _SavedState extends State<Saved> {
   ];
   @override
   Widget build(BuildContext context) {
+    ColorTheme colors = context.watch<DarkMode>().mode;
+
     return Scaffold(
-       appBar: AppBar(
+      appBar: AppBar(
         title: Text(""),
-        backgroundColor: background,
+        backgroundColor: colors.background,
       ),
-     
-     drawer: Drawer(
-      child: Draw(),
-     ),
-      backgroundColor: background,
+      drawer: Drawer(
+        child: Draw(),
+      ),
+      backgroundColor: colors.background,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
+            Text(
               "Saved Summaries",
               style: TextStyle(
                   fontSize: headingFont,
-                  color: text,
+                  color: colors.text,
                   fontWeight: FontWeight.bold),
             ),
             Expanded(
@@ -53,20 +56,20 @@ class _SavedState extends State<Saved> {
                     const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                 itemCount: items.length,
                 itemBuilder: (context, index) => Card(
-                  color: primary,
+                  color: colors.primary,
                   child: ListTile(
                     title: Text(
                       items[index].title,
-                      style: const TextStyle(
-                          color: secondary, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          color: colors.secondary, fontWeight: FontWeight.bold),
                     ),
                     subtitle: Text(
                       'Saved on: ${items[index].savedOn.day}/${items[index].savedOn.month}/${items[index].savedOn.year}',
-                      style: const TextStyle(color: secondary),
+                      style: TextStyle(color: colors.secondary),
                     ),
-                    trailing: const Icon(
+                    trailing: Icon(
                       Icons.keyboard_arrow_right_rounded,
-                      color: secondary,
+                      color: colors.secondary,
                     ),
                     onTap: () => Navigation().navigation(
                       context,

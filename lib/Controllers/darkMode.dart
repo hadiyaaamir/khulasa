@@ -15,11 +15,11 @@ class DarkMode extends ChangeNotifier {
   );
 
   final ColorTheme _lightMode = ColorTheme(
-    background: lightBlue,
+    background: veryLightBlue,
     primary: white,
-    secondary: grey,
-    text: darkBlue,
-    text2: lightBlue,
+    secondary: lightBlue,
+    text: blue,
+    text2: grey,
     caution: red,
   );
   // Color caution = red;

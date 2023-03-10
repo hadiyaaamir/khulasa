@@ -6,12 +6,14 @@ class Source {
   String titleTag;
   String contentTag;
   String webLink;
+  double rssSummaryRatio;
 
   Source({
     required this.source,
     required this.titleTag,
     required this.contentTag,
     required this.webLink,
+    required this.rssSummaryRatio,
   });
 
   // String cleanedupArticle(var article) {

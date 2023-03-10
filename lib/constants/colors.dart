@@ -7,6 +7,12 @@ const Color grey = Color(0xffA9AEB0);
 const Color red = Color(0xffA46666);
 const Color white = Color.fromRGBO(255, 255, 255, 1);
 
+//light theme specific palette
+const Color veryLightBlue = Color(0xffe1eef2);
+//button color 
+
+
+
 // const Color background = blue;
 // const Color primary = lightBlue;
 // const Color secondary = darkBlue;

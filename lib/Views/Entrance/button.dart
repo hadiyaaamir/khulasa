@@ -54,7 +54,7 @@ class Btn extends StatelessWidget {
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5.0),
-                  side: BorderSide(color: colors.secondary),
+                  // side: BorderSide(color: colors.secondary),
                 ),
               ),
             ),

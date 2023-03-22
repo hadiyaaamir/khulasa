@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+// import 'package:google_fonts/google_fonts.dart';
 
 import 'package:khulasa/Controllers/RSS/articleprovider.dart';
 import 'package:khulasa/Controllers/RSS/categoryprovider.dart';
@@ -19,7 +19,7 @@ import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp();
+  await Firebase.initializeApp();
 
   runApp(
     MultiProvider(providers: [
@@ -48,9 +48,9 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        textTheme: GoogleFonts.openSansTextTheme(
-          Theme.of(context).textTheme,
-        ),
+        // textTheme: GoogleFonts.openSansTextTheme(
+        //   Theme.of(context).textTheme,
+        // ),
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );

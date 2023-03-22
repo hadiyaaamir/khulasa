@@ -1,4 +1,11 @@
+// import 'dart:html';
+import 'dart:convert';
+
+import 'package:pdf_text/pdf_text.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:khulasa/Controllers/api.dart';
 import 'package:khulasa/Controllers/darkMode.dart';
 import 'package:khulasa/Models/colorTheme.dart';
@@ -10,6 +17,10 @@ import 'package:khulasa/Views/Widgets/dropdown.dart';
 import 'package:khulasa/constants/api.dart';
 import 'package:provider/provider.dart';
 import 'package:khulasa/constants/sizes.dart';
+import 'package:flutter_tesseract_ocr/flutter_tesseract_ocr.dart';
+
+import 'package:file_picker/file_picker.dart';
+import 'package:syncfusion_flutter_pdf/pdf.dart';
 
 class TextSummary extends StatefulWidget {
   const TextSummary({super.key});
@@ -29,7 +40,12 @@ class _TextSummaryState extends State<TextSummary> {
 
   @override
   Widget build(BuildContext context) {
+
     ColorTheme colors = context.watch<DarkMode>().mode;
+    bool scanning = false;
+    bool attach = false;
+    String extractedText = '';
+    XFile imagePicked;
 
     return SingleChildScrollView(
       child: Form(
@@ -37,16 +53,49 @@ class _TextSummaryState extends State<TextSummary> {
         child: Center(
           child: Column(
             children: [
-              textField(
-                label: "Enter text here",
-                controller: textController,
-                lines: 5,
-                textAlign: TextAlign.right,
-              ),
+              scanning == true
+                  ? textField(
+                      label: "Loading",
+                      controller: textController,
+                      lines: 5,
+                      textAlign: TextAlign.right,
+                      isLoading: true,
+                    )
+                  : textField(
+                      label: "Enter text here",
+                      controller: textController,
+                      lines: 5,
+                      textAlign: TextAlign.right,
+                    ),
               Btn(
                 label: "Attach file",
-                onPress: () {},
                 background: colors.primary,
+                onPress: () async {
+                  setState(() {
+                    scanning = true;
+                  });
+
+                  // var result = await ImagePicker()
+                  //     .pickImage(source: ImageSource.gallery);
+
+                  // if (result != null) {
+                  //   imagePicked = result;
+
+                  //   var p = imagePicked.path;
+                  //   extractedText =
+                  //       await TesseractOcr.extractText(p, language: 'urd'
+                  //       );
+                  // }
+
+                  String? extractedText = await getText();
+                  extractedText == null
+                      ? null
+                      : textController.text = extractedText;
+
+                  setState(() {
+                    scanning = false;
+                  });
+                },
                 height: 35,
                 width: 130,
                 icon: Icons.attach_file,
@@ -87,5 +136,41 @@ class _TextSummaryState extends State<TextSummary> {
         ),
       ),
     );
+  }
+
+  Future<String?> getText() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['jpg', 'pdf', 'png', 'docx', 'txt'],
+    );
+
+    if (result != null) {
+      PlatformFile file = result.files.first;
+      String? p = file.path;
+      //image using flutter tesseract ocr
+      if ((file.extension == 'png' || file.extension == 'jpg') && p != null) {
+        return await FlutterTesseractOcr.extractText(p, language: 'urd+eng');
+      } else if (file.extension == 'pdf' && p != null) {
+        // pdf reader using syncfusion flutter pdf
+        // final ByteData data = await rootBundle.load(p);
+        // PdfDocument document = PdfDocument(
+        //     inputBytes: data.buffer
+        //         .asUint8List(data.offsetInBytes, data.lengthInBytes));
+
+        PDFDoc doc = await PDFDoc.fromPath(p);
+        String text = await doc.text;
+        // List<int> bytes = text.codeUnits;
+        // PdfDocument document = PdfDocument(inputBytes: bytes);
+
+        // return PdfTextExtractor(document).extractText();
+        return doc.text;
+      } else if ((file.extension == 'docx' ||
+              file.extension ==
+                  'txt') && //text or docx file read string using rootbundle
+          p != null) {
+        return await rootBundle.loadString(p);
+      }
+    }
+    return null;
   }
 }

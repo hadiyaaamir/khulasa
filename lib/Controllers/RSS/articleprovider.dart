@@ -6,6 +6,7 @@ import 'package:khulasa/Models/link.dart';
 import 'package:khulasa/Models/source.dart';
 import 'package:khulasa/Views/RSS/article.dart';
 import 'package:khulasa/constants/api.dart';
+import 'package:khulasa/constants/sources.dart';
 
 // ignore: camel_case_types
 class articleprovider extends ChangeNotifier {
@@ -18,69 +19,21 @@ class articleprovider extends ChangeNotifier {
   List _articleList = [];
   List get articlesList => _articleList;
 
-  // final List<article> _article = [
-  //   article(
-  //       title: "سنسنی سے بھرپور گروپ مرحلے کے میچ بہت یاد آئیں گے",
-  //       summary:
-  //           "ہر روز ایسا لگتا ہے کہ اب اس سے زیادہ ڈراما کیا ہوسکتا ہے لیکن ہر دن فیفا ورلڈ کپ مجھے غلط ثابت کررہا ہے۔",
-  //       content:
-  //           " راؤنڈ آف 16 ہمارے لیے کیا حیرت انگیز مناظر لائے گا، اس کا انتظار بے صبری سے رہے گاراؤنڈ آف 16 ہمارے لیے کیا حیرت انگیز مناظر لائے گا، اس کا انتظار بے صبری سے رہے گاراؤنڈ آف 16 ہمارے لیے کیا حیرت انگیز مناظر لائے گا، اس کا انتظار بے صبری سے رہے گاراؤنڈ آف 16 ہمارے لیے کیا حیرت انگیز مناظر لائے گا، اس کا انتظار بے صبری سے رہے گاراؤنڈ آف 16 ہمارے لیے کیا حیرت انگیز مناظر لائے گا، اس کا انتظار بے صبری سے رہے گاراؤنڈ آف 16 ہمارے لیے کیا حیرت انگیز مناظر لائے گا، اس کا انتظار بے صبری سے رہے گارہا تھا جو جیت کے بالمی کپ کے یادگار لمحات ہیں۔ تمام ٹیموں کے راؤنڈ آف 16 کے میچ اب واضح ہو چکے ہیں۔ آج سے شروع ہونے والے راؤنڈ آف 16 ہمارے لیے کیا حیرت انگیز مناظر لائے گا، اس کا انتظار بے صبری سے رہے گا۔",
-  //       category: "sports"),
-  //   article(
-  //       title: "سنسنی سے بھرپور گروپ مرحلے کے میچ بہت یاد آئیں گے",
-  //       summary:
-  //           "ہر روز ایسا لگتا ہے کہ اب اس سے زیادہ ڈراما کیا ہوسکتا ہے لیکن ہر دن فیفا ورلڈ کپ مجھے غلط ثابت کررہا ہے۔",
-  //       content:
-  //           "ہر روز ایسا لگتا ہے کہ اب اس سے زیادہ ڈراما کیا ہوسکتا ہے لیکن ہر دن فیفا ورلڈ کپ مجھے غلط ثابت کررہا ہے۔",
-  //       category: "sports"),
-  //   article(
-  //       title: "سنسنی سے بھرپور گروپ مرحلے کے میچ بہت یاد آئیں گے",
-  //       summary:
-  //           "ہر روز ایسا لگتا ہے کہ اب اس سے زیادہ ڈراما کیا ہوسکتا ہے لیکن ہر دن فیفا ورلڈ کپ مجھے غلط ثابت کررہا ہے۔",
-  //       content:
-  //           "ہر روز ایسا لگتا ہے کہ اب اس سے زیادہ ڈراما کیا ہوسکتا ہے لیکن ہر دن فیفا ورلڈ کپ مجھے غلط ثابت کررہا ہے۔",
-  //       category: "sports"),
-  //   article(
-  //       title: "سنسنی سے بھرپور گروپ مرحلے کے میچ بہت یاد آئیں گے",
-  //       summary:
-  //           "ہر روز ایسا لگتا ہے کہ اب اس سے زیادہ ڈراما کیا ہوسکتا ہے لیکن ہر دن فیفا ورلڈ کپ مجھے غلط ثابت کررہا ہے۔",
-  //       content:
-  //           "ہر روز ایسا لگتا ہے کہ اب اس سے زیادہ ڈراما کیا ہوسکتا ہے لیکن ہر دن فیفا ورلڈ کپ مجھے غلط ثابت کررہا ہے۔",
-  //       category: "sports"),
-  //   article(
-  //       title: "سنسنی سے بھرپور گروپ مرحلے کے میچ بہت یاد آئیں گے",
-  //       summary:
-  //           "ہر روز ایسا لگتا ہے کہ اب اس سے زیادہ ڈراما کیا ہوسکتا ہے لیکن ہر دن فیفا ورلڈ کپ مجھے غلط ثابت کررہا ہے۔",
-  //       content:
-  //           "ہر روز ایسا لگتا ہے کہ اب اس سے زیادہ ڈراما کیا ہوسکتا ہے لیکن ہر دن فیفا ورلڈ کپ مجھے غلط ثابت کررہا ہے۔",
-  //       category: "sports"),
-  //   article(
-  //       title: "سنسنی سے بھرپور گروپ مرحلے کے میچ بہت یاد آئیں گے",
-  //       summary:
-  //           "ہر روز ایسا لگتا ہے کہ اب اس سے زیادہ ڈراما کیا ہوسکتا ہے لیکن ہر دن فیفا ورلڈ کپ مجھے غلط ثابت کررہا ہے۔",
-  //       content:
-  //           "ہر روز ایسا لگتا ہے کہ اب اس سے زیادہ ڈراما کیا ہوسکتا ہے لیکن ہر دن فیفا ورلڈ کپ مجھے غلط ثابت کررہا ہے۔",
-  //       category: "sports"),
-  //   article(
-  //       title: "سنسنی سے بھرپور گروپ مرحلے کے میچ بہت یاد آئیں گے",
-  //       summary:
-  //           "ہر روز ایسا لگتا ہے کہ اب اس سے زیادہ ڈراما کیا ہوسکتا ہے لیکن ہر دن فیفا ورلڈ کپ مجھے غلط ثابت کررہا ہے۔",
-  //       content:
-  //           "ہر روز ایسا لگتا ہے کہ اب اس سے زیادہ ڈراما کیا ہوسکتا ہے لیکن ہر دن فیفا ورلڈ کپ مجھے غلط ثابت کررہا ہے۔",
-  //       category: "sports"),
-  // ];
+  bool _isFinished = false;
+  bool get isFinished => _isFinished;
 
-  // getarticleList() {
-  //   return _article;
-  // } //update later
+  setFinished(bool finish) {
+    _isFinished = finish;
+    notifyListeners();
+  }
 
   getArticles() async {
     List<Link> links = [];
-    List<Source> sources = WebScraping().sources;
     _articleList = [];
+    setFinished(false);
 
     for (var element in sources) {
-      var l = await WebScraping().getLinksFromLink(element.webLink, element);
+      var l = await WebScraping().getLinksFromLink(element);
       links.addAll(l);
     }
 
@@ -93,11 +46,7 @@ class articleprovider extends ChangeNotifier {
             .generateSummary(
               algo: summaryType1,
               text: a.content,
-              ratio: a.link == null
-                  ? 0.1
-                  : a.link!.source.source == "Dawn News"
-                      ? 0.1
-                      : 0.2,
+              ratio: a.link == null ? 0.1 : a.link!.source.rssSummaryRatio,
             )
             .then((value) => {
                   a.summary =
@@ -108,6 +57,7 @@ class articleprovider extends ChangeNotifier {
         notifyListeners();
       }
     }
+    setFinished(true);
   }
 
   // int get count => _article.length;

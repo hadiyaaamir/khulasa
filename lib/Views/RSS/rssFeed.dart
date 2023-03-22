@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 
 import 'package:khulasa/Controllers/RSS/articleprovider.dart';
+import 'package:khulasa/Controllers/darkMode.dart';
 import 'package:khulasa/Controllers/dateFormat.dart';
 import 'package:khulasa/Controllers/navigation.dart';
 import 'package:khulasa/Models/article.dart';
+import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Views/NavBar/AppBarPage.dart';
 import 'package:khulasa/Views/RSS/article.dart';
+import 'package:khulasa/Views/RSS/searchbar.dart';
 import 'package:khulasa/Views/Widgets/iconButtons.dart';
 import 'package:khulasa/constants/colors.dart';
 import 'package:khulasa/constants/sizes.dart';
@@ -20,82 +23,141 @@ class RssFeed extends StatefulWidget {
 
 class _RssFeedState extends State<RssFeed> {
   bool isLoading = true;
+  List? artList;
+  int? count;
+
+  @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   artList = [];
+  //   count = artList.length;
+  // }
 
   @override
   Widget build(BuildContext context) {
-    List artList = context.watch<articleprovider>().articlesList;
+    List allArtList = context.watch<articleprovider>().articlesList;
+    bool isFinished = context.watch<articleprovider>().isFinished;
+    ColorTheme colors = context.watch<DarkMode>().mode;
 
-    artList.isEmpty ? isLoading = true : isLoading = false;
+    allArtList.isEmpty ? isLoading = true : isLoading = false;
+
+    // if(artList == null)
 
     return Scaffold(
-      backgroundColor: background,
+      backgroundColor: colors.background,
       appBar: AppBar(
         title: const Text("RSS Feed"),
         centerTitle: true,
-        backgroundColor: background,
+        backgroundColor: colors.background,
+        // actions: [
+        //   IconButton(
+        //       onPressed: () {
+        //         context.read<articleprovider>().getArticles();
+        //       },
+        //       icon: Icon(Icons.refresh))
+        // ],
       ),
       drawer: const Drawer(
         child: Draw(),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            isLoading
-                ? const CircularProgressIndicator(color: primary)
-                : Expanded(
+        child: isLoading
+            ? CircularProgressIndicator(color: colors.primary)
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SearchBar(
+                    setArtList: (List list) => artList = list,
+                    setItemCount: (int itemcount) => count = itemcount,
+                    allArtList: allArtList,
+                  ),
+                  // Text(count.toString()),
+                  Expanded(
                     child: ListView.builder(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 20, horizontal: 30),
-                      itemCount: artList.length,
+                      padding: const EdgeInsets.only(
+                          bottom: 20, left: 30, right: 30, top: 5),
+                      itemCount: count ?? allArtList.length,
                       itemBuilder: (context, index) => Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: Card(
-                          color: primary,
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                          ),
-                          child: ListTile(
-                            contentPadding: const EdgeInsets.symmetric(
-                                horizontal: 25, vertical: 30),
-                            title: Text(
-                              artList[index].title,
-                              textAlign: TextAlign.right,
-                              style: const TextStyle(
-                                color: secondary,
-                                fontWeight: FontWeight.w900,
-                                fontSize: headingFont,
+                        child: Column(
+                          children: [
+                            Card(
+                              color: colors.primary,
+                              shape: const RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10)),
                               ),
-                            ),
-                            subtitle: Column(
-                              children: [
-                                SourceLine(
-                                  source: artList[index].link.source.source,
-                                  date: DateFormat()
-                                      .formatDate(artList[index].date),
-                                  speakText: artList[index].summary,
-                                ),
-                                Text(
-                                  artList[index].summary,
+                              child: ListTile(
+                                contentPadding: const EdgeInsets.symmetric(
+                                    horizontal: 25, vertical: 30),
+                                title: Text(
+                                  artList == null
+                                      ? allArtList[index].title
+                                      : artList![index].title,
                                   textAlign: TextAlign.right,
-                                  style: const TextStyle(
-                                    color: text,
-                                    fontSize: buttonFont,
+                                  style: TextStyle(
+                                    color: colors.secondary,
+                                    fontWeight: FontWeight.w900,
+                                    fontSize: headingFont,
                                   ),
                                 ),
-                              ],
+                                subtitle: Column(
+                                  children: [
+                                    SourceLine(
+                                      source: artList == null
+                                          ? allArtList[index].link.source.source
+                                          : artList![index].link.source.source,
+                                      date: DateFormat().formatDate(
+                                          artList == null
+                                              ? allArtList[index].date
+                                              : artList![index].date),
+                                      speakText: artList == null
+                                          ? "${allArtList[index].title}.${allArtList[index].summary}"
+                                          : "${artList![index].title}.${artList![index].summary}",
+                                    ),
+                                    Text(
+                                      artList == null
+                                          ? allArtList[index].summary
+                                          : artList![index].summary,
+                                      textAlign: TextAlign.right,
+                                      style: TextStyle(
+                                        color: colors.text,
+                                        fontSize: buttonFont,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                onTap: () {
+                                  Navigation().navigation(
+                                      context,
+                                      Article(
+                                          art: artList == null
+                                              ? allArtList[index]
+                                              : artList![index]));
+                                },
+                              ),
                             ),
-                            onTap: () {
-                              Navigation().navigation(
-                                  context, Article(art: artList[index]));
-                            },
-                          ),
+                            // if (!isFinished &&
+                            //     index == allArtList.length - 1) ...[
+                            //   Padding(
+                            //     padding: EdgeInsets.only(top: 20),
+                            //     child: SizedBox(
+                            //       width: 25,
+                            //       height: 25,
+                            //       child: CircularProgressIndicator(
+                            //         color: colors.primary,
+                            //       ),
+                            //     ),
+                            //   )
+                            // ],
+                          ],
                         ),
                       ),
                     ),
                   )
-          ],
-        ),
+                ],
+              ),
       ),
     );
   }
@@ -115,23 +177,25 @@ class SourceLine extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ColorTheme colors = context.watch<DarkMode>().mode;
+
     return Padding(
       padding: const EdgeInsets.only(top: 15, bottom: 15),
       child: Column(
         children: [
-          const Divider(color: background, thickness: 1.2),
+          Divider(color: colors.background, thickness: 1.2),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SpeakIconButton(
                 speakText: speakText,
                 vertPadding: 0,
-                iconColor: background,
+                iconColor: colors.background,
               ),
-              Text('$source | $date', style: const TextStyle(color: text2)),
+              Text('$source | $date', style: TextStyle(color: colors.text2)),
             ],
           ),
-          const Divider(color: background, thickness: 1.2),
+          Divider(color: colors.background, thickness: 1.2),
         ],
       ),
     );

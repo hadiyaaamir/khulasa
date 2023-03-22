@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:khulasa/constants/colors.dart';
+import 'package:khulasa/Controllers/darkMode.dart';
+import 'package:khulasa/Models/colorTheme.dart';
+import 'package:provider/provider.dart';
 
 class textField extends StatelessWidget {
   const textField({
@@ -12,6 +14,8 @@ class textField extends StatelessWidget {
     this.lines = 1,
     this.paddingVert = 10,
     this.textAlign = TextAlign.left,
+
+    this.allowEmpty = false,
     this.isLoading = false,
   });
 
@@ -23,15 +27,18 @@ class textField extends StatelessWidget {
   final int lines;
   final double paddingVert;
   final TextAlign textAlign;
+
+  final bool allowEmpty;
   final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
+    ColorTheme colors = context.watch<DarkMode>().mode;
     return Padding(
         padding: EdgeInsets.symmetric(horizontal: 50, vertical: paddingVert),
         child: TextFormField(
           textAlign: textAlign,
-          cursorColor: text,
+          cursorColor: colors.text,
           autovalidateMode: AutovalidateMode.onUserInteraction,
           obscureText: password,
           controller: controller,
@@ -46,24 +53,22 @@ class textField extends StatelessWidget {
               borderRadius: BorderRadius.circular(5),
             ),
             filled: true,
-            fillColor: primary,
+            fillColor: colors.primary,
             // icon: Icon(icon, color: text),
             labelText: label,
-            labelStyle: const TextStyle(color: text),
+            labelStyle: TextStyle(color: colors.text),
           ),
           onSaved: (String? value) {
             // This optional block of code can be used to run
             // code when the user saves the form.
           },
           validator: (value) {
-            if (value != null && value.isEmpty) {
+            if (!allowEmpty && value != null && value.isEmpty) {
               return "Field cannot be empty";
             }
             return validate == null ? null : validate!(value);
           },
-          style: (const TextStyle(
-            color: text,
-          )),
+          style: (TextStyle(color: colors.text)),
         ));
   }
 }

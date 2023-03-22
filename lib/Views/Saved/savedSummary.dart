@@ -1,7 +1,8 @@
-
 import 'package:flutter/material.dart';
+import 'package:khulasa/Controllers/darkMode.dart';
+import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Models/savedSummary.dart';
-import 'package:khulasa/constants/colors.dart';
+import 'package:provider/provider.dart';
 import 'package:khulasa/constants/sizes.dart';
 
 class SavedSummary extends StatelessWidget {
@@ -10,8 +11,9 @@ class SavedSummary extends StatelessWidget {
   final savedSummary summary;
   @override
   Widget build(BuildContext context) {
+    ColorTheme colors = context.watch<DarkMode>().mode;
     return Scaffold(
-      backgroundColor: background,
+      backgroundColor: colors.background,
       body: Center(
         child: Column(
           children: [
@@ -22,24 +24,27 @@ class SavedSummary extends StatelessWidget {
                   padding: const EdgeInsets.fromLTRB(130, 0, 70, 0),
                   child: Text(
                     summary.title,
-                    style: const TextStyle(fontSize: headingFont, color: text, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        fontSize: headingFont,
+                        color: colors.text,
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
                 Row(children: [
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
                     child: Card(
-                      color: background,
+                      color: colors.background,
                       child: Column(
-                        children: const [
+                        children: [
                           Icon(
                             Icons.share_rounded,
-                            color: primary,
+                            color: colors.primary,
                           ),
                           Text(
                             'Share',
-                            style:
-                                TextStyle(fontSize: smallFont, color: primary),
+                            style: TextStyle(
+                                fontSize: smallFont, color: colors.primary),
                           )
                         ],
                       ),
@@ -48,17 +53,17 @@ class SavedSummary extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
                     child: Card(
-                      color: background,
+                      color: colors.background,
                       child: Column(
-                        children: const [
+                        children: [
                           Icon(
                             Icons.delete_forever,
-                            color: caution,
+                            color: colors.caution,
                           ),
                           Text(
                             'Delete',
-                            style:
-                                TextStyle(fontSize: smallFont, color: caution),
+                            style: TextStyle(
+                                fontSize: smallFont, color: colors.caution),
                           )
                         ],
                       ),
@@ -69,9 +74,9 @@ class SavedSummary extends StatelessWidget {
             ),
             Text(
               summary.summary,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: buttonFont,
-                color: text,
+                color: colors.text,
               ),
             )
           ],

@@ -7,13 +7,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:khulasa/Controllers/api.dart';
+import 'package:khulasa/Controllers/darkMode.dart';
+import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Views/Entrance/button.dart';
 import 'package:khulasa/Views/Entrance/textfield.dart';
 import 'package:khulasa/Views/Summary/generatedSummary.dart';
 import 'package:khulasa/Views/Summary/summarySize.dart';
 import 'package:khulasa/Views/Widgets/dropdown.dart';
 import 'package:khulasa/constants/api.dart';
-import 'package:khulasa/constants/colors.dart';
+import 'package:provider/provider.dart';
 import 'package:khulasa/constants/sizes.dart';
 import 'package:flutter_tesseract_ocr/flutter_tesseract_ocr.dart';
 
@@ -21,7 +23,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
 
 class TextSummary extends StatefulWidget {
-  TextSummary({super.key});
+  const TextSummary({super.key});
 
   @override
   State<TextSummary> createState() => _TextSummaryState();
@@ -38,6 +40,8 @@ class _TextSummaryState extends State<TextSummary> {
 
   @override
   Widget build(BuildContext context) {
+
+    ColorTheme colors = context.watch<DarkMode>().mode;
     bool scanning = false;
     bool attach = false;
     String extractedText = '';
@@ -65,6 +69,7 @@ class _TextSummaryState extends State<TextSummary> {
                     ),
               Btn(
                 label: "Attach file",
+                background: colors.primary,
                 onPress: () async {
                   setState(() {
                     scanning = true;
@@ -91,7 +96,6 @@ class _TextSummaryState extends State<TextSummary> {
                     scanning = false;
                   });
                 },
-                background: primary,
                 height: 35,
                 width: 130,
                 icon: Icons.attach_file,

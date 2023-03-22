@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:khulasa/constants/colors.dart';
+import 'package:khulasa/Controllers/darkMode.dart';
+import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/constants/sizes.dart';
+import 'package:provider/provider.dart';
 
 class Btn extends StatelessWidget {
   Btn({
@@ -10,8 +12,8 @@ class Btn extends StatelessWidget {
     this.width,
     this.font = buttonFont,
     this.height = buttonHeight,
-    this.foreground = text,
-    this.background = secondary,
+    this.foreground,
+    this.background,
     this.icon,
     this.paddingVert = 30,
     this.paddingHor = 50,
@@ -21,8 +23,8 @@ class Btn extends StatelessWidget {
   final Function() onPress;
   final String label;
   double font;
-  Color foreground;
-  Color background;
+  Color? foreground;
+  Color? background;
   double? width;
   double height;
   final IconData? icon;
@@ -32,6 +34,8 @@ class Btn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ColorTheme colors = context.watch<DarkMode>().mode;
+
     return Align(
       alignment: align,
       child: Padding(
@@ -43,12 +47,14 @@ class Btn extends StatelessWidget {
           child: ElevatedButton(
             onPressed: onPress,
             style: ButtonStyle(
-              foregroundColor: MaterialStateProperty.all<Color>(foreground),
-              backgroundColor: MaterialStateProperty.all<Color>(background),
+              foregroundColor:
+                  MaterialStateProperty.all<Color>(foreground ?? colors.text),
+              backgroundColor: MaterialStateProperty.all<Color>(
+                  background ?? colors.secondary),
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5.0),
-                  side: const BorderSide(color: secondary),
+                  // side: BorderSide(color: colors.secondary),
                 ),
               ),
             ),

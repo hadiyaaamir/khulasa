@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:khulasa/Controllers/darkMode.dart';
 import 'package:khulasa/Models/category.dart';
+import 'package:khulasa/Models/colorTheme.dart';
+import 'package:khulasa/Views/Entrance/login.dart';
 import 'package:khulasa/Views/NavBar/Toggle.dart';
 import 'package:khulasa/Views/RSS/categories.dart';
 import 'package:khulasa/Views/RSS/rssFeed.dart';
 import 'package:khulasa/Views/Saved/saved.dart';
 import 'package:khulasa/Views/Summary/summary.dart';
-import 'package:khulasa/constants/colors.dart';
 import 'package:khulasa/Controllers/navigation.dart';
 import 'package:khulasa/constants/sizes.dart';
+import 'package:provider/provider.dart';
 
 class Draw extends StatefulWidget {
   const Draw({super.key});
@@ -19,14 +22,10 @@ class Draw extends StatefulWidget {
 class _DrawState extends State<Draw> {
   @override
   Widget build(BuildContext context) {
+    ColorTheme colors = context.watch<DarkMode>().mode;
+
     return Drawer(
-      //  Scaffold(
-      //   appBar: AppBar(
-
-      //   backgroundColor: background,
-      //   ),
-
-      backgroundColor: primary,
+      backgroundColor: colors.primary,
       width: screenWidth / 3 + 11,
       child: ListView(
         // Important: Remove any padding from the ListView.
@@ -35,49 +34,49 @@ class _DrawState extends State<Draw> {
         ),
 
         children: [
-          const DrawerHeader(
+          DrawerHeader(
             decoration: BoxDecoration(
-              color: primary,
+              color: colors.primary,
             ),
-            child: ToggleButton(),
+            child: const ToggleButton(),
 
             //toggle button here
           ),
           ListTile(
-            title: const Text('RSS feed',
+            title: Text('RSS feed',
                 style: TextStyle(
                   fontSize: buttonFont,
-                  color: text,
+                  color: colors.text,
                 )),
             onTap: () {
               Navigation().navigationReplace(context, const RssFeed());
             },
           ),
           ListTile(
-            title: const Text('Summary',
+            title: Text('Summary',
                 style: TextStyle(
                   fontSize: buttonFont,
-                  color: text,
+                  color: colors.text,
                 )),
             onTap: () {
               Navigation().navigationReplace(context, const Summary());
             },
           ),
           ListTile(
-            title: const Text('Saved',
+            title: Text('Saved',
                 style: TextStyle(
                   fontSize: buttonFont,
-                  color: text,
+                  color: colors.text,
                 )),
             onTap: () {
               Navigation().navigationReplace(context, const Saved());
             },
           ),
           ListTile(
-            title: const Text('Settings',
+            title: Text('Settings',
                 style: TextStyle(
                   fontSize: buttonFont,
-                  color: text,
+                  color: colors.text,
                 )),
             onTap: () {
               Navigator.pop(context);
@@ -86,13 +85,13 @@ class _DrawState extends State<Draw> {
           Padding(
             padding: EdgeInsets.only(top: screenHeight / 3),
             child: ListTile(
-              title: const Text('Logout',
+              title: Text('Logout',
                   style: TextStyle(
                     fontSize: buttonFont,
-                    color: secondary,
+                    color: colors.secondary,
                   )),
               onTap: () {
-                Navigator.pop(context);
+                Navigation().navigationReplace(context, const Login());
               },
             ),
           ),

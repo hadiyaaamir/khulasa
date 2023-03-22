@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:khulasa/constants/colors.dart';
+import 'package:khulasa/Controllers/darkMode.dart';
+import 'package:khulasa/Models/colorTheme.dart';
+import 'package:provider/provider.dart';
 import 'package:khulasa/constants/sizes.dart';
 
 class Dropdown extends StatefulWidget {
@@ -32,6 +34,7 @@ class _DropdownState extends State<Dropdown> {
 
   @override
   Widget build(BuildContext context) {
+    ColorTheme colors = context.watch<DarkMode>().mode;
     List<String> categories = widget.categories;
 
     Object? _category;
@@ -43,15 +46,15 @@ class _DropdownState extends State<Dropdown> {
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
-          color: primary,
+          color: colors.primary,
         ),
         child: DropdownButtonFormField(
-          dropdownColor: primary,
-          icon: const Icon(Icons.keyboard_arrow_down, color: text),
+          dropdownColor: colors.primary,
+          icon: Icon(Icons.keyboard_arrow_down, color: colors.text),
           items: categories.map((String category) {
             return DropdownMenuItem(
               value: category,
-              child: Text(category, style: const TextStyle(color: text)),
+              child: Text(category, style: TextStyle(color: colors.text)),
             );
           }).toList(),
           onChanged: (newValue) {
@@ -71,7 +74,7 @@ class _DropdownState extends State<Dropdown> {
           value: _category,
           decoration: InputDecoration(
             hintText: widget.label,
-            hintStyle: const TextStyle(color: text),
+            hintStyle: TextStyle(color: colors.text),
             focusedBorder:
                 const UnderlineInputBorder(borderSide: BorderSide.none),
             border: const UnderlineInputBorder(borderSide: BorderSide.none),

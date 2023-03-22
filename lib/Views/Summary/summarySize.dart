@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-
-import 'package:khulasa/constants/colors.dart';
+import 'package:khulasa/Controllers/darkMode.dart';
+import 'package:khulasa/Models/colorTheme.dart';
+import 'package:provider/provider.dart';
 import 'package:khulasa/constants/sizes.dart';
 
 class SummarySize extends StatefulWidget {
@@ -19,6 +20,8 @@ class _SummarySizeState extends State<SummarySize> {
 
   @override
   Widget build(BuildContext context) {
+    ColorTheme colors = context.watch<DarkMode>().mode;
+
     if (widget.setSize != null) widget.setSize!(size);
 
     return Padding(
@@ -26,19 +29,19 @@ class _SummarySizeState extends State<SummarySize> {
       child: Container(
         padding: const EdgeInsets.only(right: 10),
         decoration: BoxDecoration(
-          border: Border.all(color: primary, width: 2),
+          border: Border.all(color: colors.primary, width: 2),
           borderRadius: BorderRadius.circular(5),
         ),
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            const Align(
+            Align(
               alignment: Alignment.centerLeft,
               child: Padding(
-                padding: EdgeInsets.only(left: 10, top: 10),
+                padding: const EdgeInsets.only(left: 10, top: 10),
                 child: Text(
                   'Summary Size',
-                  style: TextStyle(color: text, fontSize: buttonFont),
+                  style: TextStyle(color: colors.text, fontSize: buttonFont),
                 ),
               ),
             ),
@@ -52,9 +55,9 @@ class _SummarySizeState extends State<SummarySize> {
                     onChanged: (value) {
                       setState(() => size = value.toString());
                     },
-                    fillColor: MaterialStateProperty.all<Color>(text2),
+                    fillColor: MaterialStateProperty.all<Color>(colors.text2),
                   ),
-                  const Text("Short", style: TextStyle(color: text2))
+                  Text("Short", style: TextStyle(color: colors.text2))
                 ]),
                 Row(children: [
                   Radio(
@@ -63,9 +66,9 @@ class _SummarySizeState extends State<SummarySize> {
                     onChanged: (value) {
                       setState(() => size = value.toString());
                     },
-                    fillColor: MaterialStateProperty.all<Color>(text2),
+                    fillColor: MaterialStateProperty.all<Color>(colors.text2),
                   ),
-                  const Text("Medium", style: TextStyle(color: text2))
+                  Text("Medium", style: TextStyle(color: colors.text2))
                 ]),
                 Row(
                   children: [
@@ -75,9 +78,9 @@ class _SummarySizeState extends State<SummarySize> {
                       onChanged: (value) {
                         setState(() => size = value.toString());
                       },
-                      fillColor: MaterialStateProperty.all<Color>(text2),
+                      fillColor: MaterialStateProperty.all<Color>(colors.text2),
                     ),
-                    const Text("Long", style: TextStyle(color: text2))
+                    Text("Long", style: TextStyle(color: colors.text2))
                   ],
                 ),
               ],

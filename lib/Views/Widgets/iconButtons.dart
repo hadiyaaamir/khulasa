@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:khulasa/Controllers/darkMode.dart';
 import 'package:khulasa/Controllers/tts.dart';
+import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Views/Widgets/labelIcon.dart';
-import 'package:khulasa/constants/colors.dart';
+import 'package:provider/provider.dart';
 import 'package:khulasa/constants/sizes.dart';
 
 class SpeakIconButton extends StatefulWidget {
@@ -9,13 +11,13 @@ class SpeakIconButton extends StatefulWidget {
     super.key,
     required this.speakText,
     this.vertPadding = 12,
-    this.iconColor = text,
+    this.iconColor,
     this.iconSize = iconRegular,
   });
 
   final String speakText;
   final double vertPadding;
-  final Color iconColor;
+  final Color? iconColor;
   final double iconSize;
 
   @override
@@ -28,6 +30,8 @@ class _SpeakIconButtonState extends State<SpeakIconButton> {
 
   @override
   Widget build(BuildContext context) {
+    ColorTheme colors = context.watch<DarkMode>().mode;
+
     return Wrap(
       spacing: 0,
       children: [
@@ -37,12 +41,15 @@ class _SpeakIconButtonState extends State<SpeakIconButton> {
           child: InkWell(
             child: isSpeaking
                 ? Icon(Icons.pause,
-                    color: widget.iconColor, size: widget.iconSize)
+                    color: widget.iconColor ?? colors.text,
+                    size: widget.iconSize)
                 : started
                     ? Icon(Icons.play_arrow,
-                        color: widget.iconColor, size: widget.iconSize)
+                        color: widget.iconColor ?? colors.text,
+                        size: widget.iconSize)
                     : Icon(Icons.volume_up_rounded,
-                        color: widget.iconColor, size: widget.iconSize),
+                        color: widget.iconColor ?? colors.text,
+                        size: widget.iconSize),
             onTap: () async {
               setTtsConfig();
               flutterTts.setLanguage("ur-PK");
@@ -69,7 +76,8 @@ class _SpeakIconButtonState extends State<SpeakIconButton> {
             padding: EdgeInsets.symmetric(vertical: widget.vertPadding),
             child: InkWell(
               child: Icon(Icons.stop,
-                  color: widget.iconColor, size: widget.iconSize),
+                  color: widget.iconColor ?? colors.text,
+                  size: widget.iconSize),
               onTap: () {
                 flutterTts.stop();
                 setState(() {

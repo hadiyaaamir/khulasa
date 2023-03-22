@@ -10,14 +10,8 @@ import 'package:firebase_core/firebase_core.dart';
 
 import 'package:khulasa/Controllers/darkMode.dart';
 import 'package:khulasa/Controllers/languageprovider.dart';
-
-import 'package:khulasa/Controllers/RSS/articleprovider.dart';
-import 'package:khulasa/Controllers/RSS/categoryprovider.dart';
-
-import 'package:khulasa/Controllers/darkMode.dart';
-import 'package:khulasa/Controllers/languageprovider.dart';
-
 import 'package:khulasa/Controllers/navigation.dart';
+import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Views/Entrance/login.dart';
 import 'package:khulasa/constants/colors.dart';
 import 'package:khulasa/constants/sizes.dart';
@@ -91,11 +85,12 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: background,
+    ColorTheme colors = context.watch<DarkMode>().mode;
+    return Scaffold(
+      backgroundColor: colors.background,
       body: Center(
           child: (Text("خلاصہ",
-              style: TextStyle(color: text, fontSize: titleFont)))),
+              style: TextStyle(color: colors.text, fontSize: titleFont)))),
     );
   }
 }

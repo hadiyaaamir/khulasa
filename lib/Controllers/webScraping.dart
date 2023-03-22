@@ -10,24 +10,6 @@ import 'package:khulasa/Models/source.dart';
 import 'package:khulasa/constants/sources.dart';
 
 class WebScraping {
-  // List<String> fixedlink = [
-  //   "https://www.dawnnews.tv/",
-  //   "https://urdu.arynews.tv/"
-  // ];
-
-  // List<Source> sources = [
-  //   Source(
-  //       source: 'Dawn News',
-  //       titleTag: 'story__link',
-  //       contentTag: 'story__content',
-  //       webLink: "https://www.dawnnews.tv/"),
-  //   Source(
-  //       source: 'ARY News',
-  //       titleTag: 'tdb-title-text',
-  //       contentTag: 'tdb-block-inner td-fix-index',
-  //       webLink: "https://urdu.arynews.tv/"),
-  // ];
-
   Future<article> getArticleFromLink({
     required String source,
     required String link,
@@ -41,9 +23,7 @@ class WebScraping {
       try {
         //Scraping the first article title
         int index = sources.indexWhere((element) => element.source == source);
-        String title = index != -1
-            ? document.getElementsByClassName(sources[index].titleTag)[0].text
-            : "";
+        String title = index != -1 ? sources[index].getTitle(document) : "";
         String content = index != -1 ? sources[index].getArticle(document) : "";
         DateTime date =
             index != -1 ? sources[index].getDate(document) : DateTime(2001);
@@ -83,6 +63,7 @@ class WebScraping {
     };
     final response =
         await http.Client().get(Uri.parse(source.webLink), headers: header);
+
     List<Link> articleLinks = [];
     if (response.statusCode == 200) {
       var document = parser.parse(response.body);
@@ -91,30 +72,13 @@ class WebScraping {
         var links = document.getElementsByTagName('a');
         links.forEach((element) {
           var l = element.attributes['href'].toString();
-          // fixedlink.forEach((element) {
-          //ary
-          if (source.source == "ARY News" &&
-              l != source.webLink &&
-              l.startsWith(source.webLink) &&
-              !RegExp(r"https://urdu.arynews.tv/tag(.*)").hasMatch(l) &&
-              !l.contains("category") &&
-              !l.contains("prayer-timings") &&
-              !l.contains("latest-news")) {
+
+          if (source.isArticleLink(l)) {
             int index = articleLinks.indexWhere((element) => element.link == l);
             if (index == -1) {
               articleLinks.add(Link(link: l, source: source));
             }
           }
-          //dawn
-          RegExp exp = RegExp(r"https://www.dawnnews.tv/news/(.*)",
-              multiLine: true, caseSensitive: true);
-          if (source.source == "Dawn News" && exp.hasMatch(l)) {
-            int index = articleLinks.indexWhere((element) => element.link == l);
-            if (index == -1) {
-              articleLinks.add(Link(link: l, source: source));
-            }
-          }
-          // });
         });
 
         return articleLinks;

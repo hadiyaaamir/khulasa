@@ -6,14 +6,23 @@ class Source {
   String titleTag;
   String contentTag;
   String webLink;
+  String dateTag;
   double rssSummaryRatio;
+
+  String titleTagType;
+  String dateTagType;
+  String attributeName;
 
   Source({
     required this.source,
     required this.titleTag,
     required this.contentTag,
+    required this.dateTag,
     required this.webLink,
     required this.rssSummaryRatio,
+    this.titleTagType = '',
+    this.dateTagType = 'class',
+    this.attributeName = '',
   });
 
   // String cleanedupArticle(var article) {
@@ -27,8 +36,15 @@ class Source {
   //   return article.text;
   // }
 
+  getTitle(Document document) {
+    if (titleTagType == 'tag') {
+      return document.getElementsByTagName(titleTag)[0].text;
+    }
+    return document.getElementsByClassName(titleTag)[0].text;
+  }
+
   getArticle(Document document) {
-    if (source == 'ARY News') {
+    if (contentTag == 'p') {
       List paragraphs = document.getElementsByTagName('p');
       String s = "";
       for (var para in paragraphs) {
@@ -41,20 +57,93 @@ class Source {
   }
 
   DateTime getDate(Document document) {
-    if (source == "Dawn News") {
-      String date =
-          document.getElementsByClassName('story__time text-4')[0].text;
+    if (dateTagType == 'temp-noDate') {
+      return DateTime(1990);
+    }
+
+    if (dateTagType == 'class') {
+      String date = "";
+      // if (source == 'Jang') {
+      //   date = document.getElementsByClassName(dateTag)[2].text;
+      // } else {
+      date = document.getElementsByClassName(dateTag)[0].text;
+      // }
+
       return DateFormat().toDateTime(date);
-    } else if (source == "ARY News") {
+    }
+
+    //get by attribute
+    else if (dateTagType == 'attribute-tag') {
       String date =
-          document.getElementsByTagName('time')[0].attributes['datetime'] ?? "";
+          document.getElementsByTagName(dateTag)[0].attributes[attributeName] ??
+              "";
 
       if (date.isNotEmpty) {
-        return DateTime.parse(date);
+        DateTime d = DateTime.parse(date);
+        return DateTime(d.year, d.month, d.day);
       }
       return DateTime(2000);
     }
+
+    //get by attribute inside class
+    else if (dateTagType == 'attribute-class') {
+      String date = document
+              .getElementsByClassName(dateTag)[0]
+              .attributes[attributeName] ??
+          "";
+
+      if (date.isNotEmpty) {
+        DateTime d = DateTime.parse(date);
+        return DateTime(d.year, d.month, d.day);
+      }
+      return DateTime(2000);
+    }
+
     return DateTime(2000);
+  }
+
+  //verify if link is of article
+
+  bool isArticleLink(String l) {
+    //dawn
+    if (source == 'Dawn News') {
+      RegExp exp = RegExp(r"https://www.dawnnews.tv/news/(.*)",
+          multiLine: true, caseSensitive: true);
+      return exp.hasMatch(l);
+    }
+
+    //ary
+    if (source == 'ARY News') {
+      return l != webLink &&
+          l.startsWith(webLink) &&
+          !RegExp(r"https://urdu.arynews.tv/tag(.*)").hasMatch(l) &&
+          !l.contains("category") &&
+          !l.contains("prayer-timings") &&
+          !l.contains("latest-news");
+    }
+
+    //jang
+    if (source == 'Jang') {
+      RegExp exp = RegExp(r"https://jang.com.pk/news/(.*)",
+          multiLine: true, caseSensitive: true);
+      return exp.hasMatch(l);
+    }
+
+    //express
+    if (source == 'Express News') {
+      RegExp exp = RegExp(r"https://www.express.pk/story/(.*)",
+          multiLine: true, caseSensitive: true);
+      return exp.hasMatch(l) && !l.contains('comments');
+    }
+
+    //nawaiwaqt
+    if (source == 'Nawaiwaqt') {
+      RegExp exp = RegExp(r"https://www.nawaiwaqt.com.pk/(\d+)",
+          multiLine: true, caseSensitive: true);
+      return exp.hasMatch(l);
+    }
+
+    return false;
   }
 
   @override

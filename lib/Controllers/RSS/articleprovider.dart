@@ -27,6 +27,19 @@ class articleprovider extends ChangeNotifier {
     notifyListeners();
   }
 
+  addByDate(article a) {
+    articlesList.add(a);
+
+    for (int i = articlesList.length - 1; i > 0; i--) {
+      if (a.isNewerThan(articlesList[i - 1])) {
+        //swap
+        article temp = articlesList[i - 1];
+        articlesList[i - 1] = a;
+        articlesList[i] = temp;
+      }
+    }
+  }
+
   getArticles() async {
     List<Link> links = [];
     _articleList = [];
@@ -51,7 +64,7 @@ class articleprovider extends ChangeNotifier {
             .then((value) => {
                   a.summary =
                       value.summary.isNotEmpty ? value.summary : a.content,
-                  _articleList.add(a),
+                  addByDate(a),
                   notifyListeners(),
                 });
         notifyListeners();

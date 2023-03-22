@@ -7,6 +7,7 @@ import 'package:khulasa/Views/Summary/generatedSummary.dart';
 import 'package:khulasa/Views/Summary/summarySize.dart';
 import 'package:khulasa/Views/Widgets/dropdown.dart';
 import 'package:khulasa/constants/api.dart';
+import 'package:khulasa/constants/sources.dart';
 
 class LinkSummary extends StatefulWidget {
   LinkSummary({super.key});
@@ -39,7 +40,7 @@ class _LinkSummaryState extends State<LinkSummary> {
             children: [
               Dropdown(
                 label: "Select Source",
-                categories: ["Youtube", "Dawn News", "ARY News"],
+                categories: sources.map((source) => source.source).toList(),
                 setAlgo: (source) => website = source,
               ),
               textField(
@@ -65,6 +66,8 @@ class _LinkSummaryState extends State<LinkSummary> {
                         link: linkController.text,
                         source: website,
                       );
+
+                      print(article);
 
                       await Api()
                           .generateSummary(

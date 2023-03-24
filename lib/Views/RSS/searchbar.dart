@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:khulasa/Controllers/darkMode.dart';
+import 'package:khulasa/Models/article.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:provider/provider.dart';
 
@@ -42,11 +43,22 @@ class _SearchBarState extends State<SearchBar> {
       padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
       child: TextField(
         controller: _searchController,
+        textAlign: TextAlign.right,
         onChanged: (value) {
           print(value);
           final suggestions = widget.allArtList.where((art) {
-            return art.title.contains(value.toString()) ||
-                art.content.contains(value.toString());
+            return art.title
+                    .toString()
+                    .toLowerCase()
+                    .contains(value.toString().toLowerCase()) ||
+                art.content
+                    .toString()
+                    .toLowerCase()
+                    .contains(value.toString().toLowerCase()) ||
+                art.link.source.source
+                    .toString()
+                    .toLowerCase()
+                    .contains(value.toString().toLowerCase());
           }).toList();
 
           setState(() {
@@ -60,9 +72,9 @@ class _SearchBarState extends State<SearchBar> {
 
         //inner styles
         decoration: InputDecoration(
-          hintText: "Search Feed",
+          hintText: "تلاش کریں", //"Search Feed",
           hintStyle: TextStyle(color: colors.text2),
-          prefixIcon: Icon(Icons.search, color: colors.secondary),
+          suffixIcon: Icon(Icons.search, color: colors.secondary),
           filled: true,
           fillColor: colors.primary,
 

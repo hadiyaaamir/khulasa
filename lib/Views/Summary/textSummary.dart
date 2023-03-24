@@ -76,7 +76,9 @@ class _TextSummaryState extends State<TextSummary> {
                       ratio: ratio,
                     );
 
-                    summaryText = summary.summary;
+                    summaryText = summary.summary.isNotEmpty
+                        ? summary.summary
+                        : textController.text;
                     setState(() {});
                   }
                 },

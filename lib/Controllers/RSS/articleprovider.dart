@@ -36,6 +36,8 @@ class articleprovider extends ChangeNotifier {
         article temp = articlesList[i - 1];
         articlesList[i - 1] = a;
         articlesList[i] = temp;
+      } else {
+        break;
       }
     }
   }
@@ -61,9 +63,22 @@ class articleprovider extends ChangeNotifier {
               text: a.content,
               ratio: a.link == null ? 0.1 : a.link!.source.rssSummaryRatio,
             )
-            .then((value) => {
-                  a.summary =
-                      value.summary.isNotEmpty ? value.summary : a.content,
+            .then((value) async => {
+                  a.summary = value.summary,
+                  if (a.summary.isEmpty)
+                    {
+                      await Api()
+                          .generateSummary(
+                            algo: summaryType1,
+                            text: a.content,
+                            ratio: a.link == null
+                                ? 0.1
+                                : (a.link!.source.rssSummaryRatio + 0.1),
+                          )
+                          .then((value) => a.summary = value.summary.isNotEmpty
+                              ? value.summary
+                              : a.content)
+                    },
                   addByDate(a),
                   notifyListeners(),
                 });

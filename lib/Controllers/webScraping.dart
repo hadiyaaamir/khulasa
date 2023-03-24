@@ -74,6 +74,7 @@ class WebScraping {
           var l = element.attributes['href'].toString();
 
           if (source.isArticleLink(l)) {
+            l = source.constructProperLink(l);
             int index = articleLinks.indexWhere((element) => element.link == l);
             if (index == -1) {
               articleLinks.add(Link(link: l, source: source));

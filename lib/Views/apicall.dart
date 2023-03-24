@@ -51,25 +51,26 @@ class _ApiCallState extends State<ApiCall> {
                 // links = [];
 
                 final response = await http.Client().get(
-                    Uri.parse('https://jang.com.pk/news/1207385'),
+                    Uri.parse('https://www.bbc.com/urdu/articles/cye4d894px3o'),
                     headers: {'User-Agent': 'Mozilla/5.0'});
                 if (response.statusCode == 200) {
                   var document = parser.parse(response.body);
 
-                  int index =
-                      sources.indexWhere((element) => element.source == 'Jang');
+                  int index = sources
+                      .indexWhere((element) => element.source == 'BBC Urdu');
 
                   String title =
                       index != -1 ? sources[index].getTitle(document) : "";
 
                   String content =
+                      // sources[index].getArticle(document)
                       index != -1 ? sources[index].getArticle(document) : "";
 
                   // DateTime date = index != -1
                   //     ? sources[3].getDate(document)
                   //     : DateTime(2001);
                   article = content;
-                  // print(date);
+                  print(content);
                   setState(() {});
                 }
 
@@ -91,8 +92,11 @@ class _ApiCallState extends State<ApiCall> {
 
             //display article
             if (article != null) ...[
-              Column(
-                children: [Text(article)],
+              SizedBox(
+                height: article.isNotEmpty ? 500 : 0,
+                child: SingleChildScrollView(
+                  child: Text(article),
+                ),
               ),
             ],
 

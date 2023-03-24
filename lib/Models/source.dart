@@ -143,7 +143,32 @@ class Source {
       return exp.hasMatch(l);
     }
 
+    //jasarat
+    if (source == 'Jasarat') {
+      RegExp exp = RegExp(r"https://www.jasarat.com/(\d+)/(\d+)/(\d+)/(.*)",
+          multiLine: true, caseSensitive: true);
+      return exp.hasMatch(l);
+      // return true;
+    }
+
+    //bbc urdu
+    if (source == 'BBC Urdu') {
+      RegExp exp = RegExp(r"https://www.bbc.com/urdu/articles/(.*)",
+          multiLine: true, caseSensitive: true);
+      RegExp exp2 =
+          RegExp(r"/urdu/articles/(.*)", multiLine: true, caseSensitive: true);
+      return exp.hasMatch(l) || exp2.hasMatch(l);
+    }
+
     return false;
+  }
+
+  constructProperLink(String l) {
+    if (source == 'BBC Urdu' && !l.contains(webLink)) {
+      var arr = l.split('urdu');
+      return webLink + arr[1];
+    }
+    return l;
   }
 
   @override

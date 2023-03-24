@@ -50,27 +50,33 @@ class _ApiCallState extends State<ApiCall> {
               onPressed: () async {
                 // links = [];
 
+                //web scraping
                 final response = await http.Client().get(
-                    Uri.parse('https://www.bbc.com/urdu/articles/cye4d894px3o'),
+                    Uri.parse(
+                        'https://www.nawaiwaqt.com.pk/23-Mar-2023/1694837'),
                     headers: {'User-Agent': 'Mozilla/5.0'});
                 if (response.statusCode == 200) {
                   var document = parser.parse(response.body);
 
                   int index = sources
-                      .indexWhere((element) => element.source == 'BBC Urdu');
+                      .indexWhere((element) => element.source == 'Nawaiwaqt');
 
-                  String title =
-                      index != -1 ? sources[index].getTitle(document) : "";
+                  // String title =
+                  //     index != -1 ? sources[index].getTitle(document) : "";
 
-                  String content =
-                      // sources[index].getArticle(document)
-                      index != -1 ? sources[index].getArticle(document) : "";
+                  // String content =
+                  //     // sources[index].getArticle(document)
+                  //     index != -1 ? sources[index].getArticle(document) : "";
 
-                  // DateTime date = index != -1
-                  //     ? sources[3].getDate(document)
-                  //     : DateTime(2001);
-                  article = content;
-                  print(content);
+                  // String date = document
+                  //     .getElementsByClassName(sources[index].dateTag)[2]
+                  //     .text;
+
+                  DateTime date = index != -1
+                      ? sources[index].getDate(document)
+                      : DateTime(2001);
+                  article = date.toString();
+                  print(date);
                   setState(() {});
                 }
 

@@ -13,6 +13,8 @@ class Source {
   String dateTagType;
   String attributeName;
 
+  int dateIndex;
+
   Source({
     required this.source,
     required this.titleTag,
@@ -23,6 +25,7 @@ class Source {
     this.titleTagType = '',
     this.dateTagType = 'class',
     this.attributeName = '',
+    this.dateIndex = 0,
   });
 
   // String cleanedupArticle(var article) {
@@ -62,21 +65,16 @@ class Source {
     }
 
     if (dateTagType == 'class') {
-      String date = "";
-      // if (source == 'Jang') {
-      //   date = document.getElementsByClassName(dateTag)[2].text;
-      // } else {
-      date = document.getElementsByClassName(dateTag)[0].text;
-      // }
-
+      String date = document.getElementsByClassName(dateTag)[dateIndex].text;
       return DateFormat().toDateTime(date);
     }
 
     //get by attribute
-    else if (dateTagType == 'attribute-tag') {
-      String date =
-          document.getElementsByTagName(dateTag)[0].attributes[attributeName] ??
-              "";
+    if (dateTagType == 'attribute-tag') {
+      String date = document
+              .getElementsByTagName(dateTag)[dateIndex]
+              .attributes[attributeName] ??
+          "";
 
       if (date.isNotEmpty) {
         DateTime d = DateTime.parse(date);
@@ -88,7 +86,7 @@ class Source {
     //get by attribute inside class
     else if (dateTagType == 'attribute-class') {
       String date = document
-              .getElementsByClassName(dateTag)[0]
+              .getElementsByClassName(dateTag)[dateIndex]
               .attributes[attributeName] ??
           "";
 

@@ -33,6 +33,10 @@ class DateFormatter {
     remove = RegExp(r"T(.*)GMT", multiLine: true, caseSensitive: true);
     date = date.replaceAll(remove, '');
 
+    // date = date.replaceAll(r"(\|)(.*):(.*)", '');
+    remove = RegExp(r"\|(.*):(.*)", multiLine: true, caseSensitive: true);
+    date = date.replaceAll(remove, '');
+
     date = date.trim();
 
     //if now in date format but string, return datetime
@@ -83,7 +87,8 @@ class DateFormatter {
         return formatter
             .parse('${int.parse(yearText)}-${monthDate}-${int.parse(dayText)}');
       } catch (e) {
-        return DateTime(1990);
+        // return DateTime(1990);
+        return 'date: $date   year: $yearText   day: $dayText   rmaining: $monthDate';
       }
     }
 

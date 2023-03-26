@@ -60,7 +60,7 @@ class _ApiCallState extends State<ApiCall> {
                   'https://www.dawnnews.tv/news/1199504/',
                   'https://jang.com.pk/news/1207430',
                   'https://www.express.pk/story/2459071/10/',
-                  'https://www.nawaiwaqt.com.pk/23-Mar-2023/1694837',
+                  'https://www.nawaiwaqt.com.pk/25-Mar-2023/1695681',
                 ];
 
                 formatSources = [

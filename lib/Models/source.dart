@@ -10,10 +10,11 @@ class Source {
   double rssSummaryRatio;
 
   String titleTagType;
+
   String dateTagType;
   String attributeName;
-
   int dateIndex;
+  bool isDateTime;
 
   Source({
     required this.source,
@@ -26,6 +27,7 @@ class Source {
     this.dateTagType = 'class',
     this.attributeName = '',
     this.dateIndex = 0,
+    this.isDateTime = true,
   });
 
   // String cleanedupArticle(var article) {
@@ -64,40 +66,29 @@ class Source {
       return DateTime(1990);
     }
 
+    String date = "";
+
     if (dateTagType == 'class') {
-      String date = document.getElementsByClassName(dateTag)[dateIndex].text;
-      return DateFormat().toDateTime(date);
+      date = document.getElementsByClassName(dateTag)[dateIndex].text;
     }
 
     //get by attribute
-    if (dateTagType == 'attribute-tag') {
-      String date = document
+    else if (dateTagType == 'attribute-tag') {
+      date = document
               .getElementsByTagName(dateTag)[dateIndex]
               .attributes[attributeName] ??
           "";
-
-      if (date.isNotEmpty) {
-        DateTime d = DateTime.parse(date);
-        return DateTime(d.year, d.month, d.day);
-      }
-      return DateTime(2000);
     }
 
     //get by attribute inside class
     else if (dateTagType == 'attribute-class') {
-      String date = document
+      date = document
               .getElementsByClassName(dateTag)[dateIndex]
               .attributes[attributeName] ??
           "";
-
-      if (date.isNotEmpty) {
-        DateTime d = DateTime.parse(date);
-        return DateTime(d.year, d.month, d.day);
-      }
-      return DateTime(2000);
     }
 
-    return DateTime(2000);
+    return DateFormatter().toDateTime(date, isDateTime);
   }
 
   //verify if link is of article

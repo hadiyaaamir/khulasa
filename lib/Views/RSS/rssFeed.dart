@@ -108,7 +108,7 @@ class _RssFeedState extends State<RssFeed> {
                                       source: artList == null
                                           ? allArtList[index].link.source.source
                                           : artList![index].link.source.source,
-                                      date: DateFormat().formatDate(
+                                      date: DateFormatter().formatDate(
                                           artList == null
                                               ? allArtList[index].date
                                               : artList![index].date),

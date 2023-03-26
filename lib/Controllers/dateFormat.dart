@@ -1,6 +1,7 @@
 import 'dart:ffi';
+import 'package:intl/intl.dart';
 
-class DateFormat {
+class DateFormatter {
   List<String> urduMonths = [
     'جنوری',
     'فروری',
@@ -16,9 +17,32 @@ class DateFormat {
     'دسمبر',
   ];
 
-  toDateTime(String date) {
+  toDateTime(String date, bool isDateTime) {
+    if (isDateTime) {
+      if (date.isNotEmpty) {
+        DateTime d = DateTime.parse(date);
+        return DateTime(d.year, d.month, d.day);
+      }
+      return DateTime(2000);
+    }
+
+    //remove kachra
     RegExp remove = RegExp(r"اپ ڈیٹ", multiLine: true, caseSensitive: true);
     date = date.replaceAll(remove, '');
+
+    remove = RegExp(r"T(.*)GMT", multiLine: true, caseSensitive: true);
+    date = date.replaceAll(remove, '');
+
+    date = date.trim();
+
+    //if now in date format but string, return datetime
+    RegExp dateFormat = RegExp(r"(\d{4})-(\d{2})-(\d{2})",
+        multiLine: true, caseSensitive: true);
+
+    if (dateFormat.hasMatch(date)) {
+      DateTime d = DateTime.parse(date);
+      return DateTime(d.year, d.month, d.day);
+    }
 
     //extract year
     RegExp expYear = RegExp(r"\d{4}", multiLine: true, caseSensitive: true);
@@ -27,6 +51,7 @@ class DateFormat {
     if (year != null) {
       yearText = year.group(0).toString();
     }
+
     String noYearDate = date.replaceAll(expYear, ''); //remove year from date
 
     //extract day
@@ -37,12 +62,32 @@ class DateFormat {
       dayText = day.group(0).toString();
     }
     String monthDate = date.replaceAll(expDay, ''); //remove year from date
+    monthDate = monthDate.replaceAll(',', '');
+    monthDate = monthDate.replaceAll('،', '');
+    monthDate = monthDate.trim();
 
     //remove spaces
-    String month = monthDate.replaceAll(RegExp(r"( )"), '');
-    int monthIndex = urduMonths.indexOf(month);
+    int monthIndex = urduMonths.indexOf(monthDate);
     // return int.parse(dayText).toString();
-    return DateTime(int.parse(yearText), monthIndex + 1, int.parse(dayText));
+    if (monthIndex != -1) {
+      return DateTime(int.parse(yearText), monthIndex + 1, int.parse(dayText));
+    }
+
+    try {
+      DateFormat formatter = DateFormat('yyyy-MMM-dd');
+      return formatter
+          .parse('${int.parse(yearText)}-${monthDate}-${int.parse(dayText)}');
+    } catch (e) {
+      try {
+        DateFormat formatter = DateFormat('yyyy-MMMM-dd');
+        return formatter
+            .parse('${int.parse(yearText)}-${monthDate}-${int.parse(dayText)}');
+      } catch (e) {
+        return DateTime(1990);
+      }
+    }
+
+    return DateTime(1999);
   }
 
   //format: to urdu date

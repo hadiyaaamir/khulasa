@@ -45,6 +45,7 @@ dependencies:
   firebase_core: ^2.4.1
   flutter_tts: ^3.6.3
   web_scraper: ^0.1.4
+  intl: ^0.18.0
 
 
 dev_dependencies:

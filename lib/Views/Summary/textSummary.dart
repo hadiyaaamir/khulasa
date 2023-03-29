@@ -46,6 +46,7 @@ class _TextSummaryState extends State<TextSummary> {
               Btn(
                 label: "Attach file",
                 onPress: () {},
+                foreground: colors.text,
                 background: colors.primary,
                 height: 35,
                 width: 130,

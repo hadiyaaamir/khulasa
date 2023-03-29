@@ -8,6 +8,7 @@ import 'package:khulasa/Models/article.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Views/NavBar/AppBarPage.dart';
 import 'package:khulasa/Views/RSS/article.dart';
+import 'package:khulasa/Views/RSS/filter.dart';
 import 'package:khulasa/Views/RSS/searchbar.dart';
 import 'package:khulasa/Views/Widgets/iconButtons.dart';
 import 'package:khulasa/constants/colors.dart';
@@ -62,19 +63,33 @@ class _RssFeedState extends State<RssFeed> {
         child: Draw(),
       ),
       body: Center(
-        child: isLoading
-            ? CircularProgressIndicator(color: colors.primary)
-            : Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SearchBar(
-                    setArtList: (List list) => artList = list,
-                    setItemCount: (int itemcount) => count = itemcount,
-                    allArtList: allArtList,
-                  ),
-                  // Text(count.toString()),
-                  Expanded(
-                    child: ListView.builder(
+        child: Column(
+          // mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            //search and filter
+            Row(
+              children: [
+                Filter(),
+                SearchBar(
+                  setArtList: (List list) => artList = list,
+                  setItemCount: (int itemcount) => count = itemcount,
+                  allArtList: allArtList,
+                ),
+              ],
+            ),
+
+            // Text(count.toString()),
+
+            //articles list
+            Expanded(
+              child: isLoading
+                  ? Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CircularProgressIndicator(color: colors.primary),
+                      ],
+                    )
+                  : ListView.builder(
                       padding: const EdgeInsets.only(
                           bottom: 20, left: 30, right: 30, top: 5),
                       itemCount: count ?? allArtList.length,
@@ -139,9 +154,9 @@ class _RssFeedState extends State<RssFeed> {
                               ),
                             ),
                             // if (!isFinished &&
-                            //     index == allArtList.length - 1) ...[
+                            //     index == (count ?? allArtList.length) - 1) ...[
                             //   Padding(
-                            //     padding: EdgeInsets.only(top: 20),
+                            //     padding: const EdgeInsets.only(top: 20),
                             //     child: SizedBox(
                             //       width: 25,
                             //       height: 25,
@@ -155,9 +170,9 @@ class _RssFeedState extends State<RssFeed> {
                         ),
                       ),
                     ),
-                  )
-                ],
-              ),
+            )
+          ],
+        ),
       ),
     );
   }

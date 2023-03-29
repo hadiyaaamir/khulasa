@@ -48,9 +48,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        textTheme: GoogleFonts.openSansTextTheme(
-          Theme.of(context).textTheme,
-        ),
+        fontFamily: 'Open Sans',
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );

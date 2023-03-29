@@ -27,38 +27,42 @@ class _ArticleState extends State<Article> {
         backgroundColor: colors.background,
         elevation: 0,
       ),
-      body: SingleChildScrollView(
-        child: Center(
-          child: Padding(
-            padding:
-                const EdgeInsets.only(top: 10, bottom: 50, right: 30, left: 30),
-            child: Column(
-              children: [
-                //title
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 30),
-                  child: Text(
-                    widget.art.title,
-                    textAlign: TextAlign.right,
-                    style: GoogleFonts.notoNastaliqUrdu(
-                        color: colors.text,
-                        fontWeight: FontWeight.bold,
-                        fontSize: headingFont),
+      body: Center(
+        child: Padding(
+          padding:
+              const EdgeInsets.only(top: 10, bottom: 50, right: 30, left: 30),
+          child: Column(
+            children: [
+              //title
+              Padding(
+                padding: const EdgeInsets.only(bottom: 30),
+                child: Text(
+                  widget.art.title,
+                  textAlign: TextAlign.right,
+                  style: TextStyle(
+                    fontFamily: 'Noto Nastaleeq Urdu',
+                    color: colors.text,
+                    fontWeight: FontWeight.bold,
+                    fontSize: headingFont,
                   ),
                 ),
+              ),
 
-                //options
-                OptionsLine(
-                    speakText: "${widget.art.title}.${widget.art.content}"),
+              //options
+              OptionsLine(
+                  speakText: "${widget.art.title}.${widget.art.content}"),
 
-                //article
-                Text(
-                  widget.art.content,
-                  textAlign: TextAlign.right,
-                  style: TextStyle(color: colors.text, fontSize: buttonFont),
+              //article
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Text(
+                    widget.art.content,
+                    textAlign: TextAlign.right,
+                    style: TextStyle(color: colors.text, fontSize: buttonFont),
+                  ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

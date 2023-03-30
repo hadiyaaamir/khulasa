@@ -20,6 +20,7 @@ class DarkMode extends ChangeNotifier {
   };
 
   String _theme = 'green';
+  String get theme => _theme;
   set theme(String t) {
     _theme = t;
     notifyListeners();

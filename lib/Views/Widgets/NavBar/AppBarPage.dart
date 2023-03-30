@@ -10,6 +10,7 @@ import 'package:khulasa/Views/RSS/rssFeed.dart';
 import 'package:khulasa/Views/Saved/saved.dart';
 import 'package:khulasa/Views/Summary/summary.dart';
 import 'package:khulasa/Controllers/navigation.dart';
+import 'package:khulasa/Views/Widgets/NavBar/themeRow.dart';
 import 'package:khulasa/Views/Widgets/NavBar/toggleMode.dart';
 import 'package:khulasa/constants/sizes.dart';
 import 'package:provider/provider.dart';
@@ -57,31 +58,16 @@ class _DrawState extends State<Draw> {
                 const DrawerOption(text: 'Summary', navTo: Summary()),
                 const DrawerOption(text: 'Saved', navTo: Saved()),
                 const DrawerOption(text: 'Settings', navTo: Settings()),
+                DrawerOption(
+                    text: 'Logout',
+                    navTo: const Login(),
+                    textColour: colors.secondary),
               ],
             ),
-
-            Padding(
-              padding: EdgeInsets.only(bottom: 30),
-              child: DrawerOption(
-                text: 'Logout',
-                navTo: const Login(),
-                textColour: colors.secondary,
-              ),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+              child: ThemeRow(),
             ),
-
-            // Padding(
-            //   padding: EdgeInsets.only(top: screenHeight / 3),
-            //   child: ListTile(
-            //     title: Text('Logout',
-            //         style: TextStyle(
-            //           fontSize: buttonFont,
-            //           color: colors.secondary,
-            //         )),
-            //     onTap: () {
-            //       Navigation().navigationReplace(context, const Login());
-            //     },
-            //   ),
-            // ),
           ],
         ),
       ),

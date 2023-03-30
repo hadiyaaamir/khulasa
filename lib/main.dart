@@ -22,20 +22,15 @@ Future<void> main() async {
   // await Firebase.initializeApp();
 
   runApp(
-    MultiProvider(providers: [
-      ChangeNotifierProvider(
-        create: (context) => Language(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => DarkMode(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => catprovider(),
-      ),
-      ChangeNotifierProvider(
-        create: (context) => articleprovider(),
-      ),
-    ], child: const MyApp()),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => Language()),
+        ChangeNotifierProvider(create: (context) => DarkMode()),
+        ChangeNotifierProvider(create: (context) => catprovider()),
+        ChangeNotifierProvider(create: (context) => articleprovider()),
+      ],
+      child: const MyApp(),
+    ),
   );
 }
 
@@ -67,8 +62,12 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      context.read<articleprovider>().getArticles();
+    });
+    // TODO: implement initState
+
     startTime();
   }
 

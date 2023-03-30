@@ -34,12 +34,23 @@ class _ApiCallState extends State<ApiCall> {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController _themeController = TextEditingController();
+
     return Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(text),
+            TextField(controller: _themeController),
+
+            //test color theme
+            ElevatedButton(
+              onPressed: () {
+                //testing theme switch
+                context.read<DarkMode>().theme = _themeController.text;
+              },
+              child: Text('Switch Colour'),
+            ),
 
             //test toggling mode
             ElevatedButton(

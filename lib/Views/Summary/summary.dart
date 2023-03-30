@@ -21,10 +21,13 @@ class _SummaryState extends State<Summary> {
   @override
   Widget build(BuildContext context) {
     ColorTheme colors = context.watch<DarkMode>().mode;
+    bool isDarkMode = context.watch<DarkMode>().isDarkMode;
     return Scaffold(
       appBar: AppBar(
         title: Text(""),
         backgroundColor: colors.background,
+        foregroundColor: isDarkMode ? colors.text : colors.secondary,
+        elevation: 0,
       ),
       drawer: Drawer(
         child: Draw(),

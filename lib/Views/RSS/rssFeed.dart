@@ -40,6 +40,7 @@ class _RssFeedState extends State<RssFeed> {
     List allArtList = context.watch<articleprovider>().articlesList;
     bool isFinished = context.watch<articleprovider>().isFinished;
     ColorTheme colors = context.watch<DarkMode>().mode;
+    bool isDarkMode = context.watch<DarkMode>().isDarkMode;
 
     allArtList.isEmpty ? isLoading = true : isLoading = false;
 
@@ -48,9 +49,14 @@ class _RssFeedState extends State<RssFeed> {
     return Scaffold(
       backgroundColor: colors.background,
       appBar: AppBar(
-        title: const Text("RSS Feed"),
+        title: const Text(
+          "RSS Feed",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
         backgroundColor: colors.background,
+        foregroundColor: isDarkMode ? colors.text : colors.secondary,
+        elevation: 0,
         // actions: [
         //   IconButton(
         //       onPressed: () {
@@ -78,7 +84,13 @@ class _RssFeedState extends State<RssFeed> {
               ],
             ),
 
-            // Text(count.toString()),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 15),
+              child: Text(
+                'Fetched ${count.toString()} articles',
+                style: TextStyle(color: colors.text),
+              ),
+            ),
 
             //articles list
             Expanded(
@@ -112,7 +124,7 @@ class _RssFeedState extends State<RssFeed> {
                                       : artList![index].title,
                                   textAlign: TextAlign.right,
                                   style: TextStyle(
-                                    color: colors.secondary,
+                                    color: colors.text,
                                     fontWeight: FontWeight.w900,
                                     fontSize: headingFont,
                                   ),
@@ -193,24 +205,29 @@ class SourceLine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ColorTheme colors = context.watch<DarkMode>().mode;
+    bool isDarkMode = context.watch<DarkMode>().isDarkMode;
 
     return Padding(
       padding: const EdgeInsets.only(top: 15, bottom: 15),
       child: Column(
         children: [
-          Divider(color: colors.background, thickness: 1.2),
+          Divider(
+              color: isDarkMode ? colors.background : colors.secondary,
+              thickness: 1.2),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SpeakIconButton(
                 speakText: speakText,
                 vertPadding: 0,
-                iconColor: colors.background,
+                iconColor: isDarkMode ? colors.text : colors.secondary,
               ),
               Text('$source | $date', style: TextStyle(color: colors.text2)),
             ],
           ),
-          Divider(color: colors.background, thickness: 1.2),
+          Divider(
+              color: isDarkMode ? colors.background : colors.secondary,
+              thickness: 1.2),
         ],
       ),
     );

@@ -10,11 +10,11 @@ import 'package:khulasa/constants/sources.dart';
 
 // ignore: camel_case_types
 class articleprovider extends ChangeNotifier {
-  articleprovider() {
-    // getarticleList();
-    getArticles();
-    notifyListeners();
-  }
+  // articleprovider() {
+  //   // getarticleList();
+  //   getArticles();
+  //   notifyListeners();
+  // }
 
   List _articleList = [];
   List get articlesList => _articleList;

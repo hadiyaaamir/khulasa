@@ -4,96 +4,41 @@ import 'package:khulasa/constants/colors.dart';
 
 class DarkMode extends ChangeNotifier {
   bool isDarkMode = true;
-  //BLUE
-  // final ColorTheme _darkMode = ColorTheme(
-  //   background: darkBlue,
-  //   primary: lightBlue,
-  //   secondary: blue,
-  //   text: white,
-  //   text2: grey,
-  //   caution: red,
-  // );
 
-  // final ColorTheme _lightMode = ColorTheme(
-  //   background: white,
-  //   primary: veryLightBlue,
-  //   secondary: thoraBlue,
-  //   text: kumDarkBlue,
-  //   text2: lightGrey,
-  //   caution: red,
-  // );
-  
+  final Map<String, ColorTheme> _lightMode = {
+    'green': greenLightMode,
+    'blue': blueLightMode,
+    'orange': orangeLightMode,
+    'neutral': neutralLightMode,
+  };
 
-  //GREEN
-final ColorTheme _darkMode = ColorTheme(
-    background: darkBlue,
-    primary: lightDarkGreen,
-    secondary: darkGreen,
-    text: white,
-    text2: grey,
-    caution: red,
-  );
+  final Map<String, ColorTheme> _darkMode = {
+    'green': greenDarkMode,
+    'blue': blueDarkMode,
+    'orange': orangeDarkMode,
+    'neutral': neutralDarkMode,
+  };
 
-  final ColorTheme _lightMode = ColorTheme(
-    background: white,
-    primary: darkLightGreen,
-    secondary: lightGreen,
-    text: veryDarkGreen,
-    text2: lightGrey,
-    caution: red,
-  );
-  //ORANGE
-  // final ColorTheme _darkMode = ColorTheme(
-  //   background: darkBlue,
-  //   primary: lightDarkOrange,
-  //   secondary: darkOrange,
-  //   text: white,
-  //   text2: grey,
-  //   caution: red,
-  // );
+  String _theme = 'green';
+  set theme(String t) {
+    _theme = t;
+    notifyListeners();
+  }
 
-  // final ColorTheme _lightMode = ColorTheme(
-  //   background: white,
-  //   primary: lightOrange,
-  //   secondary: darkLightOrange,
-  //   text: veryDarkOrange,
-  //   text2: lightGrey,
-  //   caution: red,
-  // );
-
-  //NEUTRAL
-  // final ColorTheme _darkMode = ColorTheme(
-  //   background: darkBlue,
-  //   primary: lightDarkBrown,
-  //   secondary: darkBrown,
-  //   text: white,
-  //   text2: grey,
-  //   caution: red,
-  // );
-
-  // final ColorTheme _lightMode = ColorTheme(
-  //   background: white,
-  //   primary: darkLightBrown,
-  //   secondary: lightBrown,
-  //   text: veryDarkBrown,
-  //   text2: lightGrey,
-  //   caution: red,
-  // );
-
-  ColorTheme get mode => isDarkMode ? _darkMode : _lightMode;
+  ColorTheme get mode => isDarkMode
+      ? _darkMode[_theme] ?? greenDarkMode
+      : _lightMode[_theme] ?? greenLightMode;
 
   void toggleMode() {
     isDarkMode = !isDarkMode;
     notifyListeners();
   }
 
-  // void toLightMode() {
-  //   isDarkMode = false;
-  //   notifyListeners();
-  // }
+  List getThemeList() {
+    return _lightMode.keys.toList();
+  }
 
-  // void toDarkMode() {
-  //   isDarkMode = true;
-  //   notifyListeners();
-  // }
+  Map<String, ColorTheme> getThemes() {
+    return isDarkMode ? _darkMode : _lightMode;
+  }
 }

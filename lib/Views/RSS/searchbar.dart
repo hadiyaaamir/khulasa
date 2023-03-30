@@ -30,6 +30,7 @@ class _SearchBarState extends State<SearchBar> {
   @override
   Widget build(BuildContext context) {
     ColorTheme colors = context.watch<DarkMode>().mode;
+    bool isDarkMode = context.watch<DarkMode>().isDarkMode;
 
     if (_searchController.text.isEmpty) {
       widget.setArtList(widget.allArtList);
@@ -83,7 +84,8 @@ class _SearchBarState extends State<SearchBar> {
 
             //borders
             enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(width: 3, color: colors.secondary),
+              borderSide: BorderSide(
+                  width: isDarkMode ? 1 : 2, color: colors.secondary),
               borderRadius: BorderRadius.circular(30.0),
             ),
             focusedBorder: OutlineInputBorder(

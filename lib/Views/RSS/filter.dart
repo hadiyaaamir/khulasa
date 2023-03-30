@@ -3,6 +3,7 @@ import 'package:khulasa/Controllers/darkMode.dart';
 import 'package:khulasa/Controllers/dialog.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Views/RSS/filterOptions.dart';
+import 'package:khulasa/constants/colors.dart';
 import 'package:khulasa/constants/sizes.dart';
 import 'package:provider/provider.dart';
 
@@ -29,7 +30,7 @@ class _FilterState extends State<Filter> {
           ],
         ),
         child: IconButton(
-          icon: Icon(Icons.filter_list, color: colors.text2),
+          icon: const Icon(Icons.filter_list, color: white),
           onPressed: () {
             // showFilterPopup(context);
 

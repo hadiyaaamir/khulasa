@@ -21,10 +21,13 @@ class _ArticleState extends State<Article> {
   @override
   Widget build(BuildContext context) {
     ColorTheme colors = context.watch<DarkMode>().mode;
+    bool isDarkMode = context.watch<DarkMode>().isDarkMode;
+
     return Scaffold(
       backgroundColor: colors.background,
       appBar: AppBar(
         backgroundColor: colors.background,
+        foregroundColor: isDarkMode ? colors.text : colors.secondary,
         elevation: 0,
       ),
       body: Center(
@@ -78,6 +81,8 @@ class OptionsLine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ColorTheme colors = context.watch<DarkMode>().mode;
+    bool isDarkMode = context.watch<DarkMode>().isDarkMode;
+
     return Padding(
       padding: const EdgeInsets.only(top: 10, bottom: 25),
       child: Column(
@@ -90,7 +95,7 @@ class OptionsLine extends StatelessWidget {
                 speakText: speakText,
                 vertPadding: 0,
                 iconSize: iconLarge,
-                iconColor: colors.text2,
+                iconColor: isDarkMode ? colors.text2 : colors.secondary,
               ),
               Row(children: const [
                 SaveButton(),

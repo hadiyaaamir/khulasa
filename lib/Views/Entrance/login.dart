@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:khulasa/Controllers/darkMode.dart';
 import 'package:khulasa/Controllers/navigation.dart';
 import 'package:khulasa/Models/colorTheme.dart';
-import 'package:khulasa/Views/Entrance/button.dart';
-import 'package:khulasa/Views/Entrance/textfield.dart';
-import 'package:khulasa/Views/Options/option.dart';
+import 'package:khulasa/Views/Widgets/button.dart';
+import 'package:khulasa/Views/Widgets/textfield.dart';
+import 'package:khulasa/Views/Entrance/option.dart';
 import 'package:khulasa/Views/apicall.dart';
 import 'package:provider/provider.dart';
 

@@ -6,7 +6,8 @@ import 'package:khulasa/Controllers/dateFormat.dart';
 import 'package:khulasa/Controllers/navigation.dart';
 import 'package:khulasa/Models/article.dart';
 import 'package:khulasa/Models/colorTheme.dart';
-import 'package:khulasa/Views/NavBar/AppBarPage.dart';
+import 'package:khulasa/Views/Widgets/NavBar/AppBarPage.dart';
+import 'package:khulasa/Views/Widgets/NavBar/customAppBar.dart';
 import 'package:khulasa/Views/RSS/article.dart';
 import 'package:khulasa/Views/RSS/filter.dart';
 import 'package:khulasa/Views/RSS/searchbar.dart';
@@ -48,26 +49,8 @@ class _RssFeedState extends State<RssFeed> {
 
     return Scaffold(
       backgroundColor: colors.background,
-      appBar: AppBar(
-        title: const Text(
-          "RSS Feed",
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-        backgroundColor: colors.background,
-        foregroundColor: isDarkMode ? colors.text : colors.secondary,
-        elevation: 0,
-        // actions: [
-        //   IconButton(
-        //       onPressed: () {
-        //         context.read<articleprovider>().getArticles();
-        //       },
-        //       icon: Icon(Icons.refresh))
-        // ],
-      ),
-      drawer: const Drawer(
-        child: Draw(),
-      ),
+      appBar: CustomAppBar(title: 'RSS Feed'),
+      drawer: const Drawer(child: Draw()),
       body: Center(
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.center,
@@ -87,7 +70,9 @@ class _RssFeedState extends State<RssFeed> {
             Padding(
               padding: const EdgeInsets.only(bottom: 15),
               child: Text(
-                'Fetched ${count.toString()} articles',
+                count == null
+                    ? 'Fetching articles...'
+                    : 'Fetched ${count.toString()} articles',
                 style: TextStyle(color: colors.text),
               ),
             ),

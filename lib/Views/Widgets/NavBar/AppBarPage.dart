@@ -1,0 +1,119 @@
+import 'package:flutter/material.dart';
+import 'package:khulasa/Controllers/darkMode.dart';
+import 'package:khulasa/Models/category.dart';
+import 'package:khulasa/Models/colorTheme.dart';
+import 'package:khulasa/Views/Entrance/login.dart';
+import 'package:khulasa/Views/Settings/settings.dart';
+import 'package:khulasa/Views/Widgets/NavBar/Toggle.dart';
+import 'package:khulasa/Views/RSS/categories.dart';
+import 'package:khulasa/Views/RSS/rssFeed.dart';
+import 'package:khulasa/Views/Saved/saved.dart';
+import 'package:khulasa/Views/Summary/summary.dart';
+import 'package:khulasa/Controllers/navigation.dart';
+import 'package:khulasa/Views/Widgets/NavBar/toggleMode.dart';
+import 'package:khulasa/constants/sizes.dart';
+import 'package:provider/provider.dart';
+
+class Draw extends StatefulWidget {
+  const Draw({super.key});
+
+  @override
+  State<Draw> createState() => _DrawState();
+}
+
+class _DrawState extends State<Draw> {
+  @override
+  Widget build(BuildContext context) {
+    ColorTheme colors = context.watch<DarkMode>().mode;
+
+    return Drawer(
+      backgroundColor: colors.primary,
+      width: screenWidth / 3,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+        child: Column(
+          // Important: Remove any padding from the ListView.
+
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              children: [
+                DrawerHeader(
+                  decoration: BoxDecoration(
+                    color: colors.primary,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: const [
+                      ToggleButton(),
+                      ToggleMode(),
+                    ],
+                  ),
+
+                  //toggle button here
+                ),
+                const DrawerOption(text: 'RSS Feed', navTo: RssFeed()),
+                const DrawerOption(text: 'Summary', navTo: Summary()),
+                const DrawerOption(text: 'Saved', navTo: Saved()),
+                const DrawerOption(text: 'Settings', navTo: Settings()),
+              ],
+            ),
+
+            Padding(
+              padding: EdgeInsets.only(bottom: 30),
+              child: DrawerOption(
+                text: 'Logout',
+                navTo: const Login(),
+                textColour: colors.secondary,
+              ),
+            ),
+
+            // Padding(
+            //   padding: EdgeInsets.only(top: screenHeight / 3),
+            //   child: ListTile(
+            //     title: Text('Logout',
+            //         style: TextStyle(
+            //           fontSize: buttonFont,
+            //           color: colors.secondary,
+            //         )),
+            //     onTap: () {
+            //       Navigation().navigationReplace(context, const Login());
+            //     },
+            //   ),
+            // ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class DrawerOption extends StatelessWidget {
+  const DrawerOption({
+    super.key,
+    this.textColour,
+    required this.text,
+    required this.navTo,
+  });
+
+  final Color? textColour;
+  final String text;
+  final Widget navTo;
+
+  @override
+  Widget build(BuildContext context) {
+    ColorTheme colors = context.watch<DarkMode>().mode;
+
+    return ListTile(
+      title: Text(text,
+          style: TextStyle(
+            fontSize: buttonFont,
+            color: textColour ?? colors.text,
+          )),
+      onTap: () {
+        Navigation().navigationReplace(context, navTo);
+      },
+    );
+  }
+}

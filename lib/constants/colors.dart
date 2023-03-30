@@ -9,6 +9,8 @@ const Color red = Color(0xffA46666);
 
 const Color white = Color.fromRGBO(255, 255, 255, 1);
 
+const Color yellow = Color(0xffffe642);
+
 //light theme specific palette
 const Color veryLightBlue = Color(0xffe1eef2);
 const Color thoraBlue = Color(0xff3a7690);
@@ -46,7 +48,9 @@ const Color darkLightBrown = Color(0xffd1b2b2);
 
 const Color veryDarkBrown = Color(0xff390101);
 
+//
 // --------- colour themes --------- \\
+//
 
 //GREEN
 ColorTheme greenDarkMode = ColorTheme(

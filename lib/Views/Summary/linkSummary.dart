@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:khulasa/Controllers/api.dart';
 import 'package:khulasa/Controllers/webScraping.dart';
-import 'package:khulasa/Views/Entrance/button.dart';
-import 'package:khulasa/Views/Entrance/textfield.dart';
+import 'package:khulasa/Views/Widgets/button.dart';
+import 'package:khulasa/Views/Widgets/textfield.dart';
 import 'package:khulasa/Views/Summary/generatedSummary.dart';
 import 'package:khulasa/Views/Summary/summarySize.dart';
 import 'package:khulasa/Views/Widgets/dropdown.dart';

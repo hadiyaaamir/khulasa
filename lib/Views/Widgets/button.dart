@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:khulasa/Controllers/darkMode.dart';
 import 'package:khulasa/Models/colorTheme.dart';
+import 'package:khulasa/constants/colors.dart';
 import 'package:khulasa/constants/sizes.dart';
 import 'package:provider/provider.dart';
 
@@ -48,7 +49,7 @@ class Btn extends StatelessWidget {
             onPressed: onPress,
             style: ButtonStyle(
               foregroundColor:
-                  MaterialStateProperty.all<Color>(foreground ?? colors.text),
+                  MaterialStateProperty.all<Color>(foreground ?? white),
               backgroundColor: MaterialStateProperty.all<Color>(
                   background ?? colors.secondary),
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(

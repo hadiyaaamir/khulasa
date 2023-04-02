@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:khulasa/Controllers/api.dart';
 import 'package:khulasa/Controllers/webScraping.dart';
-import 'package:khulasa/Views/Entrance/button.dart';
-import 'package:khulasa/Views/Entrance/textfield.dart';
+import 'package:khulasa/Views/Widgets/button.dart';
+import 'package:khulasa/Views/Widgets/textfield.dart';
 import 'package:khulasa/Views/Summary/generatedSummary.dart';
 import 'package:khulasa/Views/Summary/summarySize.dart';
 import 'package:khulasa/Views/Widgets/dropdown.dart';
 import 'package:khulasa/constants/api.dart';
+import 'package:khulasa/constants/sources.dart';
 
 class LinkSummary extends StatefulWidget {
   LinkSummary({super.key});
@@ -39,7 +40,7 @@ class _LinkSummaryState extends State<LinkSummary> {
             children: [
               Dropdown(
                 label: "Select Source",
-                categories: ["Youtube", "Dawn News", "ARY News"],
+                categories: sources.map((source) => source.source).toList(),
                 setAlgo: (source) => website = source,
               ),
               textField(
@@ -66,13 +67,19 @@ class _LinkSummaryState extends State<LinkSummary> {
                         source: website,
                       );
 
+                      print(article);
+
                       await Api()
                           .generateSummary(
                             algo: getAlgorithm(algo),
                             text: article.content,
                             ratio: ratio,
                           )
-                          .then((value) => {summaryText = value.summary});
+                          .then((value) => {
+                                summaryText = value.summary.isNotEmpty
+                                    ? value.summary
+                                    : article.content
+                              });
                       title = article.title;
                       // summaryText = article.content;
                       setState(() {});

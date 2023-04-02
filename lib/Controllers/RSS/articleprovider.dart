@@ -10,11 +10,11 @@ import 'package:khulasa/constants/sources.dart';
 
 // ignore: camel_case_types
 class articleprovider extends ChangeNotifier {
-  articleprovider() {
-    // getarticleList();
-    getArticles();
-    notifyListeners();
-  }
+  // articleprovider() {
+  //   // getarticleList();
+  //   getArticles();
+  //   notifyListeners();
+  // }
 
   List _articleList = [];
   List get articlesList => _articleList;
@@ -25,6 +25,21 @@ class articleprovider extends ChangeNotifier {
   setFinished(bool finish) {
     _isFinished = finish;
     notifyListeners();
+  }
+
+  addByDate(article a) {
+    articlesList.add(a);
+
+    for (int i = articlesList.length - 1; i > 0; i--) {
+      if (a.isNewerThan(articlesList[i - 1])) {
+        //swap
+        article temp = articlesList[i - 1];
+        articlesList[i - 1] = a;
+        articlesList[i] = temp;
+      } else {
+        break;
+      }
+    }
   }
 
   getArticles() async {
@@ -48,10 +63,23 @@ class articleprovider extends ChangeNotifier {
               text: a.content,
               ratio: a.link == null ? 0.1 : a.link!.source.rssSummaryRatio,
             )
-            .then((value) => {
-                  a.summary =
-                      value.summary.isNotEmpty ? value.summary : a.content,
-                  _articleList.add(a),
+            .then((value) async => {
+                  a.summary = value.summary,
+                  if (a.summary.isEmpty)
+                    {
+                      await Api()
+                          .generateSummary(
+                            algo: summaryType1,
+                            text: a.content,
+                            ratio: a.link == null
+                                ? 0.1
+                                : (a.link!.source.rssSummaryRatio + 0.1),
+                          )
+                          .then((value) => a.summary = value.summary.isNotEmpty
+                              ? value.summary
+                              : a.content)
+                    },
+                  addByDate(a),
                   notifyListeners(),
                 });
         notifyListeners();

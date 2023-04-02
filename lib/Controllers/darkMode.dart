@@ -5,39 +5,41 @@ import 'package:khulasa/constants/colors.dart';
 class DarkMode extends ChangeNotifier {
   bool isDarkMode = true;
 
-  final ColorTheme _darkMode = ColorTheme(
-    background: blue,
-    primary: lightBlue,
-    secondary: darkBlue,
-    text: white,
-    text2: grey,
-    caution: red,
-  );
+  final Map<String, ColorTheme> _lightMode = {
+    'green': greenLightMode,
+    'blue': blueLightMode,
+    'orange': orangeLightMode,
+    'neutral': neutralLightMode,
+  };
 
-  final ColorTheme _lightMode = ColorTheme(
-    background: veryLightBlue,
-    primary: white,
-    secondary: lightBlue,
-    text: blue,
-    text2: grey,
-    caution: red,
-  );
-  // Color caution = red;
+  final Map<String, ColorTheme> _darkMode = {
+    'green': greenDarkMode,
+    'blue': blueDarkMode,
+    'orange': orangeDarkMode,
+    'neutral': neutralDarkMode,
+  };
 
-  ColorTheme get mode => isDarkMode ? _darkMode : _lightMode;
+  String _theme = 'green';
+  String get theme => _theme;
+  set theme(String t) {
+    _theme = t;
+    notifyListeners();
+  }
+
+  ColorTheme get mode => isDarkMode
+      ? _darkMode[_theme] ?? greenDarkMode
+      : _lightMode[_theme] ?? greenLightMode;
 
   void toggleMode() {
     isDarkMode = !isDarkMode;
     notifyListeners();
   }
 
-  // void toLightMode() {
-  //   isDarkMode = false;
-  //   notifyListeners();
-  // }
+  List getThemeList() {
+    return _lightMode.keys.toList();
+  }
 
-  // void toDarkMode() {
-  //   isDarkMode = true;
-  //   notifyListeners();
-  // }
+  Map<String, ColorTheme> getThemes() {
+    return isDarkMode ? _darkMode : _lightMode;
+  }
 }

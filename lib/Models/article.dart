@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'dart:io';
 
 import 'package:khulasa/Models/link.dart';
@@ -21,6 +22,10 @@ class article {
   });
 
   String toString() {
-    return content;
+    return title + "\n" + content;
+  }
+
+  bool isNewerThan(article a) {
+    return date.isAfter(a.date);
   }
 }

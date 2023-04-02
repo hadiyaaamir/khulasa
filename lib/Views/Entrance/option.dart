@@ -4,8 +4,9 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:khulasa/Controllers/darkMode.dart';
 import 'package:khulasa/Controllers/navigation.dart';
 import 'package:khulasa/Models/colorTheme.dart';
-import 'package:khulasa/Views/Entrance/button.dart';
-import 'package:khulasa/Views/NavBar/AppBarPage.dart';
+import 'package:khulasa/Views/Widgets/NavBar/customAppBar.dart';
+import 'package:khulasa/Views/Widgets/button.dart';
+import 'package:khulasa/Views/Widgets/NavBar/AppBarPage.dart';
 import 'package:khulasa/Views/RSS/rssFeed.dart';
 import 'package:khulasa/Views/Saved/saved.dart';
 import 'package:khulasa/Views/RSS/categories.dart';
@@ -24,12 +25,10 @@ class _OptionState extends State<Option> {
   @override
   Widget build(BuildContext context) {
     ColorTheme colors = context.watch<DarkMode>().mode;
+    bool isDarkMode = context.watch<DarkMode>().isDarkMode;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(""),
-        backgroundColor: colors.background,
-      ),
+      appBar: CustomAppBar(),
       drawer: Drawer(
         child: Draw(),
       ),

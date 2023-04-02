@@ -9,8 +9,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:khulasa/Controllers/api.dart';
 import 'package:khulasa/Controllers/darkMode.dart';
 import 'package:khulasa/Models/colorTheme.dart';
-import 'package:khulasa/Views/Entrance/button.dart';
-import 'package:khulasa/Views/Entrance/textfield.dart';
+import 'package:khulasa/Views/Widgets/button.dart';
+import 'package:khulasa/Views/Widgets/textfield.dart';
 import 'package:khulasa/Views/Summary/generatedSummary.dart';
 import 'package:khulasa/Views/Summary/summarySize.dart';
 import 'package:khulasa/Views/Widgets/dropdown.dart';
@@ -18,7 +18,6 @@ import 'package:khulasa/constants/api.dart';
 import 'package:provider/provider.dart';
 import 'package:khulasa/constants/sizes.dart';
 import 'package:flutter_tesseract_ocr/flutter_tesseract_ocr.dart';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
 
@@ -40,7 +39,6 @@ class _TextSummaryState extends State<TextSummary> {
 
   @override
   Widget build(BuildContext context) {
-
     ColorTheme colors = context.watch<DarkMode>().mode;
     bool scanning = false;
     bool attach = false;
@@ -69,7 +67,13 @@ class _TextSummaryState extends State<TextSummary> {
                     ),
               Btn(
                 label: "Attach file",
-                background: colors.primary,
+                background: colors.secondary,
+                height: 30,
+                width: 130,
+                icon: Icons.attach_file,
+                paddingVert: 0,
+                align: Alignment.centerRight,
+                font: largerSmallFont,
                 onPress: () async {
                   setState(() {
                     scanning = true;
@@ -96,12 +100,6 @@ class _TextSummaryState extends State<TextSummary> {
                     scanning = false;
                   });
                 },
-                height: 35,
-                width: 130,
-                icon: Icons.attach_file,
-                paddingVert: 0,
-                align: Alignment.centerRight,
-                font: largerSmallFont,
               ),
               Dropdown(
                 label: "Summarising Algorithm",
@@ -125,7 +123,9 @@ class _TextSummaryState extends State<TextSummary> {
                       ratio: ratio,
                     );
 
-                    summaryText = summary.summary;
+                    summaryText = summary.summary.isNotEmpty
+                        ? summary.summary
+                        : textController.text;
                     setState(() {});
                   }
                 },

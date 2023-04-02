@@ -6,8 +6,10 @@ import 'package:khulasa/Controllers/dateFormat.dart';
 import 'package:khulasa/Controllers/navigation.dart';
 import 'package:khulasa/Models/article.dart';
 import 'package:khulasa/Models/colorTheme.dart';
-import 'package:khulasa/Views/NavBar/AppBarPage.dart';
+import 'package:khulasa/Views/Widgets/NavBar/AppBarPage.dart';
+import 'package:khulasa/Views/Widgets/NavBar/customAppBar.dart';
 import 'package:khulasa/Views/RSS/article.dart';
+import 'package:khulasa/Views/RSS/filter.dart';
 import 'package:khulasa/Views/RSS/searchbar.dart';
 import 'package:khulasa/Views/Widgets/iconButtons.dart';
 import 'package:khulasa/constants/colors.dart';
@@ -39,6 +41,7 @@ class _RssFeedState extends State<RssFeed> {
     List allArtList = context.watch<articleprovider>().articlesList;
     bool isFinished = context.watch<articleprovider>().isFinished;
     ColorTheme colors = context.watch<DarkMode>().mode;
+    bool isDarkMode = context.watch<DarkMode>().isDarkMode;
 
     allArtList.isEmpty ? isLoading = true : isLoading = false;
 
@@ -46,35 +49,44 @@ class _RssFeedState extends State<RssFeed> {
 
     return Scaffold(
       backgroundColor: colors.background,
-      appBar: AppBar(
-        title: const Text("RSS Feed"),
-        centerTitle: true,
-        backgroundColor: colors.background,
-        // actions: [
-        //   IconButton(
-        //       onPressed: () {
-        //         context.read<articleprovider>().getArticles();
-        //       },
-        //       icon: Icon(Icons.refresh))
-        // ],
-      ),
-      drawer: const Drawer(
-        child: Draw(),
-      ),
+      appBar: CustomAppBar(title: 'RSS Feed'),
+      drawer: const Drawer(child: Draw()),
       body: Center(
-        child: isLoading
-            ? CircularProgressIndicator(color: colors.primary)
-            : Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SearchBar(
-                    setArtList: (List list) => artList = list,
-                    setItemCount: (int itemcount) => count = itemcount,
-                    allArtList: allArtList,
-                  ),
-                  // Text(count.toString()),
-                  Expanded(
-                    child: ListView.builder(
+        child: Column(
+          // mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            //search and filter
+            Row(
+              children: [
+                Filter(),
+                SearchBar(
+                  setArtList: (List list) => artList = list,
+                  setItemCount: (int itemcount) => count = itemcount,
+                  allArtList: allArtList,
+                ),
+              ],
+            ),
+
+            Padding(
+              padding: const EdgeInsets.only(bottom: 15),
+              child: Text(
+                count == null
+                    ? 'Fetching articles...'
+                    : 'Fetched ${count.toString()} articles',
+                style: TextStyle(color: colors.text),
+              ),
+            ),
+
+            //articles list
+            Expanded(
+              child: isLoading
+                  ? Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CircularProgressIndicator(color: colors.primary),
+                      ],
+                    )
+                  : ListView.builder(
                       padding: const EdgeInsets.only(
                           bottom: 20, left: 30, right: 30, top: 5),
                       itemCount: count ?? allArtList.length,
@@ -97,7 +109,7 @@ class _RssFeedState extends State<RssFeed> {
                                       : artList![index].title,
                                   textAlign: TextAlign.right,
                                   style: TextStyle(
-                                    color: colors.secondary,
+                                    color: colors.text,
                                     fontWeight: FontWeight.w900,
                                     fontSize: headingFont,
                                   ),
@@ -108,7 +120,7 @@ class _RssFeedState extends State<RssFeed> {
                                       source: artList == null
                                           ? allArtList[index].link.source.source
                                           : artList![index].link.source.source,
-                                      date: DateFormat().formatDate(
+                                      date: DateFormatter().formatDate(
                                           artList == null
                                               ? allArtList[index].date
                                               : artList![index].date),
@@ -139,9 +151,9 @@ class _RssFeedState extends State<RssFeed> {
                               ),
                             ),
                             // if (!isFinished &&
-                            //     index == allArtList.length - 1) ...[
+                            //     index == (count ?? allArtList.length) - 1) ...[
                             //   Padding(
-                            //     padding: EdgeInsets.only(top: 20),
+                            //     padding: const EdgeInsets.only(top: 20),
                             //     child: SizedBox(
                             //       width: 25,
                             //       height: 25,
@@ -155,9 +167,9 @@ class _RssFeedState extends State<RssFeed> {
                         ),
                       ),
                     ),
-                  )
-                ],
-              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -178,24 +190,29 @@ class SourceLine extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ColorTheme colors = context.watch<DarkMode>().mode;
+    bool isDarkMode = context.watch<DarkMode>().isDarkMode;
 
     return Padding(
       padding: const EdgeInsets.only(top: 15, bottom: 15),
       child: Column(
         children: [
-          Divider(color: colors.background, thickness: 1.2),
+          Divider(
+              color: isDarkMode ? colors.background : colors.secondary,
+              thickness: 1.2),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SpeakIconButton(
                 speakText: speakText,
                 vertPadding: 0,
-                iconColor: colors.background,
+                iconColor: isDarkMode ? colors.text : colors.secondary,
               ),
               Text('$source | $date', style: TextStyle(color: colors.text2)),
             ],
           ),
-          Divider(color: colors.background, thickness: 1.2),
+          Divider(
+              color: isDarkMode ? colors.background : colors.secondary,
+              thickness: 1.2),
         ],
       ),
     );

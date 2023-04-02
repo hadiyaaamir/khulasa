@@ -9,10 +9,10 @@ import 'package:khulasa/Models/user.dart';
 
 import 'package:khulasa/Models/user.dart';
 
-import 'package:khulasa/Views/Entrance/button.dart';
+import 'package:khulasa/Views/Widgets/button.dart';
 import 'package:khulasa/Views/Entrance/login.dart';
-import 'package:khulasa/Views/Entrance/textfield.dart';
-import 'package:khulasa/Views/Options/option.dart';
+import 'package:khulasa/Views/Widgets/textfield.dart';
+import 'package:khulasa/Views/Entrance/option.dart';
 import 'package:provider/provider.dart';
 
 final GlobalKey<FormState> _formKey = GlobalKey<FormState>();

@@ -14,7 +14,7 @@ class FilterOptionsBox extends StatelessWidget {
     return Container(
       height: screenHeight / 2,
       decoration: BoxDecoration(
-        color: colors.background,
+        color: colors.primary,
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(35),
           topRight: Radius.circular(35),

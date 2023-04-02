@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:khulasa/Controllers/darkMode.dart';
 import 'package:khulasa/Models/article.dart';
 import 'package:khulasa/Models/colorTheme.dart';
+import 'package:khulasa/Views/Widgets/NavBar/customAppBar.dart';
 import 'package:khulasa/Views/Widgets/iconButtons.dart';
 import 'package:provider/provider.dart';
 import 'package:khulasa/constants/sizes.dart';
@@ -25,11 +26,7 @@ class _ArticleState extends State<Article> {
 
     return Scaffold(
       backgroundColor: colors.background,
-      appBar: AppBar(
-        backgroundColor: colors.background,
-        foregroundColor: isDarkMode ? colors.text : colors.secondary,
-        elevation: 0,
-      ),
+      appBar: CustomAppBar(),
       body: Center(
         child: Padding(
           padding:

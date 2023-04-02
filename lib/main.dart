@@ -1,19 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-
 import 'package:khulasa/Controllers/RSS/articleprovider.dart';
 import 'package:khulasa/Controllers/RSS/categoryprovider.dart';
-
-import 'package:firebase_core/firebase_core.dart';
-
 import 'package:khulasa/Controllers/darkMode.dart';
 import 'package:khulasa/Controllers/languageprovider.dart';
 import 'package:khulasa/Controllers/navigation.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Views/Entrance/login.dart';
-import 'package:khulasa/constants/colors.dart';
 import 'package:khulasa/constants/sizes.dart';
 import 'package:provider/provider.dart';
 

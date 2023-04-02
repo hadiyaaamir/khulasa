@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:khulasa/Controllers/darkMode.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Views/Widgets/NavBar/AppBarPage.dart';
 import 'package:khulasa/Views/Summary/linkSummary.dart';
 import 'package:khulasa/Views/Summary/textSummary.dart';
-import 'package:khulasa/constants/colors.dart';
-import 'package:khulasa/constants/sizes.dart';
+import 'package:khulasa/Views/Widgets/NavBar/customAppBar.dart';
 import 'package:provider/provider.dart';
 
 class Summary extends StatefulWidget {
@@ -21,17 +18,10 @@ class _SummaryState extends State<Summary> {
   @override
   Widget build(BuildContext context) {
     ColorTheme colors = context.watch<DarkMode>().mode;
-    bool isDarkMode = context.watch<DarkMode>().isDarkMode;
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text(""),
-        backgroundColor: colors.background,
-        foregroundColor: isDarkMode ? colors.text : colors.secondary,
-        elevation: 0,
-      ),
-      drawer: Drawer(
-        child: Draw(),
-      ),
+      appBar: CustomAppBar(title: 'Summary'),
+      drawer: const Drawer(child: Draw()),
       backgroundColor: colors.background,
       body: Center(
         child: DefaultTabController(

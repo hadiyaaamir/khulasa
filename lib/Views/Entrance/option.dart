@@ -29,9 +29,7 @@ class _OptionState extends State<Option> {
 
     return Scaffold(
       appBar: CustomAppBar(),
-      drawer: Drawer(
-        child: Draw(),
-      ),
+      drawer: const Drawer(child: Draw()),
       backgroundColor: colors.background,
       body: Center(
         child: SingleChildScrollView(
@@ -50,7 +48,7 @@ class _OptionState extends State<Option> {
               Btn(
                 label: "RSS Feed",
                 onPress: () =>
-                    Navigation().navigation(context, const RssFeed()),
+                    Navigation().navigation(context, const Categories()),
                 background: colors.primary,
                 foreground: colors.text,
                 height: 160,

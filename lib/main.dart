@@ -20,7 +20,7 @@ Future<void> main() async {
       providers: [
         ChangeNotifierProvider(create: (context) => Language()),
         ChangeNotifierProvider(create: (context) => DarkMode()),
-        ChangeNotifierProvider(create: (context) => catprovider()),
+        // ChangeNotifierProvider(create: (context) => catprovider()),
         ChangeNotifierProvider(create: (context) => articleprovider()),
       ],
       child: const MyApp(),

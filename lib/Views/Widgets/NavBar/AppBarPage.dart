@@ -54,14 +54,27 @@ class _DrawState extends State<Draw> {
 
                   //toggle button here
                 ),
-                const DrawerOption(text: 'RSS Feed', navTo: RssFeed()),
-                const DrawerOption(text: 'Summary', navTo: Summary()),
-                const DrawerOption(text: 'Saved', navTo: Saved()),
-                const DrawerOption(text: 'Settings', navTo: Settings()),
+                const DrawerOption(
+                    text: 'RSS Feed',
+                    navTo: Categories(),
+                    icon: Icons.find_in_page_outlined),
+                const DrawerOption(
+                    text: 'Summary', navTo: Summary(), icon: Icons.text_fields),
+                const DrawerOption(
+                  text: 'Saved',
+                  navTo: Saved(),
+                  icon: Icons.bookmark_border_outlined,
+                ),
+                const DrawerOption(
+                  text: 'Settings',
+                  navTo: Settings(),
+                  icon: Icons.settings_outlined,
+                ),
                 DrawerOption(
                     text: 'Logout',
                     navTo: const Login(),
-                    textColour: colors.secondary),
+                    textColour: colors.secondary,
+                    icon: Icons.logout_outlined),
               ],
             ),
             const Padding(
@@ -81,11 +94,13 @@ class DrawerOption extends StatelessWidget {
     this.textColour,
     required this.text,
     required this.navTo,
+    required this.icon,
   });
 
   final Color? textColour;
   final String text;
   final Widget navTo;
+  final IconData icon;
 
   @override
   Widget build(BuildContext context) {
@@ -97,6 +112,7 @@ class DrawerOption extends StatelessWidget {
             fontSize: buttonFont,
             color: textColour ?? colors.text,
           )),
+      leading: Icon(icon, color: textColour ?? colors.text),
       onTap: () {
         Navigation().navigationReplace(context, navTo);
       },

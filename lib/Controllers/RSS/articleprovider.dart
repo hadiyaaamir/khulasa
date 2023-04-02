@@ -57,6 +57,7 @@ class articleprovider extends ChangeNotifier {
           source: links[i].source.source, link: links[i].link);
       // arts.add(a);
       if (a.content.isNotEmpty && a.link != null && a.link!.link.isNotEmpty) {
+        await Api().getCategory(a.title).then((value) => a.category = value);
         await Api()
             .generateSummary(
               algo: summaryType1,

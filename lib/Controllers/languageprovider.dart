@@ -1,15 +1,21 @@
 import 'package:flutter/cupertino.dart';
 
 class Language extends ChangeNotifier {
-  bool English = true;
+  bool _isEnglish = false;
+  bool get isEnglish => _isEnglish;
+
+  void toggleLanguage() {
+    _isEnglish = !_isEnglish;
+    notifyListeners();
+  }
 
   void toUrdu() {
-    English = false;
+    _isEnglish = false;
     notifyListeners();
   }
 
   void toEnglish() {
-    English = true;
+    _isEnglish = true;
     notifyListeners();
   }
 }

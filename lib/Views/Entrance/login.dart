@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:khulasa/Controllers/darkMode.dart';
+import 'package:khulasa/Controllers/languageprovider.dart';
 import 'package:khulasa/Controllers/navigation.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Views/Widgets/button.dart';
@@ -25,6 +26,8 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     ColorTheme colors = context.watch<DarkMode>().mode;
+    bool isEnglish = context.watch<Language>().isEnglish;
+
     return Scaffold(
       backgroundColor: colors.background,
       body: Center(
@@ -35,7 +38,8 @@ class _LoginState extends State<Login> {
           children: [
             //email textfield
             textField(
-              label: "Email",
+              label: isEnglish ? "Email" : "email in urdu",
+              directionality: isEnglish ? TextDirection.ltr : TextDirection.rtl,
               icon: Icons.email,
               controller: emailController,
               allowEmpty: true,
@@ -53,7 +57,8 @@ class _LoginState extends State<Login> {
 
             //password textfield
             textField(
-              label: "Password",
+              label: isEnglish ? "Password" : "email in urdu",
+              directionality: isEnglish ? TextDirection.ltr : TextDirection.rtl,
               controller: passwordController,
               icon: Icons.password_rounded,
               password: true,
@@ -65,7 +70,7 @@ class _LoginState extends State<Login> {
 
             //button
             Btn(
-                label: "LOGIN",
+                label: isEnglish ? "LOGIN" : "LOGIN in urdu",
                 onPress: () async {
                   final FormState form = _formKey.currentState as FormState;
                   if (form.validate()) {
@@ -76,7 +81,9 @@ class _LoginState extends State<Login> {
 
             RichText(
                 text: TextSpan(
-                    text: "Don't have an acount? Sign Up!",
+                    text: isEnglish
+                        ? "Don't have an acount? Sign Up!"
+                        : "urdu text",
                     style: TextStyle(color: colors.text),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {

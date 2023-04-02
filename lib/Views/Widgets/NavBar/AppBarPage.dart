@@ -54,7 +54,7 @@ class _DrawState extends State<Draw> {
 
                   //toggle button here
                 ),
-                const DrawerOption(text: 'RSS Feed', navTo: RssFeed()),
+                const DrawerOption(text: 'RSS Feed', navTo: Categories()),
                 const DrawerOption(text: 'Summary', navTo: Summary()),
                 const DrawerOption(text: 'Saved', navTo: Saved()),
                 const DrawerOption(text: 'Settings', navTo: Settings()),

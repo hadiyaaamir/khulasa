@@ -1,9 +1,13 @@
+import 'package:flutter/material.dart';
+
 class category {
   String cat;
-  bool isFav;
+  String name;
+  IconData icon;
 
   category({
     required this.cat,
-    required this.isFav,
+    required this.name,
+    required this.icon,
   });
 }

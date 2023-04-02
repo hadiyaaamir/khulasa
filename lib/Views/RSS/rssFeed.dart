@@ -5,6 +5,7 @@ import 'package:khulasa/Controllers/darkMode.dart';
 import 'package:khulasa/Controllers/dateFormat.dart';
 import 'package:khulasa/Controllers/navigation.dart';
 import 'package:khulasa/Models/article.dart';
+import 'package:khulasa/Models/category.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Views/Widgets/NavBar/AppBarPage.dart';
 import 'package:khulasa/Views/Widgets/NavBar/customAppBar.dart';
@@ -17,7 +18,9 @@ import 'package:khulasa/constants/sizes.dart';
 import 'package:provider/provider.dart';
 
 class RssFeed extends StatefulWidget {
-  const RssFeed({super.key});
+  const RssFeed({super.key, required this.cat});
+
+  final category cat;
 
   @override
   State<RssFeed> createState() => _RssFeedState();
@@ -38,19 +41,21 @@ class _RssFeedState extends State<RssFeed> {
 
   @override
   Widget build(BuildContext context) {
-    List allArtList = context.watch<articleprovider>().articlesList;
-    bool isFinished = context.watch<articleprovider>().isFinished;
-    ColorTheme colors = context.watch<DarkMode>().mode;
-    bool isDarkMode = context.watch<DarkMode>().isDarkMode;
+    List allArtList =
+        context.watch<articleprovider>().articlesList.where((art) {
+      return art.category == widget.cat.cat;
+    }).toList();
 
+    // bool isFinished = context.watch<articleprovider>().isFinished;
+    ColorTheme colors = context.watch<DarkMode>().mode;
     allArtList.isEmpty ? isLoading = true : isLoading = false;
 
     // if(artList == null)
 
     return Scaffold(
       backgroundColor: colors.background,
-      appBar: CustomAppBar(title: 'RSS Feed'),
-      drawer: const Drawer(child: Draw()),
+      appBar: CustomAppBar(title: widget.cat.name),
+      // drawer: const Drawer(child: Draw()),
       body: Center(
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.center,
@@ -71,7 +76,9 @@ class _RssFeedState extends State<RssFeed> {
               padding: const EdgeInsets.only(bottom: 15),
               child: Text(
                 count == null
-                    ? 'Fetching articles...'
+                    ? allArtList.isEmpty
+                        ? 'Fetching articles...'
+                        : 'Fetched ${allArtList.length.toString()} articles'
                     : 'Fetched ${count.toString()} articles',
                 style: TextStyle(color: colors.text),
               ),

@@ -1,75 +1,67 @@
-// import 'package:flutter/material.dart';
-// import 'package:flutter/src/widgets/container.dart';
-// import 'package:flutter/src/widgets/framework.dart';
-// import 'package:khulasa/Controllers/RSS/categoryprovider.dart';
-// import 'package:khulasa/Controllers/RSS/categoryprovider.dart';
-// import 'package:khulasa/Views/NavBar/AppBarPage.dart';
-// import 'package:khulasa/Views/RSS/articlelist.dart';
-// import 'package:khulasa/constants/colors.dart';
-// import 'package:khulasa/constants/sizes.dart';
-// import 'package:provider/provider.dart';
-// import '../../Models/category.dart';
+import 'package:flutter/material.dart';
+import 'package:khulasa/Controllers/darkMode.dart';
+import 'package:khulasa/Controllers/navigation.dart';
+import 'package:khulasa/Models/category.dart';
+import 'package:khulasa/Models/colorTheme.dart';
+import 'package:khulasa/Views/RSS/rssFeed.dart';
+import 'package:khulasa/Views/Widgets/NavBar/AppBarPage.dart';
+import 'package:khulasa/Views/Widgets/NavBar/customAppBar.dart';
+import 'package:khulasa/constants/categories.dart';
+import 'package:khulasa/constants/sizes.dart';
+import 'package:provider/provider.dart';
 
-// class Categories extends StatefulWidget {
-//   const Categories({super.key});
+class Categories extends StatefulWidget {
+  const Categories({super.key});
 
-//   @override
-//   State<Categories> createState() => _CategoriesState();
-// }
+  @override
+  State<Categories> createState() => _CategoriesState();
+}
 
-// class _CategoriesState extends State<Categories> {
-//   @override
-//   Widget build(BuildContext context) {
-//     List<category> categorylist = context.watch<catprovider>().categoryList;
-//     return Scaffold(
-//        appBar: AppBar(
-//         title: Text(""),
-//         backgroundColor: background,
-//       ),
-     
-//      drawer: Drawer(
-//       child: Draw(),
-//      ),
-//         backgroundColor: background,
-//         body: Center(
-//           child: Column(
-//             mainAxisAlignment: MainAxisAlignment.center,
-//             children: [
-//               const Padding(
-//                 padding: EdgeInsets.only(top: 5.0),
-//                 child: Text(
-//                   "RSS Feed",
-//                   style: TextStyle(
-//                     color: text,
-//                     fontSize: headingFont,
-//                   ),
-//                 ),
-//               ),
-//               Expanded(
-//                 child: ListView.builder(
-//                     padding: const EdgeInsets.symmetric(
-//                         vertical: 15, horizontal: 20),
-//                     itemCount: context.read<catprovider>().count,
-//                     itemBuilder: (context, index) => Card(
-//                           color: primary,
-//                           child: ListTile(
-//                             onTap: () {
-//                               Navigator.of(context).push(MaterialPageRoute(
-//                                   builder: (context) => articleList(
-//                                         c: context
-//                                             .watch<catprovider>()
-//                                             .getcategory(index),
-//                                       )));
-//                             },
-//                             shape: const RoundedRectangleBorder(
-//                               borderRadius:
-//                                   BorderRadius.all(Radius.circular(5)),
-//                             ),
-//                             title: Text(
-//                               context.read<catprovider>().getcategory(index),
-//                               style: const TextStyle(
-//                                   color: text, fontSize: buttonFont),
-//                             ),
+class _CategoriesState extends State<Categories> {
+  @override
+  Widget build(BuildContext context) {
+    ColorTheme colors = context.watch<DarkMode>().mode;
+    return Scaffold(
+      appBar: CustomAppBar(
+        title: 'RSS Feed',
+      ),
+      drawer: const Drawer(child: Draw()),
+      backgroundColor: colors.background,
+      body: ListView.builder(
+        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+        itemCount: categories.length,
+        itemBuilder: (context, index) => Padding(
+          padding: const EdgeInsets.only(bottom: 0),
+          child: Card(
+            color: colors.primary,
+            child: ListTile(
+              contentPadding:
+                  const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
+              title: Text(
+                categories[index].name,
+                style: TextStyle(color: colors.text, fontSize: headingFont),
+              ),
+
+              leading:
+                  Icon(categories[index].icon, color: colors.text, size: 30),
+              onTap: () {
+                Navigation()
+                    .navigation(context, RssFeed(cat: categories[index]));
+              },
+              // onTap: Navigation().navigation(context, RssFeed()),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
+
+/*
+
+
 //                             trailing: GestureDetector(
 //                                 child:
 //                                     (!context.read<catprovider>().getfav(index))
@@ -88,12 +80,5 @@
 //                                           .read<catprovider>()
 //                                           .getfav(index));
 //                                 }),
-//                             tileColor: primary,
-//                           ),
-//                         )),
-//               ),
-//             ],
-//           ),
-//         ));
-//   }
-// }
+//                             \
+*/

@@ -34,16 +34,23 @@ class _CategoriesState extends State<Categories> {
           padding: const EdgeInsets.only(bottom: 0),
           child: Card(
             color: colors.primary,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+            ),
             child: ListTile(
               contentPadding:
-                  const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
+                  const EdgeInsets.symmetric(vertical: 7, horizontal: 25),
+
               title: Text(
                 categories[index].name,
-                style: TextStyle(color: colors.text, fontSize: headingFont),
+                style: TextStyle(color: colors.text),
               ),
 
-              leading:
-                  Icon(categories[index].icon, color: colors.text, size: 30),
+              leading: Icon(categories[index].icon, color: colors.text),
+              trailing: Icon(
+                Icons.keyboard_arrow_right_rounded,
+                color: colors.text2,
+              ),
               onTap: () {
                 Navigation()
                     .navigation(context, RssFeed(cat: categories[index]));

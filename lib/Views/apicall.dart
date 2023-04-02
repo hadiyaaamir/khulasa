@@ -76,9 +76,9 @@ class _ApiCallState extends State<ApiCall> {
 
                 formatSources = [
                   sources[0],
+                  sources[1],
                   sources[2],
                   sources[3],
-                  sources[4],
                 ];
 
                 formattedDates = ['', '', '', ''];

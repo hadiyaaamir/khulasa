@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:khulasa/Controllers/darkMode.dart';
 import 'package:khulasa/Models/article.dart';
 import 'package:khulasa/Models/colorTheme.dart';

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:khulasa/Controllers/darkMode.dart';
 import 'package:khulasa/Controllers/languageprovider.dart';
+import 'package:khulasa/Controllers/userController.dart';
 import 'package:khulasa/Models/category.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Views/Entrance/login.dart';
@@ -113,7 +114,9 @@ class _DrawState extends State<Draw> {
                   DrawerOption(
                     text: 'Logout',
                     onPress: () {
+                      UserController().setSignOut();
                       Navigation().navigationReplace(context, const Login());
+                      
                     },
                     icon: Icons.logout_outlined,
                   ),

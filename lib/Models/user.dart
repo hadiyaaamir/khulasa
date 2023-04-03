@@ -1,19 +1,21 @@
 import 'package:khulasa/Models/savedSummary.dart';
 import 'package:khulasa/Models/summary.dart';
 
-class User {
-  User({
+class appUser {
+  appUser({
     this.firstName = "",
     this.lastName = "",
     this.email = "",
-    this.password = "",
+    this.darkMode = false,
+    this.english = false,
     this.savedSummaries = const [],
     this.isLoggedIn = true,
   });
 
   String firstName;
   String lastName;
-  String password;
+  bool darkMode;
+  bool english;
 
   List<savedSummary> savedSummaries;
 
@@ -24,18 +26,21 @@ class User {
     final Map<String, dynamic> data = {};
     data['firstName'] = firstName;
     data['lastName'] = lastName;
-    data['password'] = password;
+    data['email'] = email;
     data['isLoggedIn'] = isLoggedIn;
+    data['darkMode'] = darkMode;
+    data['english'] = english;
     return data;
   }
 
-  static User fromJson(Map<String, dynamic> json) {
-    return User(
+  static appUser fromJson(Map<String, dynamic> json) {
+    return appUser(
       firstName: json['firstName'],
       lastName: json['lastName'],
-      password: json['password'],
       email: json['email'],
       isLoggedIn: json['isLoggedIn'],
+      darkMode: json['darkMode'],
+      english: json['english'],
     );
   }
 }

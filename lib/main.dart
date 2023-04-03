@@ -10,17 +10,17 @@ import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Views/Entrance/login.dart';
 import 'package:khulasa/constants/sizes.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp();
+  await Firebase.initializeApp();
 
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => Language()),
         ChangeNotifierProvider(create: (context) => DarkMode()),
-        // ChangeNotifierProvider(create: (context) => catprovider()),
         ChangeNotifierProvider(create: (context) => articleprovider()),
       ],
       child: const MyApp(),

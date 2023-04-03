@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:khulasa/Controllers/darkMode.dart';
+import 'package:khulasa/Controllers/languageprovider.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/constants/colors.dart';
 import 'package:provider/provider.dart';
@@ -21,19 +22,29 @@ class ToggleButton extends StatefulWidget {
 
 class _ToggleButtonState extends State<ToggleButton> {
   bool vertical = false;
-  final List<bool> selected = <bool>[true, false];
+  List<bool> selected = <bool>[true, false];
+
   @override
   Widget build(BuildContext context) {
     ColorTheme colors = context.watch<DarkMode>().mode;
+    bool isEnglish = context.watch<Language>().isEnglish;
+
+    selected = <bool>[isEnglish, !isEnglish];
+
     return ToggleButtons(
       direction: vertical ? Axis.vertical : Axis.horizontal,
       onPressed: (int index) {
-        setState(() {
-          // The button that is tapped is set to true, and the others to false.
-          for (int i = 0; i < selected.length; i++) {
-            selected[i] = i == index;
-          }
-        });
+        // setState(() {
+        // The button that is tapped is set to true, and the others to false.
+        // for (int i = 0; i < selected.length; i++) {
+        //   selected[i] = i == index;
+        // }
+        // });
+        if (index == 0 && !selected[index]) {
+          context.read<Language>().toEnglish();
+        } else if (index == 1 && !selected[index]) {
+          context.read<Language>().toUrdu();
+        }
       },
       borderRadius: const BorderRadius.all(Radius.circular(8)),
       borderWidth: 3,

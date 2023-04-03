@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:khulasa/Controllers/darkMode.dart';
+import 'package:khulasa/Controllers/languageprovider.dart';
 import 'package:khulasa/Controllers/navigation.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Views/Widgets/NavBar/customAppBar.dart';
@@ -26,6 +27,7 @@ class _OptionState extends State<Option> {
   Widget build(BuildContext context) {
     ColorTheme colors = context.watch<DarkMode>().mode;
     bool isDarkMode = context.watch<DarkMode>().isDarkMode;
+    bool isEnglish = context.watch<Language>().isEnglish;
 
     return Scaffold(
       appBar: CustomAppBar(),
@@ -37,7 +39,7 @@ class _OptionState extends State<Option> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Btn(
-                label: "Summary",
+                label: isEnglish ? "Summary" : "خلاصہ",
                 onPress: () =>
                     Navigation().navigation(context, const Summary()),
                 background: colors.primary,
@@ -46,7 +48,7 @@ class _OptionState extends State<Option> {
                 font: largeFont,
               ),
               Btn(
-                label: "RSS Feed",
+                label: isEnglish ? "RSS Feed" : "RSS in urdu",
                 onPress: () =>
                     Navigation().navigation(context, const Categories()),
                 background: colors.primary,

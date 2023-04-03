@@ -14,9 +14,9 @@ class textField extends StatelessWidget {
     this.lines = 1,
     this.paddingVert = 10,
     this.textAlign = TextAlign.left,
-
     this.allowEmpty = false,
     this.isLoading = false,
+    this.directionality = TextDirection.ltr,
   });
 
   final TextEditingController controller;
@@ -31,11 +31,15 @@ class textField extends StatelessWidget {
   final bool allowEmpty;
   final bool isLoading;
 
+  final TextDirection directionality;
+
   @override
   Widget build(BuildContext context) {
     ColorTheme colors = context.watch<DarkMode>().mode;
     return Padding(
-        padding: EdgeInsets.symmetric(horizontal: 50, vertical: paddingVert),
+      padding: EdgeInsets.symmetric(horizontal: 50, vertical: paddingVert),
+      child: Directionality(
+        textDirection: directionality,
         child: TextFormField(
           textAlign: textAlign,
           cursorColor: colors.text,
@@ -69,6 +73,8 @@ class textField extends StatelessWidget {
             return validate == null ? null : validate!(value);
           },
           style: (TextStyle(color: colors.text)),
-        ));
+        ),
+      ),
+    );
   }
 }

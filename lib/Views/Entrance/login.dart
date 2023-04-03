@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:khulasa/Controllers/darkMode.dart';
 import 'package:khulasa/Controllers/languageprovider.dart';
 import 'package:khulasa/Controllers/navigation.dart';
+import 'package:khulasa/Controllers/userController.dart';
 import 'package:khulasa/Models/colorTheme.dart';
+import 'package:khulasa/Views/Entrance/signup.dart';
 import 'package:khulasa/Views/Widgets/button.dart';
 import 'package:khulasa/Views/Widgets/textfield.dart';
 import 'package:khulasa/Views/Entrance/option.dart';
@@ -74,8 +76,11 @@ class _LoginState extends State<Login> {
                 onPress: () async {
                   final FormState form = _formKey.currentState as FormState;
                   if (form.validate()) {
-                    //check database
-                    Navigation().navigationReplace(context, const Option());
+                    UserController()
+                        .setLoggedIn(
+                            emailController.text, passwordController.text)
+                        .then(Navigation()
+                            .navigationReplace(context, const Option()));
                   }
                 }),
 
@@ -87,7 +92,7 @@ class _LoginState extends State<Login> {
                     style: TextStyle(color: colors.text),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
-                        Navigation().navigation(context, const ApiCall());
+                        Navigation().navigation(context, const SignUp());
                       }))
           ],
         ),

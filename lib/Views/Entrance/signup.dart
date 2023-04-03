@@ -7,13 +7,12 @@ import 'package:khulasa/Controllers/usercontroller.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Models/user.dart';
 
-import 'package:khulasa/Models/user.dart';
-
 import 'package:khulasa/Views/Widgets/button.dart';
 import 'package:khulasa/Views/Entrance/login.dart';
 import 'package:khulasa/Views/Widgets/textfield.dart';
 import 'package:khulasa/Views/Entrance/option.dart';
 import 'package:provider/provider.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 
 final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -94,14 +93,13 @@ class _SignUpState extends State<SignUp> {
                   onPress: () async {
                     final FormState form = _formKey.currentState as FormState;
                     if (form.validate()) {
-                      User user = User(
+                      appUser user = appUser(
                           firstName: firstNameController.text,
                           lastName: lastNameController.text,
-                          email: emailController.text,
-                          password: passwordController.text);
+                          email: emailController.text);
                       //add to Database
 
-                      UserController().addToDB(user);
+                      UserController().addToDB(user, passwordController.text);
                       Navigation().navigationReplace(context, const Option());
                     }
                   }),

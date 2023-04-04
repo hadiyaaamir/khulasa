@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:khulasa/Controllers/darkMode.dart';
 import 'package:khulasa/Controllers/languageprovider.dart';
 import 'package:khulasa/Controllers/navigation.dart';
+import 'package:khulasa/Controllers/userController.dart';
 import 'package:khulasa/Models/colorTheme.dart';
+import 'package:khulasa/Views/Entrance/signup.dart';
 import 'package:khulasa/Views/Widgets/button.dart';
 import 'package:khulasa/Views/Widgets/textfield.dart';
 import 'package:khulasa/Views/Entrance/option.dart';
@@ -68,31 +70,33 @@ class _LoginState extends State<Login> {
                 },
               ),
 
-              //button
-              Btn(
-                  label: isEnglish ? "LOGIN" : "LOGIN in urdu",
-                  onPress: () async {
-                    final FormState form = _formKey.currentState as FormState;
-                    if (form.validate()) {
-                      //check database
-                      Navigation().navigationReplace(context, const Option());
-                    }
-                  }),
+            //button
+            Btn(
+                label: isEnglish ? "LOGIN" : "LOGIN in urdu",
+                onPress: () async {
+                  final FormState form = _formKey.currentState as FormState;
+                  if (form.validate()) {
+                    UserController()
+                        .setLoggedIn(
+                            emailController.text, passwordController.text)
+                        .then(Navigation()
+                            .navigationReplace(context, const Option()));
+                  }
+                }),
 
-              RichText(
-                  text: TextSpan(
-                      text: isEnglish
-                          ? "Don't have an acount? Sign Up!"
-                          : "urdu text",
-                      style: TextStyle(color: colors.text),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          Navigation().navigation(context, const ApiCall());
-                        }))
-            ],
-          ),
-        )),
-      ),
+            RichText(
+                text: TextSpan(
+                    text: isEnglish
+                        ? "Don't have an account? Sign Up!"
+                        : "urdu text",
+                    style: TextStyle(color: colors.text),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        Navigation().navigation(context, const SignUp());
+                      }))
+          ],
+        ),
+      )),
     );
   }
 }

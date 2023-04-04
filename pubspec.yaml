@@ -42,7 +42,7 @@ dependencies:
   cloud_firestore: ^4.3.1
   firebase_core: ^2.4.1
   flutter_tts: ^3.6.3
-  intl: ^0.18.0
+  intl: ^0.17.0
   web_scraper: ^0.1.4
   # tesseract_ocr: ^0.3.1
   flutter_tesseract_ocr: ^0.4.20
@@ -50,6 +50,8 @@ dependencies:
   syncfusion_flutter_pdf: ^20.4.51
   file_picker: ^5.2.5
   pdf_text: ^0.5.0
+  firebase_auth: ^4.4.0
+  firebase_auth_web: ^5.3.0
 
 
 dev_dependencies:

@@ -70,33 +70,34 @@ class _LoginState extends State<Login> {
                 },
               ),
 
-            //button
-            Btn(
-                label: isEnglish ? "LOGIN" : "LOGIN in urdu",
-                onPress: () async {
-                  final FormState form = _formKey.currentState as FormState;
-                  if (form.validate()) {
-                    UserController()
-                        .setLoggedIn(
-                            emailController.text, passwordController.text)
-                        .then(Navigation()
-                            .navigationReplace(context, const Option()));
-                  }
-                }),
+              //button
+              Btn(
+                  label: isEnglish ? "LOGIN" : "LOGIN in urdu",
+                  onPress: () async {
+                    final FormState form = _formKey.currentState as FormState;
+                    if (form.validate()) {
+                      UserController()
+                          .setLoggedIn(
+                              emailController.text, passwordController.text)
+                          .then(Navigation()
+                              .navigationReplace(context, const Option()));
+                    }
+                  }),
 
-            RichText(
-                text: TextSpan(
-                    text: isEnglish
-                        ? "Don't have an account? Sign Up!"
-                        : "urdu text",
-                    style: TextStyle(color: colors.text),
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = () {
-                        Navigation().navigation(context, const SignUp());
-                      }))
-          ],
-        ),
-      )),
+              RichText(
+                  text: TextSpan(
+                      text: isEnglish
+                          ? "Don't have an account? Sign Up!"
+                          : "urdu text",
+                      style: TextStyle(color: colors.text),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          Navigation().navigation(context, const SignUp());
+                        }))
+            ],
+          ),
+        )),
+      ),
     );
   }
 }

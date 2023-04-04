@@ -29,6 +29,7 @@ class _DrawState extends State<Draw> {
     ColorTheme colors = context.watch<DarkMode>().mode;
     String drawerLanguage = context.watch<Language>().drawerLanguage;
     bool isDarkMode = context.watch<DarkMode>().isDarkMode;
+    bool isEnglish = context.watch<Language>().isEnglish;
 
     return Drawer(
       backgroundColor: colors.primary,
@@ -42,7 +43,7 @@ class _DrawState extends State<Draw> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Padding(
-              padding: EdgeInsets.only(top: 120),
+              padding: const EdgeInsets.only(top: 70),
               child: Column(
                 children: [
                   // DrawerHeader(
@@ -62,7 +63,7 @@ class _DrawState extends State<Draw> {
 
                   //navigation options
                   DrawerOption(
-                    text: 'RSS Feed',
+                    text: isEnglish ? 'RSS Feed' : "آر ایس ایس فیڈ",
                     onPress: () {
                       Navigation()
                           .navigationReplace(context, const Categories());
@@ -70,21 +71,21 @@ class _DrawState extends State<Draw> {
                     icon: Icons.find_in_page_outlined,
                   ),
                   DrawerOption(
-                    text: 'Summary',
+                    text: isEnglish ? 'Summary' : "خلاصہ",
                     onPress: () {
                       Navigation().navigationReplace(context, const Summary());
                     },
                     icon: Icons.text_fields,
                   ),
                   DrawerOption(
-                    text: 'Saved',
+                    text: isEnglish ? 'Saved' : 'اردو saved',
                     onPress: () {
                       Navigation().navigationReplace(context, const Saved());
                     },
                     icon: Icons.bookmark_border_outlined,
                   ),
                   DrawerOption(
-                    text: 'Settings',
+                    text: isEnglish ? 'Settings' : 'اردو settings',
                     onPress: () {
                       Navigation().navigationReplace(context, const Settings());
                     },
@@ -101,7 +102,13 @@ class _DrawState extends State<Draw> {
                     icon: Icons.language_outlined,
                   ),
                   DrawerOption(
-                    text: isDarkMode ? 'Light Mode' : 'Dark Mode',
+                    text: isDarkMode
+                        ? isEnglish
+                            ? 'Light Mode'
+                            : 'اردو light'
+                        : isEnglish
+                            ? 'Dark Mode'
+                            : 'اردو dark',
                     onPress: () {
                       context.read<DarkMode>().toggleMode();
                     },
@@ -111,7 +118,7 @@ class _DrawState extends State<Draw> {
                   //logout
                   Divider(color: colors.secondary),
                   DrawerOption(
-                    text: 'Logout',
+                    text: isEnglish ? 'Logout' : 'اردو logout',
                     onPress: () {
                       Navigation().navigationReplace(context, const Login());
                     },

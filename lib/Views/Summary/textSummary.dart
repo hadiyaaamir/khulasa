@@ -1,6 +1,7 @@
 // import 'dart:html';
 import 'dart:convert';
 
+import 'package:khulasa/Controllers/languageprovider.dart';
 import 'package:pdf_text/pdf_text.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -40,6 +41,7 @@ class _TextSummaryState extends State<TextSummary> {
   @override
   Widget build(BuildContext context) {
     ColorTheme colors = context.watch<DarkMode>().mode;
+    bool isEnglish = context.watch<Language>().isEnglish;
     bool scanning = false;
     bool attach = false;
     String extractedText = '';
@@ -60,13 +62,13 @@ class _TextSummaryState extends State<TextSummary> {
                       isLoading: true,
                     )
                   : textField(
-                      label: "Enter text here",
+                      label: isEnglish ? "Enter text here" : 'اردو',
                       controller: textController,
                       lines: 5,
                       textAlign: TextAlign.right,
                     ),
               Btn(
-                label: "Attach file",
+                label: isEnglish ? "Attach file" : 'اردو',
                 background: colors.secondary,
                 height: 30,
                 width: 130,
@@ -102,7 +104,7 @@ class _TextSummaryState extends State<TextSummary> {
                 },
               ),
               Dropdown(
-                label: "Summarising Algorithm",
+                label: isEnglish ? "Summarising Algorithm" : 'اردو',
                 categories: [summaryChoice1, summaryChoice2],
                 paddingVert: 20,
                 setAlgo: (algorithm) => algo = algorithm,
@@ -111,7 +113,7 @@ class _TextSummaryState extends State<TextSummary> {
                 setSize: (String size) => ratio = getRatio(size),
               ),
               Btn(
-                label: "GENERATE SUMMARY",
+                label: isEnglish ? "GENERATE SUMMARY" : 'اردو',
                 onPress: () async {
                   final FormState form =
                       _summaryFormKey.currentState as FormState;

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:khulasa/Controllers/RSS/articleprovider.dart';
 import 'package:khulasa/Controllers/darkMode.dart';
 import 'package:khulasa/Controllers/dateFormat.dart';
+import 'package:khulasa/Controllers/languageprovider.dart';
 import 'package:khulasa/Controllers/navigation.dart';
 import 'package:khulasa/Models/article.dart';
 import 'package:khulasa/Models/category.dart';
@@ -48,13 +49,18 @@ class _RssFeedState extends State<RssFeed> {
 
     // bool isFinished = context.watch<articleprovider>().isFinished;
     ColorTheme colors = context.watch<DarkMode>().mode;
+    bool isEnglish = context.watch<Language>().isEnglish;
+
     allArtList.isEmpty ? isLoading = true : isLoading = false;
 
     // if(artList == null)
 
     return Scaffold(
       backgroundColor: colors.background,
-      appBar: CustomAppBar(title: widget.cat.name),
+      appBar: CustomAppBar(
+        title: isEnglish ? widget.cat.name : widget.cat.nameUrdu,
+        fakeRTL: !isEnglish,
+      ),
       // drawer: const Drawer(child: Draw()),
       body: Center(
         child: Column(

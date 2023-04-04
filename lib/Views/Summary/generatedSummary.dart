@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:khulasa/Controllers/darkMode.dart';
+import 'package:khulasa/Controllers/languageprovider.dart';
 import 'package:khulasa/Controllers/tts.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Views/Widgets/iconButtons.dart';
@@ -16,8 +17,10 @@ class GeneratedSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ColorTheme colors = context.watch<DarkMode>().mode;
+    bool isEnglish = context.watch<Language>().isEnglish;
+
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+      padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
       child: Column(
         children: [
           Row(
@@ -27,7 +30,7 @@ class GeneratedSummary extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      "Summary",
+                      isEnglish ? "Summary" : 'اردو',
                       style: TextStyle(
                           color: colors.text,
                           fontSize: largeFont,

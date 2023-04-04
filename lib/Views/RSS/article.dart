@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:khulasa/Controllers/darkMode.dart';
+import 'package:khulasa/Controllers/languageprovider.dart';
 import 'package:khulasa/Models/article.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Views/Widgets/NavBar/customAppBar.dart';
@@ -22,10 +23,11 @@ class _ArticleState extends State<Article> {
   Widget build(BuildContext context) {
     ColorTheme colors = context.watch<DarkMode>().mode;
     bool isDarkMode = context.watch<DarkMode>().isDarkMode;
+    bool isEnglish = context.watch<Language>().isEnglish;
 
     return Scaffold(
       backgroundColor: colors.background,
-      appBar: CustomAppBar(),
+      appBar: CustomAppBar(fakeRTL: !isEnglish),
       body: Center(
         child: Padding(
           padding:

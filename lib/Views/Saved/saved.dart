@@ -37,10 +37,8 @@ class _SavedState extends State<Saved> {
     return Directionality(
       textDirection: isEnglish ? TextDirection.ltr : TextDirection.rtl,
       child: Scaffold(
-        appBar: CustomAppBar(title: 'Saved Summaries'),
-        drawer: Drawer(
-          child: Draw(),
-        ),
+        appBar: CustomAppBar(title: isEnglish ? 'Saved Summaries' : ''),
+        drawer: Drawer(child: Draw()),
         backgroundColor: colors.background,
         body: Center(
           child: Column(

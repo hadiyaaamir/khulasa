@@ -40,7 +40,7 @@ class _SettingsState extends State<Settings> {
       textDirection: isEnglish ? TextDirection.ltr : TextDirection.rtl,
       child: Scaffold(
         backgroundColor: colors.background,
-        appBar: CustomAppBar(title: 'Settings'),
+        appBar: CustomAppBar(title: isEnglish ? 'Settings' : ''),
         drawer: const Drawer(child: Draw()),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),

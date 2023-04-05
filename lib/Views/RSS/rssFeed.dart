@@ -11,7 +11,7 @@ import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Views/Widgets/NavBar/AppBarPage.dart';
 import 'package:khulasa/Views/Widgets/NavBar/customAppBar.dart';
 import 'package:khulasa/Views/RSS/article.dart';
-import 'package:khulasa/Views/RSS/filter.dart';
+import 'package:khulasa/Views/RSS/Filter/filter.dart';
 import 'package:khulasa/Views/RSS/searchbar.dart';
 import 'package:khulasa/Views/Widgets/iconButtons.dart';
 import 'package:khulasa/constants/colors.dart';

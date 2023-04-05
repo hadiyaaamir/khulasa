@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:khulasa/Controllers/darkMode.dart';
 import 'package:khulasa/Models/colorTheme.dart';
+import 'package:khulasa/Views/RSS/Filter/sourceFilter.dart';
 import 'package:khulasa/constants/sizes.dart';
 import 'package:provider/provider.dart';
 
@@ -12,7 +13,7 @@ class FilterOptionsBox extends StatelessWidget {
     ColorTheme colors = context.watch<DarkMode>().mode;
 
     return Container(
-      height: screenHeight / 2,
+      // height: screenHeight / 2,
       decoration: BoxDecoration(
         color: colors.primary,
         borderRadius: const BorderRadius.only(
@@ -24,8 +25,15 @@ class FilterOptionsBox extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            'Apply Filters',
-            style: TextStyle(color: colors.text, fontSize: headingFont),
+            'Filter Feed',
+            style: TextStyle(
+                color: colors.text,
+                fontSize: headingFont,
+                fontWeight: FontWeight.w600),
+          ),
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 15),
+            child: SourceFilter(),
           ),
         ],
       ),

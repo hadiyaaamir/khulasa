@@ -17,7 +17,7 @@ class Btn extends StatelessWidget {
     this.background,
     this.icon,
     this.paddingVert = 30,
-    this.paddingHor = 50,
+    this.paddingHor = 40,
     this.align = Alignment.center,
   });
 

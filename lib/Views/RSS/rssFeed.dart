@@ -16,6 +16,7 @@ import 'package:khulasa/Views/RSS/searchbar.dart';
 import 'package:khulasa/Views/Widgets/iconButtons.dart';
 import 'package:khulasa/constants/colors.dart';
 import 'package:khulasa/constants/sizes.dart';
+import 'package:khulasa/constants/sources.dart';
 import 'package:provider/provider.dart';
 
 class RssFeed extends StatefulWidget {
@@ -39,12 +40,14 @@ class _RssFeedState extends State<RssFeed> {
   //   artList = [];
   //   count = artList.length;
   // }
+  List filteredSources = List.from(sources);
 
   @override
   Widget build(BuildContext context) {
     List allArtList =
         context.watch<articleprovider>().articlesList.where((art) {
-      return art.category == widget.cat.cat;
+      return art.category == widget.cat.cat &&
+          filteredSources.contains(art.link.source);
     }).toList();
 
     // bool isFinished = context.watch<articleprovider>().isFinished;
@@ -69,10 +72,16 @@ class _RssFeedState extends State<RssFeed> {
             //search and filter
             Row(
               children: [
-                Filter(),
+                Filter(
+                  filteredSources: filteredSources,
+                  setFilteredSources: (List l) => setState(() {
+                    filteredSources = List.from(l);
+                  }),
+                ),
                 SearchBar(
-                  setArtList: (List list) => artList = list,
-                  setItemCount: (int itemcount) => count = itemcount,
+                  setArtList: (List list) => setState(() => artList = list),
+                  setItemCount: (int itemcount) =>
+                      setState(() => count = itemcount),
                   allArtList: allArtList,
                 ),
               ],

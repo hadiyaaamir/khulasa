@@ -32,14 +32,14 @@ class _SearchBarState extends State<SearchBar> {
     ColorTheme colors = context.watch<DarkMode>().mode;
     bool isDarkMode = context.watch<DarkMode>().isDarkMode;
 
-    if (_searchController.text.isEmpty) {
-      widget.setArtList(widget.allArtList);
-      widget.setItemCount(widget.allArtList.length);
-    } else {
-      widget.setArtList(artList);
-      widget.setItemCount(itemcount);
-      print(itemcount);
-    }
+    // if (_searchController.text.isEmpty) {
+    //   widget.setArtList(widget.allArtList);
+    //   widget.setItemCount(widget.allArtList.length);
+    // } else {
+    //   widget.setArtList(artList);
+    //   widget.setItemCount(itemcount);
+    //   print(itemcount);
+    // }
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(10, 20, 30, 20),
@@ -65,9 +65,18 @@ class _SearchBarState extends State<SearchBar> {
                       .contains(value.toString().toLowerCase());
             }).toList();
 
+            if (_searchController.text.isEmpty) {
+              widget.setArtList(widget.allArtList);
+              widget.setItemCount(widget.allArtList.length);
+            } else {
+              widget.setArtList(suggestions);
+              widget.setItemCount(suggestions.length);
+              print(itemcount);
+            }
+
             setState(() {
-              artList = suggestions;
-              itemcount = suggestions.length;
+              // artList = suggestions;
+              // itemcount = suggestions.length;
             });
           },
 

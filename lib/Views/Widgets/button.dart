@@ -19,6 +19,8 @@ class Btn extends StatelessWidget {
     this.paddingVert = 30,
     this.paddingHor = 40,
     this.align = Alignment.center,
+    this.fontWeight = FontWeight.normal,
+    this.borderColor = Colors.transparent,
   });
 
   final Function() onPress;
@@ -32,6 +34,8 @@ class Btn extends StatelessWidget {
   double paddingVert;
   double paddingHor;
   Alignment align;
+  FontWeight fontWeight;
+  Color borderColor;
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +59,7 @@ class Btn extends StatelessWidget {
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5.0),
-                  // side: BorderSide(color: colors.secondary),
+                  side: BorderSide(color: borderColor, width: 2),
                 ),
               ),
             ),
@@ -63,7 +67,10 @@ class Btn extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 if (icon != null) ...[Icon(icon, size: font + 2)],
-                Text(label, style: TextStyle(fontSize: font)),
+                Text(
+                  label,
+                  style: TextStyle(fontSize: font, fontWeight: fontWeight),
+                ),
               ],
             ),
           ),

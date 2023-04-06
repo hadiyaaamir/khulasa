@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:khulasa/Controllers/darkMode.dart';
-import 'package:khulasa/Controllers/languageprovider.dart';
+import 'package:khulasa/Controllers/Config/darkMode.dart';
+import 'package:khulasa/Controllers/Config/languageprovider.dart';
 import 'package:khulasa/Controllers/userController.dart';
 import 'package:khulasa/Models/category.dart';
 import 'package:khulasa/Models/colorTheme.dart';
@@ -11,7 +11,7 @@ import 'package:khulasa/Views/RSS/categories.dart';
 import 'package:khulasa/Views/RSS/rssFeed.dart';
 import 'package:khulasa/Views/Saved/saved.dart';
 import 'package:khulasa/Views/Summary/summary.dart';
-import 'package:khulasa/Controllers/navigation.dart';
+import 'package:khulasa/Controllers/HelperFunctions/navigation.dart';
 import 'package:khulasa/Views/Widgets/NavBar/themeRow.dart';
 import 'package:khulasa/Views/Widgets/NavBar/toggleMode.dart';
 import 'package:khulasa/constants/sizes.dart';
@@ -123,7 +123,6 @@ class _DrawState extends State<Draw> {
                     onPress: () {
                       UserController().setSignOut();
                       Navigation().navigationReplace(context, const Login());
-                      
                     },
                     icon: Icons.logout_outlined,
                   ),

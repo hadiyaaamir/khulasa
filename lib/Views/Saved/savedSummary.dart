@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:khulasa/Controllers/darkMode.dart';
+import 'package:khulasa/Controllers/Config/darkMode.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Models/savedSummary.dart';
 import 'package:provider/provider.dart';

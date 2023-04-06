@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:khulasa/Controllers/api.dart';
-import 'package:khulasa/Controllers/languageprovider.dart';
-import 'package:khulasa/Controllers/webScraping.dart';
+import 'package:khulasa/Controllers/Backend/api.dart';
+import 'package:khulasa/Controllers/Config/languageprovider.dart';
+import 'package:khulasa/Controllers/Backend/webScraping.dart';
 import 'package:khulasa/Views/Widgets/button.dart';
 import 'package:khulasa/Views/Widgets/textfield.dart';
 import 'package:khulasa/Views/Summary/generatedSummary.dart';

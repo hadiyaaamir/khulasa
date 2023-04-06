@@ -1,8 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:khulasa/Controllers/darkMode.dart';
-import 'package:khulasa/Controllers/dialog.dart';
+import 'package:khulasa/Controllers/Config/darkMode.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Views/RSS/Filter/filterOptions.dart';
 import 'package:khulasa/constants/colors.dart';

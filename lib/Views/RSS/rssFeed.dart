@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'package:khulasa/Controllers/RSS/articleprovider.dart';
-import 'package:khulasa/Controllers/darkMode.dart';
-import 'package:khulasa/Controllers/dateFormat.dart';
-import 'package:khulasa/Controllers/languageprovider.dart';
-import 'package:khulasa/Controllers/navigation.dart';
+import 'package:khulasa/Controllers/articleprovider.dart';
+import 'package:khulasa/Controllers/Config/darkMode.dart';
+import 'package:khulasa/Controllers/Backend/dateFormat.dart';
+import 'package:khulasa/Controllers/Config/languageprovider.dart';
+import 'package:khulasa/Controllers/HelperFunctions/navigation.dart';
 import 'package:khulasa/Models/article.dart';
 import 'package:khulasa/Models/category.dart';
 import 'package:khulasa/Models/colorTheme.dart';

@@ -2,10 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:khulasa/Controllers/api.dart';
-import 'package:khulasa/Controllers/darkMode.dart';
-import 'package:khulasa/Controllers/dateFormat.dart';
-import 'package:khulasa/Controllers/webScraping.dart';
+import 'package:khulasa/Controllers/Backend/api.dart';
+import 'package:khulasa/Controllers/Backend/dateFormat.dart';
+import 'package:khulasa/Controllers/Config/darkMode.dart';
+import 'package:khulasa/Controllers/Backend/webScraping.dart';
 import 'package:khulasa/Models/link.dart';
 import 'package:khulasa/Models/source.dart';
 import 'package:khulasa/Models/summary.dart';

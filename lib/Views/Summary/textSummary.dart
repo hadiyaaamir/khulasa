@@ -1,14 +1,14 @@
 // import 'dart:html';
 import 'dart:convert';
 
-import 'package:khulasa/Controllers/languageprovider.dart';
+import 'package:khulasa/Controllers/Config/languageprovider.dart';
 import 'package:pdf_text/pdf_text.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:khulasa/Controllers/api.dart';
-import 'package:khulasa/Controllers/darkMode.dart';
+import 'package:khulasa/Controllers/Backend/api.dart';
+import 'package:khulasa/Controllers/Config/darkMode.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Views/Widgets/button.dart';
 import 'package:khulasa/Views/Widgets/textfield.dart';

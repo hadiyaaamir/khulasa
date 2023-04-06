@@ -19,6 +19,7 @@ class Btn extends StatelessWidget {
     this.paddingVert = 30,
     this.paddingHor = 40,
     this.align = Alignment.center,
+    this.fontWeight = FontWeight.normal,
   });
 
   final Function() onPress;
@@ -32,6 +33,7 @@ class Btn extends StatelessWidget {
   double paddingVert;
   double paddingHor;
   Alignment align;
+  FontWeight fontWeight;
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +65,11 @@ class Btn extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 if (icon != null) ...[Icon(icon, size: font + 2)],
-                Text(label, style: TextStyle(fontSize: font)),
+                Text(label,
+                    style: TextStyle(
+                      fontSize: font,
+                      fontWeight: fontWeight,
+                    )),
               ],
             ),
           ),

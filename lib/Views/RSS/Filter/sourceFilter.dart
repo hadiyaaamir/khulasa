@@ -3,22 +3,39 @@ import 'package:flutter/material.dart';
 import 'package:khulasa/Controllers/darkMode.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Models/source.dart';
+import 'package:khulasa/Views/RSS/Filter/sourceCheckbox.dart';
 import 'package:khulasa/constants/sizes.dart';
 import 'package:khulasa/constants/sources.dart';
 import 'package:provider/provider.dart';
 
-class SourceFilter extends StatelessWidget {
-  const SourceFilter({super.key});
+class SourceFilter extends StatefulWidget {
+  const SourceFilter({
+    super.key,
+    required this.addSource,
+    required this.removeSource,
+    required this.checkedSources,
+  });
 
+  final Function(Source) addSource;
+  final Function(Source) removeSource;
+  final List checkedSources;
+
+  @override
+  State<SourceFilter> createState() => _SourceFilterState();
+}
+
+class _SourceFilterState extends State<SourceFilter> {
   @override
   Widget build(BuildContext context) {
     ColorTheme colors = context.watch<DarkMode>().mode;
+
+    List checkedSources = widget.checkedSources;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 5, vertical: 15),
+          padding: const EdgeInsets.only(right: 5, left: 5, bottom: 15),
           child: Text(
             'News Sources',
             style: TextStyle(color: colors.text, fontSize: buttonFont),
@@ -27,57 +44,16 @@ class SourceFilter extends StatelessWidget {
         Wrap(
           children: List.generate(
             sources.length,
-            (index) => SourceCheckbox(source: sources[index]),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class SourceCheckbox extends StatefulWidget {
-  const SourceCheckbox({super.key, required this.source});
-
-  final Source source;
-
-  @override
-  State<SourceCheckbox> createState() => SourceCheckboxState();
-}
-
-class SourceCheckboxState extends State<SourceCheckbox> {
-  bool isChecked = true;
-  @override
-  Widget build(BuildContext context) {
-    ColorTheme colors = context.watch<DarkMode>().mode;
-    bool isDarkMode = context.watch<DarkMode>().isDarkMode;
-
-    return Padding(
-      padding: const EdgeInsets.only(right: 5, bottom: 5),
-      child: GestureDetector(
-        child: Container(
-          decoration: BoxDecoration(
-              border: Border.all(
-                  color: isDarkMode ? colors.background : colors.text,
-                  width: 2),
-              color: isChecked ? colors.secondary : colors.primary,
-              borderRadius: BorderRadius.circular(30)),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            child: Text(
-              widget.source.source,
-              style: TextStyle(
-                color: isChecked ? colors.background : colors.text,
-                fontWeight: isChecked ? FontWeight.w600 : FontWeight.normal,
-              ),
+            (index) => SourceCheckbox(
+              source: sources[index],
+              addSource: (Source s) => setState(() => widget.addSource(s)),
+              removeSource: (Source s) =>
+                  setState(() => widget.removeSource(s)),
+              isChecked: checkedSources.contains(sources[index]),
             ),
           ),
         ),
-        onTap: () {
-          setState(() {
-            isChecked = !isChecked;
-          });
-        },
-      ),
+      ],
     );
   }
 }

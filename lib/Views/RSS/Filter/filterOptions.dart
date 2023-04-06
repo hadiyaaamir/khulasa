@@ -59,7 +59,7 @@ class _FilterOptionsBoxState extends State<FilterOptionsBox> {
 
           //News sources filter
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 15),
+            padding: const EdgeInsets.symmetric(vertical: 25),
             child: SourceFilter(
               checkedSources: checkedSources,
               addSource: (Source s) => setState(() => checkedSources.add(s)),
@@ -70,7 +70,7 @@ class _FilterOptionsBoxState extends State<FilterOptionsBox> {
 
           // Divider
           Padding(
-            padding: const EdgeInsets.only(bottom: 15),
+            padding: const EdgeInsets.only(bottom: 30),
             child: Divider(color: colors.background),
           ),
 
@@ -86,9 +86,11 @@ class _FilterOptionsBoxState extends State<FilterOptionsBox> {
                 },
                 width: 100,
                 paddingHor: 0,
-                background: colors.background,
+                background: colors.primary,
                 foreground: colors.text,
+                fontWeight: FontWeight.w600,
                 paddingVert: 5,
+                borderColor: colors.secondary,
               ),
               Btn(
                 label: 'Apply Filters',
@@ -98,7 +100,8 @@ class _FilterOptionsBoxState extends State<FilterOptionsBox> {
                 },
                 width: 200,
                 paddingHor: 0,
-                foreground: colors.background,
+                foreground:
+                    colors == blueDarkMode ? colors.text : colors.background,
                 fontWeight: FontWeight.w600,
                 paddingVert: 5,
               ),

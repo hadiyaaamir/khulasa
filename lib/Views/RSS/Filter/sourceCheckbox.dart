@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:khulasa/Controllers/darkMode.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Models/source.dart';
+import 'package:khulasa/constants/colors.dart';
 import 'package:provider/provider.dart';
 
 class SourceCheckbox extends StatefulWidget {
@@ -45,7 +46,11 @@ class SourceCheckboxState extends State<SourceCheckbox> {
             child: Text(
               widget.source.source,
               style: TextStyle(
-                color: isChecked ? colors.background : colors.text,
+                color: isChecked
+                    ? colors == blueDarkMode
+                        ? colors.text
+                        : colors.background
+                    : colors.text,
                 fontWeight: isChecked ? FontWeight.w600 : FontWeight.normal,
               ),
             ),

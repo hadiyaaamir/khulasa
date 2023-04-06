@@ -8,6 +8,7 @@ class appUser {
     this.email = "",
     this.darkMode = false,
     this.english = false,
+    this.savedArticles = const [],
     this.savedSummaries = const [],
     this.isLoggedIn = true,
   });
@@ -18,6 +19,7 @@ class appUser {
   bool english;
 
   List<savedSummary> savedSummaries;
+  List<savedSummary> savedArticles ;
 
   String email;
   bool isLoggedIn;
@@ -28,6 +30,8 @@ class appUser {
     data['lastName'] = lastName;
     data['email'] = email;
     data['isLoggedIn'] = isLoggedIn;
+    data['savedArticles'] = savedArticles;
+    data['savedSummaries'] = savedSummaries;
     data['darkMode'] = darkMode;
     data['english'] = english;
     return data;
@@ -39,6 +43,8 @@ class appUser {
       lastName: json['lastName'],
       email: json['email'],
       isLoggedIn: json['isLoggedIn'],
+      savedArticles: json['savedArticles'],
+      savedSummaries: json['savedSummaries'],
       darkMode: json['darkMode'],
       english: json['english'],
     );

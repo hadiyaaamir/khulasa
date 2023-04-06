@@ -9,7 +9,7 @@ import 'package:khulasa/Views/Widgets/NavBar/customAppBar.dart';
 import 'package:khulasa/Views/Widgets/button.dart';
 import 'package:khulasa/Views/Widgets/NavBar/AppBarPage.dart';
 import 'package:khulasa/Views/RSS/rssFeed.dart';
-import 'package:khulasa/Views/Saved/saved.dart';
+import 'package:khulasa/Views/Saved/Summary.dart';
 import 'package:khulasa/Views/RSS/categories.dart';
 import 'package:khulasa/Views/Summary/summary.dart';
 import 'package:provider/provider.dart';

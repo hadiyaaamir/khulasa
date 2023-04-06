@@ -1,54 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:khulasa/Controllers/darkMode.dart';
 import 'package:khulasa/Controllers/navigation.dart';
+import 'package:khulasa/Controllers/savedProvider.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Models/savedSummary.dart';
 import 'package:khulasa/Views/Widgets/NavBar/AppBarPage.dart';
 import 'package:khulasa/Views/Widgets/NavBar/customAppBar.dart';
 import 'package:khulasa/Views/Saved/savedSummary.dart';
 import 'package:provider/provider.dart';
-import 'package:khulasa/constants/sizes.dart';
 
 class Saved extends StatefulWidget {
-  const Saved({super.key});
+  const Saved({
+    Key? key,
+    required this.isSummary,
+  }) : super(key: key);
+
+  final bool isSummary;
 
   @override
   State<Saved> createState() => _SavedState();
 }
 
 class _SavedState extends State<Saved> {
-  final List<savedSummary> items = [
-    savedSummary(
-        title: "FIFA Drama",
-        savedOn: DateTime.now(),
-        summary: "Hi, my name is jaw"),
-    savedSummary(
-        title: "FIFA Drama",
-        savedOn: DateTime.now(),
-        summary: "Hi, my name is jaw")
-  ];
   @override
   Widget build(BuildContext context) {
+    final List<savedSummary> items = widget.isSummary
+        ? context.watch<savedProvider>().savdSummary
+        : context.watch<savedProvider>().savdArticles;
     ColorTheme colors = context.watch<DarkMode>().mode;
     bool isDarkMode = context.watch<DarkMode>().isDarkMode;
 
     return Scaffold(
-      appBar: CustomAppBar(title: 'Saved Summaries'),
-      drawer: Drawer(
-        child: Draw(),
-      ),
       backgroundColor: colors.background,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Text(
-            //   "Saved Summaries",
-            //   style: TextStyle(
-            //       fontSize: headingFont,
-            //       color: colors.text,
-            //       fontWeight: FontWeight.bold),
-            // ),
             Expanded(
               child: ListView.builder(
                 padding:
@@ -74,6 +61,7 @@ class _SavedState extends State<Saved> {
                       context,
                       SavedSummary(
                         summary: items[index],
+                        isSummary: widget.isSummary,
                       ),
                     ),
                   ),

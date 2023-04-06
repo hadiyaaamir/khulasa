@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:khulasa/Controllers/darkMode.dart';
+import 'package:khulasa/Controllers/savedProvider.dart';
 import 'package:khulasa/Controllers/tts.dart';
 import 'package:khulasa/Models/colorTheme.dart';
+import 'package:khulasa/Models/savedSummary.dart';
 import 'package:khulasa/Views/Widgets/labelIcon.dart';
 import 'package:provider/provider.dart';
 import 'package:khulasa/constants/sizes.dart';
@@ -107,14 +109,41 @@ class ShareButton extends StatelessWidget {
 }
 
 class SaveButton extends StatelessWidget {
-  const SaveButton({super.key});
-
+  const SaveButton({
+    Key? key,
+    required this.isSummary,
+    required this.ss,
+  }) : super(key: key);
+  final bool isSummary;
+  final savedSummary ss;
   @override
   Widget build(BuildContext context) {
     return LabelIcon(
       icon: Icons.save,
       label: "Save",
-      onPress: () {},
+      onPress: () {
+        savedProvider().addSummaryDB(isSummary, ss);
+      },
+    );
+  }
+}
+
+class DeleteButton extends StatelessWidget {
+  const DeleteButton({
+    Key? key,
+    required this.isSummary,
+    required this.ss,
+  }) : super(key: key);
+  final bool isSummary;
+  final savedSummary ss;
+  @override
+  Widget build(BuildContext context) {
+    return LabelIcon(
+      icon: Icons.delete_forever,
+      label: "Delete",
+      onPress: () {
+        savedProvider().removeSummaryDB(isSummary, ss);
+      },
     );
   }
 }

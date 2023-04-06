@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:khulasa/Controllers/darkMode.dart';
 import 'package:khulasa/Controllers/tts.dart';
 import 'package:khulasa/Models/colorTheme.dart';
+import 'package:khulasa/Models/savedSummary.dart';
 import 'package:khulasa/Views/Widgets/iconButtons.dart';
 import 'package:khulasa/Views/Widgets/labelIcon.dart';
 import 'package:provider/provider.dart';
@@ -38,8 +39,13 @@ class GeneratedSummary extends StatelessWidget {
                   ],
                 ),
                 Row(
-                  children: const [
-                    SaveButton(),
+                  children: [
+                    SaveButton(
+                        isSummary: true,
+                        ss: savedSummary(
+                            title: 'summary',
+                            savedOn: DateTime.now(),
+                            summary: summaryText)),
                     SizedBox(width: 10),
                     ShareButton(),
                   ],

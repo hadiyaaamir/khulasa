@@ -9,7 +9,7 @@ import 'package:khulasa/Views/Settings/settings.dart';
 import 'package:khulasa/Views/Widgets/NavBar/Toggle.dart';
 import 'package:khulasa/Views/RSS/categories.dart';
 import 'package:khulasa/Views/RSS/rssFeed.dart';
-import 'package:khulasa/Views/Saved/saved.dart';
+import 'package:khulasa/Views/Saved/Summary.dart';
 import 'package:khulasa/Views/Summary/summary.dart';
 import 'package:khulasa/Controllers/navigation.dart';
 import 'package:khulasa/Views/Widgets/NavBar/themeRow.dart';

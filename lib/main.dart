@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:khulasa/Controllers/Backend/categoryExcel.dart';
 import 'package:khulasa/Controllers/articleprovider.dart';
 import 'package:khulasa/Controllers/Config/darkMode.dart';
 import 'package:khulasa/Controllers/Config/languageprovider.dart';
@@ -59,6 +60,8 @@ class _MyHomePageState extends State<MyHomePage> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       context.read<articleprovider>().getArticles();
     });
+
+    // CategoryExcel().toExcel();
     // TODO: implement initState
 
     startTime();

@@ -3,9 +3,11 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:khulasa/Controllers/Backend/api.dart';
+import 'package:khulasa/Controllers/Backend/categoryExcel.dart';
 import 'package:khulasa/Controllers/Backend/dateFormat.dart';
 import 'package:khulasa/Controllers/Config/darkMode.dart';
 import 'package:khulasa/Controllers/Backend/webScraping.dart';
+import 'package:khulasa/Controllers/articleprovider.dart';
 import 'package:khulasa/Models/link.dart';
 import 'package:khulasa/Models/source.dart';
 import 'package:khulasa/Models/summary.dart';
@@ -35,31 +37,19 @@ class _ApiCallState extends State<ApiCall> {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController _themeController = TextEditingController();
-
     return Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextField(controller: _themeController),
-
-            //test color theme
-            ElevatedButton(
-              onPressed: () {
-                //testing theme switch
-                context.read<DarkMode>().theme = _themeController.text;
-              },
-              child: Text('Switch Colour'),
-            ),
-
-            //test toggling mode
+            //get category excel
             ElevatedButton(
               onPressed: () {
                 //testing mode switch
-                context.read<DarkMode>().toggleMode();
+                CategoryExcel()
+                    .toExcel(context.read<articleprovider>().articlesList);
               },
-              child: Text('Switch Mode'),
+              child: Text('Get Categories Excel'),
             ),
 
             //test web scraping stuff

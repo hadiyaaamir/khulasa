@@ -3,6 +3,7 @@ import 'package:khulasa/Models/source.dart';
 List<Source> sources = [
   Source(
     source: 'Dawn News',
+    sourceUrdu: 'ڈان نیوز',
     titleTag: 'story__link',
     contentTag: 'story__content',
     dateTag: 'story__time text-4',
@@ -22,6 +23,7 @@ List<Source> sources = [
   // ),
   Source(
     source: 'Jang',
+    sourceUrdu: 'جنگ',
     titleTag: 'h1',
     titleTagType: 'tag',
     contentTag: 'detail_view_content',
@@ -34,6 +36,7 @@ List<Source> sources = [
   ),
   Source(
     source: 'Express News',
+    sourceUrdu: 'ایکسپریس نیوز',
     titleTag: 'title',
     contentTag: 'p',
     contentTagType: 'paragraph',
@@ -56,6 +59,7 @@ List<Source> sources = [
   // ),
   Source(
     source: 'Jasarat',
+    sourceUrdu: 'جسارت',
     titleTag: 'entry-title',
     contentTag: 'p',
     contentTagType: 'paragraph',
@@ -67,6 +71,7 @@ List<Source> sources = [
   ),
   Source(
     source: 'BBC Urdu',
+    sourceUrdu: 'بی بی سی',
     titleTag: 'bbc-1gvq3vt e1p3vdyi0',
     contentTag: 'p',
     contentTagType: 'paragraph',

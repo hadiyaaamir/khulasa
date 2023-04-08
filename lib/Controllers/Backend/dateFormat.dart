@@ -32,6 +32,8 @@ class DateFormatter {
     'دسمبر',
   ];
 
+  List<String> urduNumbers = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+
   toDateTime(String date, bool isDateTime) {
     try {
       if (isDateTime) {
@@ -120,7 +122,27 @@ class DateFormatter {
   }
 
   //format: to urdu date
-  String formatDate(DateTime date) {
-    return "${date.day}/${date.month}/${date.year}";
+  String formatDate(DateTime date, bool isEnglish) {
+    if (isEnglish) {
+      return "${date.day}/${date.month}/${date.year}";
+    }
+    String year = "${date.year}";
+    int month = date.month;
+    String day = "${date.day}";
+
+    String urduYear = "";
+    String urduMonth = "";
+    String urduDay = "";
+
+    for (int i = 0; i < year.length; i++) {
+      urduYear += urduNumbers[int.parse(year[i])];
+    }
+    for (int i = 0; i < day.length; i++) {
+      urduDay += urduNumbers[int.parse(day[i])];
+    }
+
+    urduMonth = urduMonths[month - 1];
+
+    return "$urduDay $urduMonth $urduYear";
   }
 }

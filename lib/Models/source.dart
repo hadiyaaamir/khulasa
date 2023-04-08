@@ -3,6 +3,7 @@ import 'package:khulasa/Controllers/Backend/dateFormat.dart';
 
 class Source {
   String source;
+  String sourceUrdu;
   String titleTag;
   String contentTag;
   String webLink;
@@ -20,6 +21,7 @@ class Source {
 
   Source({
     required this.source,
+    required this.sourceUrdu,
     required this.titleTag,
     required this.contentTag,
     required this.dateTag,

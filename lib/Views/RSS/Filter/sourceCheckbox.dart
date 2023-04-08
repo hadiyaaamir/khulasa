@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:khulasa/Controllers/Config/darkMode.dart';
+import 'package:khulasa/Controllers/Config/languageprovider.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Models/source.dart';
 import 'package:khulasa/constants/colors.dart';
@@ -28,6 +29,7 @@ class SourceCheckboxState extends State<SourceCheckbox> {
   Widget build(BuildContext context) {
     ColorTheme colors = context.watch<DarkMode>().mode;
     bool isDarkMode = context.watch<DarkMode>().isDarkMode;
+    bool isEnglish = context.watch<Language>().isEnglish;
 
     bool isChecked = widget.isChecked;
 
@@ -44,7 +46,7 @@ class SourceCheckboxState extends State<SourceCheckbox> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
             child: Text(
-              widget.source.source,
+              isEnglish ? widget.source.source : widget.source.sourceUrdu,
               style: TextStyle(
                 color: isChecked
                     ? colors == blueDarkMode

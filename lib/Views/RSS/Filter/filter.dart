@@ -5,8 +5,6 @@ import 'package:khulasa/Controllers/Config/darkMode.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Views/RSS/Filter/filterOptions.dart';
 import 'package:khulasa/constants/colors.dart';
-import 'package:khulasa/constants/sizes.dart';
-import 'package:khulasa/constants/sources.dart';
 import 'package:provider/provider.dart';
 
 class Filter extends StatefulWidget {

@@ -3,7 +3,9 @@ import 'package:khulasa/Controllers/Config/darkMode.dart';
 import 'package:khulasa/Controllers/Config/languageprovider.dart';
 import 'package:khulasa/Controllers/HelperFunctions/tts.dart';
 import 'package:khulasa/Models/colorTheme.dart';
-import 'package:khulasa/Views/Widgets/iconButtons.dart';
+import 'package:khulasa/Views/Widgets/IconButtons/saveButton.dart';
+import 'package:khulasa/Views/Widgets/IconButtons/Share/shareButton.dart';
+import 'package:khulasa/Views/Widgets/IconButtons/speakButton.dart';
 import 'package:khulasa/Views/Widgets/labelIcon.dart';
 import 'package:provider/provider.dart';
 import 'package:khulasa/constants/sizes.dart';
@@ -44,7 +46,7 @@ class GeneratedSummary extends StatelessWidget {
                   children: const [
                     SaveButton(),
                     SizedBox(width: 10),
-                    ShareButton(),
+                    ShareButton(isRSSFeed: false),
                   ],
                 )
               ],

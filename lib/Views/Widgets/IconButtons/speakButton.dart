@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:khulasa/Controllers/Config/darkMode.dart';
 import 'package:khulasa/Controllers/HelperFunctions/tts.dart';
 import 'package:khulasa/Models/colorTheme.dart';
-import 'package:khulasa/Views/Widgets/labelIcon.dart';
 import 'package:provider/provider.dart';
 import 'package:khulasa/constants/sizes.dart';
 
@@ -89,32 +88,6 @@ class _SpeakIconButtonState extends State<SpeakIconButton> {
           ),
         ]
       ],
-    );
-  }
-}
-
-class ShareButton extends StatelessWidget {
-  const ShareButton({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return LabelIcon(
-      icon: Icons.share_rounded,
-      label: "Share",
-      onPress: () {},
-    );
-  }
-}
-
-class SaveButton extends StatelessWidget {
-  const SaveButton({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return LabelIcon(
-      icon: Icons.save,
-      label: "Save",
-      onPress: () {},
     );
   }
 }

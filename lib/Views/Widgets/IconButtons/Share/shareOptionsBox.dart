@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:khulasa/Controllers/Config/darkMode.dart';
 import 'package:khulasa/Controllers/Config/languageprovider.dart';
+import 'package:khulasa/Controllers/sharingController.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Views/Widgets/IconButtons/Share/sharingOption.dart';
 import 'package:khulasa/constants/sizes.dart';
 import 'package:provider/provider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_share_me/flutter_share_me.dart';
 
 class ShareOptionsBox extends StatelessWidget {
-  const ShareOptionsBox({super.key, required this.isRSSFeed});
+  ShareOptionsBox({super.key, required this.isRSSFeed, required this.content});
 
   final bool isRSSFeed;
+  var content;
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +56,13 @@ class ShareOptionsBox extends StatelessWidget {
                   SharingOption(
                     icon: FontAwesomeIcons.facebook,
                     text: 'Facebook',
-                    onPress: () {},
+                    onPress: () async {
+                      SharingController().shareOnSocial(
+                        social: 'facebook',
+                        content: content,
+                        isRSSFeed: isRSSFeed,
+                      );
+                    },
                   ),
                   SharingOption(
                     icon: FontAwesomeIcons.instagram,
@@ -63,17 +72,37 @@ class ShareOptionsBox extends StatelessWidget {
                   SharingOption(
                     icon: FontAwesomeIcons.twitter,
                     text: 'Twitter',
-                    onPress: () {},
+                    onPress: () {
+                      SharingController().shareOnSocial(
+                        social: 'twitter',
+                        content: content,
+                        isRSSFeed: isRSSFeed,
+                        onlyLink: true,
+                      );
+                    },
                   ),
                   SharingOption(
                     icon: FontAwesomeIcons.whatsapp,
                     text: 'WhatsApp',
-                    onPress: () {},
+                    onPress: () {
+                      SharingController().shareOnSocial(
+                        social: 'whatsapp',
+                        content: content,
+                        isRSSFeed: isRSSFeed,
+                      );
+                    },
                   ),
                   SharingOption(
                     icon: FontAwesomeIcons.copy,
                     text: 'Copy',
-                    onPress: () {},
+                    onPress: () {
+                      SharingController().shareOnSocial(
+                        social: 'copy',
+                        content: content,
+                        isRSSFeed: isRSSFeed,
+                        isAdvert: false,
+                      );
+                    },
                   ),
                   // SharingOption(icon: Icons),
                 ],

@@ -53,7 +53,9 @@ class _ArticleState extends State<Article> {
 
               //options
               OptionsLine(
-                  speakText: "${widget.art.title}.${widget.art.content}"),
+                speakText: "${widget.art.title}.${widget.art.content}",
+                art: widget.art,
+              ),
 
               //article
               Expanded(
@@ -74,9 +76,10 @@ class _ArticleState extends State<Article> {
 }
 
 class OptionsLine extends StatelessWidget {
-  const OptionsLine({super.key, required this.speakText});
+  const OptionsLine({super.key, required this.speakText, required this.art});
 
   final String speakText;
+  final article art;
 
   @override
   Widget build(BuildContext context) {
@@ -97,10 +100,10 @@ class OptionsLine extends StatelessWidget {
                 iconSize: iconLarge,
                 iconColor: isDarkMode ? colors.text2 : colors.secondary,
               ),
-              Row(children: const [
+              Row(children: [
                 SaveButton(),
                 SizedBox(width: 15),
-                ShareButton(),
+                ShareButton(content: art),
               ]),
             ],
           ),

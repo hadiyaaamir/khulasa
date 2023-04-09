@@ -43,10 +43,10 @@ class GeneratedSummary extends StatelessWidget {
                   ],
                 ),
                 Row(
-                  children: const [
+                  children: [
                     SaveButton(),
                     SizedBox(width: 10),
-                    ShareButton(isRSSFeed: false),
+                    ShareButton(isRSSFeed: false, content: summaryText),
                   ],
                 )
               ],

@@ -8,9 +8,10 @@ import 'package:khulasa/constants/sizes.dart';
 import 'package:provider/provider.dart';
 
 class ShareButton extends StatelessWidget {
-  const ShareButton({super.key, this.isRSSFeed = true});
+  ShareButton({super.key, this.isRSSFeed = true, required this.content});
 
   final bool isRSSFeed;
+  var content;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,7 @@ class ShareButton extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(40.0)),
           ),
           builder: (BuildContext context) =>
-              ShareOptionsBox(isRSSFeed: isRSSFeed),
+              ShareOptionsBox(isRSSFeed: isRSSFeed, content: content),
           isScrollControlled: true,
           // constraints: BoxConstraints(maxHeight: screenHeight * 2 / 3),
         );

@@ -88,5 +88,5 @@ class UserController extends ChangeNotifier {
     return user.email == "";
   }
 
-  addSummary() {}
+  addSummary(savedSummary ss) {}
 }

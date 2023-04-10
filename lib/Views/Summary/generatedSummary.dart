@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:khulasa/Controllers/darkMode.dart';
 import 'package:khulasa/Controllers/tts.dart';
+import 'package:khulasa/Controllers/userController.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Models/savedSummary.dart';
+import 'package:khulasa/Models/user.dart';
 import 'package:khulasa/Views/Widgets/iconButtons.dart';
 import 'package:khulasa/Views/Widgets/labelIcon.dart';
 import 'package:provider/provider.dart';
@@ -17,6 +19,7 @@ class GeneratedSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ColorTheme colors = context.watch<DarkMode>().mode;
+    appUser user = context.watch<UserController>().user;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
       child: Column(
@@ -43,9 +46,11 @@ class GeneratedSummary extends StatelessWidget {
                     SaveButton(
                         isSummary: true,
                         ss: savedSummary(
-                            title: 'summary',
-                            savedOn: DateTime.now(),
-                            summary: summaryText)),
+                          title: 'summary',
+                          savedOn: DateTime.now(),
+                          summary: summaryText,
+                          email: user.email,
+                        )),
                     SizedBox(width: 10),
                     ShareButton(),
                   ],

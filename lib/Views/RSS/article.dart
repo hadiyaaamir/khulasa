@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:khulasa/Controllers/darkMode.dart';
+import 'package:khulasa/Controllers/userController.dart';
 import 'package:khulasa/Models/article.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Models/savedSummary.dart';
+import 'package:khulasa/Models/user.dart';
 import 'package:khulasa/Views/Widgets/NavBar/customAppBar.dart';
 import 'package:khulasa/Views/Widgets/iconButtons.dart';
 import 'package:provider/provider.dart';
@@ -49,7 +51,9 @@ class _ArticleState extends State<Article> {
               ),
 
               //options
-              OptionsLine(art: widget.art,),
+              OptionsLine(
+                art: widget.art,
+              ),
 
               //article
               Expanded(
@@ -77,7 +81,9 @@ class OptionsLine extends StatelessWidget {
   Widget build(BuildContext context) {
     ColorTheme colors = context.watch<DarkMode>().mode;
     bool isDarkMode = context.watch<DarkMode>().isDarkMode;
+    appUser user = context.watch<UserController>().user;
     String speakText = "${art.title}.${art.content}";
+
     return Padding(
       padding: const EdgeInsets.only(top: 10, bottom: 25),
       child: Column(
@@ -94,11 +100,14 @@ class OptionsLine extends StatelessWidget {
               ),
               Row(children: [
                 SaveButton(
-                    isSummary: false,
-                    ss: savedSummary(
-                        title: art.title,
-                        savedOn: DateTime.now(),
-                        summary: art.content)),
+                  isSummary: false,
+                  ss: savedSummary(
+                    title: art.title,
+                    savedOn: DateTime.now(),
+                    summary: art.content,
+                    email: user.email,
+                  ),
+                ),
                 ShareButton(),
               ]),
             ],

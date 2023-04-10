@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:khulasa/Controllers/darkMode.dart';
+import 'package:khulasa/Controllers/Config/darkMode.dart';
+import 'package:khulasa/Controllers/Config/languageprovider.dart';
 import 'package:khulasa/Controllers/userController.dart';
 import 'package:khulasa/Models/article.dart';
 import 'package:khulasa/Models/colorTheme.dart';
+import 'package:khulasa/Models/savedArticle.dart';
 import 'package:khulasa/Models/savedSummary.dart';
 import 'package:khulasa/Models/user.dart';
+import 'package:khulasa/Views/Widgets/IconButtons/saveButton.dart';
+import 'package:khulasa/Views/Widgets/IconButtons/Share/shareButton.dart';
+import 'package:khulasa/Views/Widgets/IconButtons/speakButton.dart';
 import 'package:khulasa/Views/Widgets/NavBar/customAppBar.dart';
-import 'package:khulasa/Views/Widgets/iconButtons.dart';
 import 'package:provider/provider.dart';
 import 'package:khulasa/constants/sizes.dart';
 
@@ -25,10 +29,11 @@ class _ArticleState extends State<Article> {
   Widget build(BuildContext context) {
     ColorTheme colors = context.watch<DarkMode>().mode;
     bool isDarkMode = context.watch<DarkMode>().isDarkMode;
+    bool isEnglish = context.watch<Language>().isEnglish;
 
     return Scaffold(
       backgroundColor: colors.background,
-      appBar: CustomAppBar(),
+      appBar: CustomAppBar(fakeRTL: !isEnglish),
       body: Center(
         child: Padding(
           padding:
@@ -52,6 +57,7 @@ class _ArticleState extends State<Article> {
 
               //options
               OptionsLine(
+                speakText: "${widget.art.title}.${widget.art.content}",
                 art: widget.art,
               ),
 
@@ -74,9 +80,11 @@ class _ArticleState extends State<Article> {
 }
 
 class OptionsLine extends StatelessWidget {
-  const OptionsLine({super.key, required this.art});
+  const OptionsLine({super.key, required this.speakText, required this.art});
 
+  final String speakText;
   final article art;
+
   @override
   Widget build(BuildContext context) {
     ColorTheme colors = context.watch<DarkMode>().mode;
@@ -101,14 +109,13 @@ class OptionsLine extends StatelessWidget {
               Row(children: [
                 SaveButton(
                   isSummary: false,
-                  ss: savedSummary(
-                    title: art.title,
+                  ss: savedArticle(
+                    art: art,
                     savedOn: DateTime.now(),
-                    summary: art.content,
                     email: user.email,
                   ),
                 ),
-                ShareButton(),
+                ShareButton(isRSSFeed: true, content: art),
               ]),
             ],
           ),

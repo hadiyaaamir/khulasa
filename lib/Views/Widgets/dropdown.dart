@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:khulasa/Controllers/darkMode.dart';
+import 'package:khulasa/Controllers/Config/darkMode.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:provider/provider.dart';
 import 'package:khulasa/constants/sizes.dart';
@@ -41,7 +41,7 @@ class _DropdownState extends State<Dropdown> {
 
     return Padding(
       padding:
-          EdgeInsets.symmetric(horizontal: 50, vertical: widget.paddingVert),
+          EdgeInsets.symmetric(horizontal: 40, vertical: widget.paddingVert),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
         decoration: BoxDecoration(

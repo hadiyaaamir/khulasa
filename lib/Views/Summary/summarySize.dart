@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:khulasa/Controllers/darkMode.dart';
+import 'package:khulasa/Controllers/Config/darkMode.dart';
+import 'package:khulasa/Controllers/Config/languageprovider.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:provider/provider.dart';
 import 'package:khulasa/constants/sizes.dart';
@@ -21,11 +22,12 @@ class _SummarySizeState extends State<SummarySize> {
   @override
   Widget build(BuildContext context) {
     ColorTheme colors = context.watch<DarkMode>().mode;
+    bool isEnglish = context.watch<Language>().isEnglish;
 
     if (widget.setSize != null) widget.setSize!(size);
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 50),
+      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 40),
       child: Container(
         padding: const EdgeInsets.only(right: 10),
         decoration: BoxDecoration(
@@ -36,17 +38,18 @@ class _SummarySizeState extends State<SummarySize> {
           // mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Align(
-              alignment: Alignment.centerLeft,
+              alignment:
+                  isEnglish ? Alignment.centerLeft : Alignment.centerRight,
               child: Padding(
                 padding: const EdgeInsets.only(left: 10, top: 10),
                 child: Text(
-                  'Summary Size',
+                  isEnglish ? 'Summary Size' : 'اردو',
                   style: TextStyle(color: colors.text, fontSize: buttonFont),
                 ),
               ),
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Row(children: [
                   Radio(
@@ -57,7 +60,10 @@ class _SummarySizeState extends State<SummarySize> {
                     },
                     fillColor: MaterialStateProperty.all<Color>(colors.text2),
                   ),
-                  Text("Short", style: TextStyle(color: colors.text2))
+                  Text(
+                    isEnglish ? "Short" : 'اردو',
+                    style: TextStyle(color: colors.text2),
+                  )
                 ]),
                 Row(children: [
                   Radio(
@@ -68,7 +74,10 @@ class _SummarySizeState extends State<SummarySize> {
                     },
                     fillColor: MaterialStateProperty.all<Color>(colors.text2),
                   ),
-                  Text("Medium", style: TextStyle(color: colors.text2))
+                  Text(
+                    isEnglish ? "Medium" : 'اردو',
+                    style: TextStyle(color: colors.text2),
+                  )
                 ]),
                 Row(
                   children: [
@@ -80,7 +89,10 @@ class _SummarySizeState extends State<SummarySize> {
                       },
                       fillColor: MaterialStateProperty.all<Color>(colors.text2),
                     ),
-                    Text("Long", style: TextStyle(color: colors.text2))
+                    Text(
+                      isEnglish ? "Long" : 'اردو',
+                      style: TextStyle(color: colors.text2),
+                    )
                   ],
                 ),
               ],

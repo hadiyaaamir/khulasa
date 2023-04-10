@@ -1,14 +1,21 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
-import 'package:khulasa/Controllers/darkMode.dart';
-import 'package:khulasa/Controllers/dialog.dart';
+import 'package:khulasa/Controllers/Config/darkMode.dart';
 import 'package:khulasa/Models/colorTheme.dart';
-import 'package:khulasa/Views/RSS/filterOptions.dart';
+import 'package:khulasa/Views/RSS/Filter/filterOptions.dart';
 import 'package:khulasa/constants/colors.dart';
-import 'package:khulasa/constants/sizes.dart';
 import 'package:provider/provider.dart';
 
 class Filter extends StatefulWidget {
-  const Filter({super.key});
+  const Filter({
+    super.key,
+    required this.filteredSources,
+    required this.setFilteredSources,
+  });
+
+  final List filteredSources;
+  final Function(List) setFilteredSources;
 
   @override
   State<Filter> createState() => _FilterState();
@@ -31,19 +38,21 @@ class _FilterState extends State<Filter> {
         ),
         child: IconButton(
           icon: const Icon(Icons.filter_list, color: white),
-          onPressed: () {
+          onPressed: () async {
             // showFilterPopup(context);
 
-            showModalBottomSheet<void>(
+            bool? modal = await showModalBottomSheet(
               context: context,
+              backgroundColor: colors.primary,
               shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.vertical(
-                  top: Radius.circular(40.0),
-                ),
+                borderRadius: BorderRadius.all(Radius.circular(40.0)),
               ),
-              builder: (BuildContext context) {
-                return FilterOptionsBox();
-              },
+              builder: (BuildContext context) => FilterOptionsBox(
+                filteredSources: widget.filteredSources,
+                setFilteredSources: widget.setFilteredSources,
+              ),
+              isScrollControlled: true,
+              // constraints: BoxConstraints(maxHeight: screenHeight * 2 / 3),
             );
           },
         ),

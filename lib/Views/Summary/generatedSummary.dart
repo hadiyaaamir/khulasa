@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:khulasa/Controllers/darkMode.dart';
-import 'package:khulasa/Controllers/tts.dart';
 import 'package:khulasa/Controllers/userController.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Models/savedSummary.dart';
 import 'package:khulasa/Models/user.dart';
-import 'package:khulasa/Views/Widgets/iconButtons.dart';
-import 'package:khulasa/Views/Widgets/labelIcon.dart';
+import 'package:khulasa/Controllers/Config/darkMode.dart';
+import 'package:khulasa/Controllers/Config/languageprovider.dart';
+import 'package:khulasa/Views/Widgets/IconButtons/Share/shareButton.dart';
+import 'package:khulasa/Views/Widgets/IconButtons/saveButton.dart';
+import 'package:khulasa/Views/Widgets/IconButtons/speakButton.dart';
 import 'package:provider/provider.dart';
 import 'package:khulasa/constants/sizes.dart';
 
@@ -20,8 +21,10 @@ class GeneratedSummary extends StatelessWidget {
   Widget build(BuildContext context) {
     ColorTheme colors = context.watch<DarkMode>().mode;
     appUser user = context.watch<UserController>().user;
+    bool isEnglish = context.watch<Language>().isEnglish;
+
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+      padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
       child: Column(
         children: [
           Row(
@@ -31,7 +34,7 @@ class GeneratedSummary extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      "Summary",
+                      isEnglish ? "Summary" : 'اردو',
                       style: TextStyle(
                           color: colors.text,
                           fontSize: largeFont,
@@ -52,7 +55,7 @@ class GeneratedSummary extends StatelessWidget {
                           email: user.email,
                         )),
                     SizedBox(width: 10),
-                    ShareButton(),
+                    ShareButton(isRSSFeed: false, content: summaryText),
                   ],
                 )
               ],

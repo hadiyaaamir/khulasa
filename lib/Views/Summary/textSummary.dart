@@ -1,13 +1,14 @@
 // import 'dart:html';
 import 'dart:convert';
 
+import 'package:khulasa/Controllers/Config/languageprovider.dart';
 import 'package:pdf_text/pdf_text.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:khulasa/Controllers/api.dart';
-import 'package:khulasa/Controllers/darkMode.dart';
+import 'package:khulasa/Controllers/Backend/api.dart';
+import 'package:khulasa/Controllers/Config/darkMode.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Views/Widgets/button.dart';
 import 'package:khulasa/Views/Widgets/textfield.dart';
@@ -19,7 +20,7 @@ import 'package:provider/provider.dart';
 import 'package:khulasa/constants/sizes.dart';
 import 'package:flutter_tesseract_ocr/flutter_tesseract_ocr.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:syncfusion_flutter_pdf/pdf.dart';
+// import 'package:syncfusion_flutter_pdf/pdf.dart';
 
 class TextSummary extends StatefulWidget {
   const TextSummary({super.key});
@@ -40,6 +41,7 @@ class _TextSummaryState extends State<TextSummary> {
   @override
   Widget build(BuildContext context) {
     ColorTheme colors = context.watch<DarkMode>().mode;
+    bool isEnglish = context.watch<Language>().isEnglish;
     bool scanning = false;
     bool attach = false;
     String extractedText = '';
@@ -60,13 +62,13 @@ class _TextSummaryState extends State<TextSummary> {
                       isLoading: true,
                     )
                   : textField(
-                      label: "Enter text here",
+                      label: isEnglish ? "Enter text here" : 'اردو',
                       controller: textController,
                       lines: 5,
                       textAlign: TextAlign.right,
                     ),
               Btn(
-                label: "Attach file",
+                label: isEnglish ? "Attach file" : 'اردو',
                 background: colors.secondary,
                 height: 30,
                 width: 130,
@@ -102,7 +104,7 @@ class _TextSummaryState extends State<TextSummary> {
                 },
               ),
               Dropdown(
-                label: "Summarising Algorithm",
+                label: isEnglish ? "Summarising Algorithm" : 'اردو',
                 categories: [summaryChoice1, summaryChoice2],
                 paddingVert: 20,
                 setAlgo: (algorithm) => algo = algorithm,
@@ -111,7 +113,7 @@ class _TextSummaryState extends State<TextSummary> {
                 setSize: (String size) => ratio = getRatio(size),
               ),
               Btn(
-                label: "GENERATE SUMMARY",
+                label: isEnglish ? "GENERATE SUMMARY" : 'اردو',
                 onPress: () async {
                   final FormState form =
                       _summaryFormKey.currentState as FormState;

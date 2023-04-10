@@ -1,8 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:khulasa/Controllers/darkMode.dart';
-import 'package:khulasa/Controllers/languageprovider.dart';
-import 'package:khulasa/Controllers/navigation.dart';
+import 'package:khulasa/Controllers/Config/darkMode.dart';
+import 'package:khulasa/Controllers/Config/languageprovider.dart';
+import 'package:khulasa/Controllers/HelperFunctions/navigation.dart';
 import 'package:khulasa/Controllers/userController.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Views/Entrance/signup.dart';
@@ -30,73 +30,74 @@ class _LoginState extends State<Login> {
     ColorTheme colors = context.watch<DarkMode>().mode;
     bool isEnglish = context.watch<Language>().isEnglish;
 
-    return Scaffold(
-      backgroundColor: colors.background,
-      body: Center(
-          child: Form(
-        key: _formKey,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            //email textfield
-            textField(
-              label: isEnglish ? "Email" : "email in urdu",
-              directionality: isEnglish ? TextDirection.ltr : TextDirection.rtl,
-              icon: Icons.email,
-              controller: emailController,
-              allowEmpty: true,
-              validate: (value) {
-                return
-                    // (value == null ||
-                    //         value.isEmpty ||
-                    //         !value.contains('@') ||
-                    //         !value.contains('.'))
-                    //     ? 'Invalid Email'
-                    //     :
-                    null;
-              },
-            ),
+    return Directionality(
+      textDirection: isEnglish ? TextDirection.ltr : TextDirection.rtl,
+      child: Scaffold(
+        backgroundColor: colors.background,
+        body: Center(
+            child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              //email textfield
+              textField(
+                label: isEnglish ? "Email" : "email in urdu",
+                icon: Icons.email,
+                controller: emailController,
+                allowEmpty: true,
+                validate: (value) {
+                  return
+                      // (value == null ||
+                      //         value.isEmpty ||
+                      //         !value.contains('@') ||
+                      //         !value.contains('.'))
+                      //     ? 'Invalid Email'
+                      //     :
+                      null;
+                },
+              ),
 
-            //password textfield
-            textField(
-              label: isEnglish ? "Password" : "email in urdu",
-              directionality: isEnglish ? TextDirection.ltr : TextDirection.rtl,
-              controller: passwordController,
-              icon: Icons.password_rounded,
-              password: true,
-              allowEmpty: true,
-              validate: (value) {
-                return null;
-              },
-            ),
+              //password textfield
+              textField(
+                label: isEnglish ? "Password" : "email in urdu",
+                controller: passwordController,
+                icon: Icons.password_rounded,
+                password: true,
+                allowEmpty: true,
+                validate: (value) {
+                  return null;
+                },
+              ),
 
-            //button
-            Btn(
-                label: isEnglish ? "LOGIN" : "LOGIN in urdu",
-                onPress: () async {
-                  final FormState form = _formKey.currentState as FormState;
-                  if (form.validate()) {
-                    UserController()
-                        .setLoggedIn(
-                            emailController.text, passwordController.text)
-                        .then(Navigation()
-                            .navigationReplace(context, const Option()));
-                  }
-                }),
+              //button
+              Btn(
+                  label: isEnglish ? "LOGIN" : "LOGIN in urdu",
+                  onPress: () async {
+                    final FormState form = _formKey.currentState as FormState;
+                    if (form.validate()) {
+                      UserController()
+                          .setLoggedIn(
+                              emailController.text, passwordController.text)
+                          .then(Navigation()
+                              .navigationReplace(context, const Option()));
+                    }
+                  }),
 
-            RichText(
-                text: TextSpan(
-                    text: isEnglish
-                        ? "Don't have an acount? Sign Up!"
-                        : "urdu text",
-                    style: TextStyle(color: colors.text),
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = () {
-                        Navigation().navigation(context, const SignUp());
-                      }))
-          ],
-        ),
-      )),
+              RichText(
+                  text: TextSpan(
+                      text: isEnglish
+                          ? "Don't have an account? Sign Up!"
+                          : "urdu text",
+                      style: TextStyle(color: colors.text),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          Navigation().navigation(context, const ApiCall());
+                        }))
+            ],
+          ),
+        )),
+      ),
     );
   }
 }

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:khulasa/Controllers/darkMode.dart';
 import 'package:khulasa/Controllers/savedProvider.dart';
-import 'package:khulasa/Controllers/tts.dart';
 import 'package:khulasa/Controllers/userController.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Models/savedSummary.dart';
 import 'package:khulasa/Views/Widgets/labelIcon.dart';
+import 'package:khulasa/Controllers/Config/darkMode.dart';
+import 'package:khulasa/Controllers/HelperFunctions/tts.dart';
+import 'package:khulasa/Models/colorTheme.dart';
 import 'package:provider/provider.dart';
 import 'package:khulasa/constants/sizes.dart';
 
@@ -92,60 +93,6 @@ class _SpeakIconButtonState extends State<SpeakIconButton> {
           ),
         ]
       ],
-    );
-  }
-}
-
-class ShareButton extends StatelessWidget {
-  const ShareButton({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return LabelIcon(
-      icon: Icons.share_rounded,
-      label: "Share",
-      onPress: () {},
-    );
-  }
-}
-
-class SaveButton extends StatelessWidget {
-  const SaveButton({
-    Key? key,
-    required this.isSummary,
-    required this.ss,
-  }) : super(key: key);
-  final bool isSummary;
-  final savedSummary ss;
-  @override
-  Widget build(BuildContext context) {
-    return LabelIcon(
-      icon: Icons.save,
-      label: "Save",
-      onPress: () {
-        // context.read<UserController>().addSaved(ss, isSummary);
-        // UserController().addSummaryDB(isSummary, ss);
-      },
-    );
-  }
-}
-
-class DeleteButton extends StatelessWidget {
-  const DeleteButton({
-    Key? key,
-    required this.isSummary,
-    required this.ss,
-  }) : super(key: key);
-  final bool isSummary;
-  final savedSummary ss;
-  @override
-  Widget build(BuildContext context) {
-    return LabelIcon(
-      icon: Icons.delete_forever,
-      label: "Delete",
-      onPress: () {
-        // UserController().removeSummaryDB(isSummary, ss);
-      },
     );
   }
 }

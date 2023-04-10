@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:khulasa/Controllers/darkMode.dart';
 import 'package:khulasa/Controllers/savedProvider.dart';
 import 'package:khulasa/Controllers/tts.dart';
+import 'package:khulasa/Controllers/userController.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Models/savedSummary.dart';
 import 'package:khulasa/Views/Widgets/labelIcon.dart';
@@ -122,7 +123,8 @@ class SaveButton extends StatelessWidget {
       icon: Icons.save,
       label: "Save",
       onPress: () {
-        savedProvider().addSummaryDB(isSummary, ss);
+        context.read<UserController>().addSummaryDB(isSummary, ss);
+        // UserController().addSummaryDB(isSummary, ss);
       },
     );
   }
@@ -142,7 +144,7 @@ class DeleteButton extends StatelessWidget {
       icon: Icons.delete_forever,
       label: "Delete",
       onPress: () {
-        savedProvider().removeSummaryDB(isSummary, ss);
+        // UserController().removeSummaryDB(isSummary, ss);
       },
     );
   }

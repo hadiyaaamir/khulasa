@@ -2,18 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:khulasa/Controllers/darkMode.dart';
 import 'package:khulasa/Controllers/languageprovider.dart';
 import 'package:khulasa/Controllers/userController.dart';
-import 'package:khulasa/Models/category.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Views/Entrance/login.dart';
+import 'package:khulasa/Views/Saved/savedOptions.dart';
 import 'package:khulasa/Views/Settings/settings.dart';
-import 'package:khulasa/Views/Widgets/NavBar/Toggle.dart';
 import 'package:khulasa/Views/RSS/categories.dart';
-import 'package:khulasa/Views/RSS/rssFeed.dart';
-import 'package:khulasa/Views/Saved/Summary.dart';
 import 'package:khulasa/Views/Summary/summary.dart';
 import 'package:khulasa/Controllers/navigation.dart';
 import 'package:khulasa/Views/Widgets/NavBar/themeRow.dart';
-import 'package:khulasa/Views/Widgets/NavBar/toggleMode.dart';
 import 'package:khulasa/constants/sizes.dart';
 import 'package:provider/provider.dart';
 
@@ -80,7 +76,8 @@ class _DrawState extends State<Draw> {
                   DrawerOption(
                     text: 'Saved',
                     onPress: () {
-                      Navigation().navigationReplace(context, const Saved());
+                      Navigation()
+                          .navigationReplace(context, const SavedMain());
                     },
                     icon: Icons.bookmark_border_outlined,
                   ),
@@ -116,7 +113,6 @@ class _DrawState extends State<Draw> {
                     onPress: () {
                       UserController().setSignOut();
                       Navigation().navigationReplace(context, const Login());
-                      
                     },
                     icon: Icons.logout_outlined,
                   ),

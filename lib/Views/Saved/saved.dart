@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:khulasa/Controllers/darkMode.dart';
 import 'package:khulasa/Controllers/navigation.dart';
 import 'package:khulasa/Controllers/savedProvider.dart';
+import 'package:khulasa/Controllers/userController.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Models/savedSummary.dart';
 import 'package:khulasa/Views/Widgets/NavBar/AppBarPage.dart';
@@ -25,8 +26,8 @@ class _SavedState extends State<Saved> {
   @override
   Widget build(BuildContext context) {
     final List<savedSummary> items = widget.isSummary
-        ? context.watch<savedProvider>().savdSummary
-        : context.watch<savedProvider>().savdArticles;
+        ? context.watch<UserController>().savdSummary
+        : context.watch<UserController>().savdArticles;
     ColorTheme colors = context.watch<DarkMode>().mode;
     bool isDarkMode = context.watch<DarkMode>().isDarkMode;
 

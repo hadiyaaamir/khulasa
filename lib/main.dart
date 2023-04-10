@@ -6,6 +6,7 @@ import 'package:khulasa/Controllers/RSS/categoryprovider.dart';
 import 'package:khulasa/Controllers/darkMode.dart';
 import 'package:khulasa/Controllers/languageprovider.dart';
 import 'package:khulasa/Controllers/navigation.dart';
+import 'package:khulasa/Controllers/userController.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Views/Entrance/login.dart';
 import 'package:khulasa/constants/sizes.dart';
@@ -22,6 +23,7 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (context) => Language()),
         ChangeNotifierProvider(create: (context) => DarkMode()),
         ChangeNotifierProvider(create: (context) => articleprovider()),
+        ChangeNotifierProvider(create: (context) => UserController()),
       ],
       child: const MyApp(),
     ),

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:khulasa/Controllers/savedProvider.dart';
+import 'package:khulasa/Controllers/userController.dart';
 import 'package:khulasa/Controllers/Config/darkMode.dart';
 import 'package:khulasa/Controllers/Config/languageprovider.dart';
 import 'package:khulasa/Controllers/HelperFunctions/navigation.dart';
@@ -8,28 +10,25 @@ import 'package:khulasa/Views/Widgets/NavBar/AppBarPage.dart';
 import 'package:khulasa/Views/Widgets/NavBar/customAppBar.dart';
 import 'package:khulasa/Views/Saved/savedSummary.dart';
 import 'package:provider/provider.dart';
-import 'package:khulasa/constants/sizes.dart';
 
 class Saved extends StatefulWidget {
-  const Saved({super.key});
+  const Saved({
+    Key? key,
+    required this.isSummary,
+  }) : super(key: key);
+
+  final bool isSummary;
 
   @override
   State<Saved> createState() => _SavedState();
 }
 
 class _SavedState extends State<Saved> {
-  final List<savedSummary> items = [
-    savedSummary(
-        title: "FIFA Drama",
-        savedOn: DateTime.now(),
-        summary: "Hi, my name is jaw"),
-    savedSummary(
-        title: "FIFA Drama",
-        savedOn: DateTime.now(),
-        summary: "Hi, my name is jaw")
-  ];
   @override
   Widget build(BuildContext context) {
+    final List items = widget.isSummary
+        ? context.watch<UserController>().savdSummary
+        : context.watch<UserController>().savdArticles;
     ColorTheme colors = context.watch<DarkMode>().mode;
     bool isDarkMode = context.watch<DarkMode>().isDarkMode;
     bool isEnglish = context.watch<Language>().isEnglish;
@@ -37,20 +36,11 @@ class _SavedState extends State<Saved> {
     return Directionality(
       textDirection: isEnglish ? TextDirection.ltr : TextDirection.rtl,
       child: Scaffold(
-        appBar: CustomAppBar(title: isEnglish ? 'Saved Summaries' : ''),
-        drawer: Drawer(child: Draw()),
         backgroundColor: colors.background,
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Text(
-              //   "Saved Summaries",
-              //   style: TextStyle(
-              //       fontSize: headingFont,
-              //       color: colors.text,
-              //       fontWeight: FontWeight.bold),
-              // ),
               Expanded(
                 child: ListView.builder(
                   padding:
@@ -76,6 +66,7 @@ class _SavedState extends State<Saved> {
                         context,
                         SavedSummary(
                           summary: items[index],
+                          isSummary: widget.isSummary,
                         ),
                       ),
                     ),

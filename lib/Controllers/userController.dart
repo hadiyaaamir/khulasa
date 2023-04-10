@@ -1,14 +1,25 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:khulasa/Models/article.dart';
+import 'package:khulasa/Models/savedArticle.dart';
+import 'package:khulasa/Models/savedSummary.dart';
 
 import '../Models/user.dart';
 
 CollectionReference userlist = FirebaseFirestore.instance.collection('Users');
-appUser user = appUser();
+CollectionReference summaryList =
+    FirebaseFirestore.instance.collection('SavedSummaries');
+CollectionReference articleList =
+    FirebaseFirestore.instance.collection('SavedArticles');
+
 FirebaseAuth auth = FirebaseAuth.instance;
 
-class UserController {
+class UserController extends ChangeNotifier {
   // User get user => _user;
+  appUser user = appUser();
+  List<savedSummary> savdSummary = [];
+  List<savedArticle> savdArticles = [];
 
   Future<void> addToDB(appUser user, String p) async {
     try {
@@ -77,5 +88,17 @@ class UserController {
 
   bool userNotFound() {
     return user.email == "";
+  }
+
+  addSummary(savedSummary ss) {
+    savdSummary.add(ss);
+    notifyListeners();
+    ss.addToDB();
+  }
+
+  addArticle(savedArticle art) {
+    savdArticles.add(art);
+    notifyListeners();
+    art.addToDB();
   }
 }

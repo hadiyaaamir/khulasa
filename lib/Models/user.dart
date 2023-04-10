@@ -8,7 +8,6 @@ class appUser {
     this.email = "",
     this.darkMode = false,
     this.english = false,
-    this.savedSummaries = const [],
     this.isLoggedIn = true,
   });
 
@@ -16,8 +15,6 @@ class appUser {
   String lastName;
   bool darkMode;
   bool english;
-
-  List<savedSummary> savedSummaries;
 
   String email;
   bool isLoggedIn;

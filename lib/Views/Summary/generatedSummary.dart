@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:khulasa/Controllers/userController.dart';
+import 'package:khulasa/Models/colorTheme.dart';
+import 'package:khulasa/Models/savedSummary.dart';
+import 'package:khulasa/Models/user.dart';
 import 'package:khulasa/Controllers/Config/darkMode.dart';
 import 'package:khulasa/Controllers/Config/languageprovider.dart';
-import 'package:khulasa/Controllers/HelperFunctions/tts.dart';
-import 'package:khulasa/Models/colorTheme.dart';
-import 'package:khulasa/Views/Widgets/IconButtons/saveButton.dart';
 import 'package:khulasa/Views/Widgets/IconButtons/Share/shareButton.dart';
+import 'package:khulasa/Views/Widgets/IconButtons/saveButton.dart';
 import 'package:khulasa/Views/Widgets/IconButtons/speakButton.dart';
-import 'package:khulasa/Views/Widgets/labelIcon.dart';
 import 'package:provider/provider.dart';
 import 'package:khulasa/constants/sizes.dart';
 
@@ -19,6 +20,7 @@ class GeneratedSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ColorTheme colors = context.watch<DarkMode>().mode;
+    appUser user = context.watch<UserController>().user;
     bool isEnglish = context.watch<Language>().isEnglish;
 
     return Padding(
@@ -44,7 +46,14 @@ class GeneratedSummary extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    SaveButton(),
+                    SaveButton(
+                        isSummary: true,
+                        ss: savedSummary(
+                          title: 'summary',
+                          savedOn: DateTime.now(),
+                          summary: summaryText,
+                          email: user.email,
+                        )),
                     SizedBox(width: 10),
                     ShareButton(isRSSFeed: false, content: summaryText),
                   ],

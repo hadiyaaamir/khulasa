@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:khulasa/Controllers/userController.dart';
 import 'package:khulasa/Controllers/Backend/categoryExcel.dart';
 import 'package:khulasa/Controllers/articleprovider.dart';
 import 'package:khulasa/Controllers/Config/darkMode.dart';
@@ -22,6 +23,7 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (context) => Language()),
         ChangeNotifierProvider(create: (context) => DarkMode()),
         ChangeNotifierProvider(create: (context) => articleprovider()),
+        ChangeNotifierProvider(create: (context) => UserController()),
       ],
       child: const MyApp(),
     ),

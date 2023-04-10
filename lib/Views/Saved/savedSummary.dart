@@ -2,13 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:khulasa/Controllers/Config/darkMode.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Models/savedSummary.dart';
+import 'package:khulasa/Views/Widgets/IconButtons/Share/shareButton.dart';
+import 'package:khulasa/Views/Widgets/IconButtons/deleteButton.dart';
 import 'package:provider/provider.dart';
 import 'package:khulasa/constants/sizes.dart';
 
 class SavedSummary extends StatelessWidget {
-  const SavedSummary({super.key, required this.summary});
+  const SavedSummary(
+      {super.key, required this.summary, required this.isSummary});
 
   final savedSummary summary;
+  final bool isSummary;
   @override
   Widget build(BuildContext context) {
     ColorTheme colors = context.watch<DarkMode>().mode;
@@ -37,34 +41,9 @@ class SavedSummary extends StatelessWidget {
                       color: colors.background,
                       child: Column(
                         children: [
-                          Icon(
-                            Icons.share_rounded,
-                            color: colors.primary,
-                          ),
-                          Text(
-                            'Share',
-                            style: TextStyle(
-                                fontSize: smallFont, color: colors.primary),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
-                    child: Card(
-                      color: colors.background,
-                      child: Column(
-                        children: [
-                          Icon(
-                            Icons.delete_forever,
-                            color: colors.caution,
-                          ),
-                          Text(
-                            'Delete',
-                            style: TextStyle(
-                                fontSize: smallFont, color: colors.caution),
-                          )
+                          ShareButton(
+                              content: summary.summary, isRSSFeed: !isSummary),
+                          DeleteButton(isSummary: isSummary, ss: summary)
                         ],
                       ),
                     ),

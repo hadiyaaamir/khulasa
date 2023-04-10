@@ -1,3 +1,4 @@
+import 'package:khulasa/Controllers/userController.dart';
 import 'package:khulasa/Models/article.dart';
 import 'package:khulasa/Models/link.dart';
 
@@ -18,7 +19,7 @@ class savedArticle {
     data['summary'] = art.summary;
     data['content'] = art.content;
     data['link'] = art.link!.link;
-    data['source'] = art.link!.source;
+    data['source'] = art.link!.source.source;
     data['date'] = art.date;
     data['category'] = art.category;
     data['savedOn'] = savedOn;
@@ -38,5 +39,12 @@ class savedArticle {
         ),
         savedOn: json['savedOn'],
         email: json['email']);
+  }
+
+  addToDB() async {
+    await articleList
+        .add(toJson())
+        .then((value) => print("Article Saved"))
+        .catchError((error) => print("Failed to add: $error"));
   }
 }

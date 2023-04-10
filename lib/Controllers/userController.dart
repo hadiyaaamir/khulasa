@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:khulasa/Models/article.dart';
+import 'package:khulasa/Models/savedArticle.dart';
 import 'package:khulasa/Models/savedSummary.dart';
 
 import '../Models/user.dart';
@@ -17,7 +19,7 @@ class UserController extends ChangeNotifier {
   // User get user => _user;
   appUser user = appUser();
   List<savedSummary> savdSummary = [];
-  List<savedSummary> savdArticles = [];
+  List<savedArticle> savdArticles = [];
 
   Future<void> addToDB(appUser user, String p) async {
     try {
@@ -88,5 +90,15 @@ class UserController extends ChangeNotifier {
     return user.email == "";
   }
 
-  addSummary(savedSummary ss) {}
+  addSummary(savedSummary ss) {
+    savdSummary.add(ss);
+    notifyListeners();
+    ss.addToDB();
+  }
+
+  addArticle(savedArticle art) {
+    savdArticles.add(art);
+    notifyListeners();
+    art.addToDB();
+  }
 }

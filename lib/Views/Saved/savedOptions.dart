@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:khulasa/Controllers/darkMode.dart';
+import 'package:khulasa/Controllers/Config/darkMode.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Views/Saved/saved.dart';
 import 'package:khulasa/Views/Widgets/NavBar/AppBarPage.dart';
@@ -56,7 +56,14 @@ class _SavedMainState extends State<SavedMain> {
               //height of TabBarView
               const Expanded(
                 child: TabBarView(
-                  children: [ Saved(isSummary: true,), Saved(isSummary: false,)],
+                  children: [
+                    Saved(
+                      isSummary: true,
+                    ),
+                    Saved(
+                      isSummary: false,
+                    )
+                  ],
                 ),
               ),
             ],

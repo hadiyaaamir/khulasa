@@ -20,7 +20,7 @@ import 'package:provider/provider.dart';
 import 'package:khulasa/constants/sizes.dart';
 import 'package:flutter_tesseract_ocr/flutter_tesseract_ocr.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:syncfusion_flutter_pdf/pdf.dart';
+// import 'package:syncfusion_flutter_pdf/pdf.dart';
 
 class TextSummary extends StatefulWidget {
   const TextSummary({super.key});

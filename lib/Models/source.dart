@@ -3,6 +3,7 @@ import 'package:khulasa/Controllers/Backend/dateFormat.dart';
 
 class Source {
   String source;
+  String sourceUrdu;
   String titleTag;
   String contentTag;
   String webLink;
@@ -11,6 +12,8 @@ class Source {
 
   String titleTagType;
 
+  String contentTagType;
+
   String dateTagType;
   String attributeName;
   int dateIndex;
@@ -18,12 +21,14 @@ class Source {
 
   Source({
     required this.source,
+    required this.sourceUrdu,
     required this.titleTag,
     required this.contentTag,
     required this.dateTag,
     required this.webLink,
     required this.rssSummaryRatio,
     this.titleTagType = '',
+    this.contentTagType = 'class',
     this.dateTagType = 'class',
     this.attributeName = '',
     this.dateIndex = 0,
@@ -49,8 +54,15 @@ class Source {
   }
 
   getArticle(Document document) {
-    if (contentTag == 'p') {
-      List paragraphs = document.getElementsByTagName('p');
+    if (contentTagType == 'paragraph') {
+      List paragraphs = [];
+      if (contentTag == 'p') {
+        paragraphs = document.getElementsByTagName('p');
+      } else {
+        paragraphs = document
+            .getElementsByClassName(contentTag)[0]
+            .getElementsByTagName('p');
+      }
       String s = "";
       for (var para in paragraphs) {
         s += "${para.text}\n\n";

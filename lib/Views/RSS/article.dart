@@ -3,8 +3,10 @@ import 'package:khulasa/Controllers/Config/darkMode.dart';
 import 'package:khulasa/Controllers/Config/languageprovider.dart';
 import 'package:khulasa/Models/article.dart';
 import 'package:khulasa/Models/colorTheme.dart';
+import 'package:khulasa/Views/Widgets/IconButtons/saveButton.dart';
+import 'package:khulasa/Views/Widgets/IconButtons/Share/shareButton.dart';
+import 'package:khulasa/Views/Widgets/IconButtons/speakButton.dart';
 import 'package:khulasa/Views/Widgets/NavBar/customAppBar.dart';
-import 'package:khulasa/Views/Widgets/iconButtons.dart';
 import 'package:provider/provider.dart';
 import 'package:khulasa/constants/sizes.dart';
 
@@ -51,7 +53,9 @@ class _ArticleState extends State<Article> {
 
               //options
               OptionsLine(
-                  speakText: "${widget.art.title}.${widget.art.content}"),
+                speakText: "${widget.art.title}.${widget.art.content}",
+                art: widget.art,
+              ),
 
               //article
               Expanded(
@@ -72,9 +76,10 @@ class _ArticleState extends State<Article> {
 }
 
 class OptionsLine extends StatelessWidget {
-  const OptionsLine({super.key, required this.speakText});
+  const OptionsLine({super.key, required this.speakText, required this.art});
 
   final String speakText;
+  final article art;
 
   @override
   Widget build(BuildContext context) {
@@ -95,10 +100,10 @@ class OptionsLine extends StatelessWidget {
                 iconSize: iconLarge,
                 iconColor: isDarkMode ? colors.text2 : colors.secondary,
               ),
-              Row(children: const [
+              Row(children: [
                 SaveButton(),
                 SizedBox(width: 15),
-                ShareButton(),
+                ShareButton(content: art),
               ]),
             ],
           ),

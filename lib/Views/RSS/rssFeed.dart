@@ -8,12 +8,12 @@ import 'package:khulasa/Controllers/HelperFunctions/navigation.dart';
 import 'package:khulasa/Models/article.dart';
 import 'package:khulasa/Models/category.dart';
 import 'package:khulasa/Models/colorTheme.dart';
+import 'package:khulasa/Views/Widgets/IconButtons/speakButton.dart';
 import 'package:khulasa/Views/Widgets/NavBar/AppBarPage.dart';
 import 'package:khulasa/Views/Widgets/NavBar/customAppBar.dart';
 import 'package:khulasa/Views/RSS/article.dart';
 import 'package:khulasa/Views/RSS/Filter/filter.dart';
 import 'package:khulasa/Views/RSS/searchbar.dart';
-import 'package:khulasa/Views/Widgets/iconButtons.dart';
 import 'package:khulasa/constants/colors.dart';
 import 'package:khulasa/constants/sizes.dart';
 import 'package:khulasa/constants/sources.dart';
@@ -140,12 +140,30 @@ class _RssFeedState extends State<RssFeed> {
                                   children: [
                                     SourceLine(
                                       source: artList == null
-                                          ? allArtList[index].link.source.source
-                                          : artList![index].link.source.source,
+                                          ? isEnglish
+                                              ? allArtList[index]
+                                                  .link
+                                                  .source
+                                                  .source
+                                              : allArtList[index]
+                                                  .link
+                                                  .source
+                                                  .sourceUrdu
+                                          : isEnglish
+                                              ? artList![index]
+                                                  .link
+                                                  .source
+                                                  .source
+                                              : artList![index]
+                                                  .link
+                                                  .source
+                                                  .sourceUrdu,
                                       date: DateFormatter().formatDate(
-                                          artList == null
-                                              ? allArtList[index].date
-                                              : artList![index].date),
+                                        artList == null
+                                            ? allArtList[index].date
+                                            : artList![index].date,
+                                        isEnglish,
+                                      ),
                                       speakText: artList == null
                                           ? "${allArtList[index].title}.${allArtList[index].summary}"
                                           : "${artList![index].title}.${artList![index].summary}",
@@ -213,6 +231,7 @@ class SourceLine extends StatelessWidget {
   Widget build(BuildContext context) {
     ColorTheme colors = context.watch<DarkMode>().mode;
     bool isDarkMode = context.watch<DarkMode>().isDarkMode;
+    bool isEnglish = context.watch<Language>().isEnglish;
 
     return Padding(
       padding: const EdgeInsets.only(top: 15, bottom: 15),
@@ -229,7 +248,12 @@ class SourceLine extends StatelessWidget {
                 vertPadding: 0,
                 iconColor: isDarkMode ? colors.text : colors.secondary,
               ),
-              Text('$source | $date', style: TextStyle(color: colors.text2)),
+              Directionality(
+                textDirection:
+                    isEnglish ? TextDirection.ltr : TextDirection.rtl,
+                child: Text('$source | $date',
+                    style: TextStyle(color: colors.text2)),
+              ),
             ],
           ),
           Divider(

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:khulasa/Controllers/Config/darkMode.dart';
+import 'package:khulasa/Controllers/Config/languageprovider.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Models/source.dart';
 import 'package:khulasa/Views/RSS/Filter/sourceCheckbox.dart';
@@ -28,6 +29,7 @@ class _SourceFilterState extends State<SourceFilter> {
   @override
   Widget build(BuildContext context) {
     ColorTheme colors = context.watch<DarkMode>().mode;
+    bool isEnglish = context.watch<Language>().isEnglish;
 
     List checkedSources = widget.checkedSources;
 
@@ -37,8 +39,10 @@ class _SourceFilterState extends State<SourceFilter> {
         Padding(
           padding: const EdgeInsets.only(right: 5, left: 5, bottom: 15),
           child: Text(
-            'News Sources',
-            style: TextStyle(color: colors.text, fontSize: buttonFont),
+            isEnglish ? 'News Sources' : 'اخبار کے ذرائع',
+            style: TextStyle(
+                color: colors.text,
+                fontSize: isEnglish ? buttonFont : buttonFont + 2),
           ),
         ),
         Wrap(

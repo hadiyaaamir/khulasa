@@ -5,14 +5,14 @@ import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Views/Widgets/NavBar/customAppBar.dart';
 import 'package:provider/provider.dart';
 
-class Font extends StatefulWidget {
-  const Font({super.key});
+class FontSetting extends StatefulWidget {
+  const FontSetting({super.key});
 
   @override
-  State<Font> createState() => _FontState();
+  State<FontSetting> createState() => _FontSettingState();
 }
 
-class _FontState extends State<Font> {
+class _FontSettingState extends State<FontSetting> {
   @override
   Widget build(BuildContext context) {
     ColorTheme colors = context.watch<DarkMode>().mode;

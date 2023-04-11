@@ -26,8 +26,8 @@ class _SettingsState extends State<Settings> {
     SettingsOption(
         title: 'Language', titleUrdu: 'اردو', navTo: LanguageSetting()),
     SettingsOption(title: 'Theme', titleUrdu: 'اردو', navTo: ThemeSetting()),
-    SettingsOption(title: 'Mode', titleUrdu: 'اردو', navTo: Mode()),
-    SettingsOption(title: 'Font', titleUrdu: 'اردو', navTo: Font()),
+    SettingsOption(title: 'Mode', titleUrdu: 'اردو', navTo: ModeSetting()),
+    SettingsOption(title: 'Font', titleUrdu: 'اردو', navTo: FontSetting()),
   ];
 
   @override

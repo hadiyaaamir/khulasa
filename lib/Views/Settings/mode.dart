@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:khulasa/Controllers/Config/darkMode.dart';
+import 'package:khulasa/Controllers/Config/languageprovider.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Views/Settings/settingBtn.dart';
 import 'package:khulasa/Views/Widgets/NavBar/customAppBar.dart';
@@ -19,24 +20,29 @@ class _ThemeSettingState extends State<ModeSetting> {
     ColorTheme colors = context.watch<DarkMode>().mode;
     bool isDarkMode = context.watch<DarkMode>().isDarkMode;
 
-    return Scaffold(
-      backgroundColor: colors.background,
-      appBar: CustomAppBar(title: 'Mode Settings'),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
-        child: Column(
-          children: [
-            ModeBtn(
-              text: 'Light Mode',
-              isSelected: !isDarkMode,
-              icon: Icons.light_mode,
-            ),
-            ModeBtn(
-              text: 'Dark Mode',
-              isSelected: isDarkMode,
-              icon: Icons.dark_mode,
-            ),
-          ],
+    bool isEnglish = context.watch<Language>().isEnglish;
+
+    return Directionality(
+      textDirection: isEnglish ? TextDirection.ltr : TextDirection.rtl,
+      child: Scaffold(
+        backgroundColor: colors.background,
+        appBar: CustomAppBar(title: isEnglish ? 'Mode Settings' : ''),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+          child: Column(
+            children: [
+              ModeBtn(
+                text: isEnglish ? 'Light Mode' : 'لائٹ موڈ',
+                isSelected: !isDarkMode,
+                icon: Icons.light_mode,
+              ),
+              ModeBtn(
+                text: isEnglish ? 'Dark Mode' : 'ڈارک موڈ',
+                isSelected: isDarkMode,
+                icon: Icons.dark_mode,
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -77,7 +83,9 @@ class ModeBtn extends StatelessWidget {
         isSelected: isSelected,
       ),
       onTap: () {
-        context.read<DarkMode>().toggleMode();
+        if (!isSelected) {
+          context.read<DarkMode>().toggleMode();
+        }
       },
     );
   }

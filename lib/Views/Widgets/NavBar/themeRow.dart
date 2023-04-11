@@ -59,7 +59,7 @@ class _ThemeOptionState extends State<ThemeOption> {
   Widget build(BuildContext context) {
     ColorTheme colors = context.read<DarkMode>().mode;
 
-    return InkWell(
+    return GestureDetector(
       child: Container(
         height: widget.isSelected ? 35 : 30,
         width: widget.isSelected ? 35 : 30,

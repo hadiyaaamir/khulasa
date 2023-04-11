@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+// import 'package:intl/intl.dart';
 import 'package:khulasa/Controllers/Config/darkMode.dart';
+import 'package:khulasa/Controllers/Config/languageprovider.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Views/Settings/settingBtn.dart';
 import 'package:khulasa/Views/Widgets/NavBar/customAppBar.dart';
+import 'package:khulasa/constants/colors.dart';
 import 'package:khulasa/constants/sizes.dart';
 import 'package:provider/provider.dart';
 
@@ -19,33 +22,41 @@ class _ThemeSettingState extends State<ThemeSetting> {
     ColorTheme colors = context.watch<DarkMode>().mode;
     bool isDarkMode = context.watch<DarkMode>().isDarkMode;
 
-    return Scaffold(
-      backgroundColor: colors.background,
-      appBar: CustomAppBar(title: 'Theme Settings'),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
-        child: Column(
-          children: [
-            ThemeBtn(
-              text: 'Light Mode',
-              isSelected: true,
-            ),
-          ],
+    Map<String, ColorTheme> themes = context.watch<DarkMode>().getThemes();
+
+    List<ColorTheme> values = themes.values.toList();
+    List<String> keys = themes.keys.toList();
+    bool isEnglish = context.watch<Language>().isEnglish;
+
+    return Directionality(
+      textDirection: isEnglish ? TextDirection.ltr : TextDirection.rtl,
+      child: Scaffold(
+        backgroundColor: colors.background,
+        appBar: CustomAppBar(title: 'Theme Settings'),
+        body: ListView.builder(
+          // gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          //   crossAxisCount: 2,
+          // ),
+          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+          itemCount: keys.length,
+          itemBuilder: (context, index) =>
+              ThemeBtn(text: keys[index], theme: values[index]),
         ),
       ),
     );
   }
 }
 
+//option tile
 class ThemeBtn extends StatelessWidget {
   const ThemeBtn({
     super.key,
     required this.text,
-    required this.isSelected,
+    required this.theme,
   });
 
   final String text;
-  final bool isSelected;
+  final ColorTheme theme;
 
   @override
   Widget build(BuildContext context) {
@@ -53,18 +64,48 @@ class ThemeBtn extends StatelessWidget {
 
     return GestureDetector(
       child: SettingBtn(
-        content: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 5),
-          child: Text(
-            text,
-            style: TextStyle(color: colors.text, fontSize: buttonFont),
-          ),
+        content: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "${text[0].toUpperCase()}${text.substring(1)} Theme",
+              style: TextStyle(
+                color: colors.text,
+                fontSize: buttonFont,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+
+            const SizedBox(
+              height: 15,
+            ),
+
+            //colours row
+            Row(
+              children: [
+                ColorSquare(color: theme.primary),
+                ColorSquare(color: theme.secondary),
+                ColorSquare(color: theme.text),
+                ColorSquare(color: theme.text2),
+              ],
+            ),
+          ],
         ),
-        isSelected: isSelected,
+        isSelected: theme == colors,
       ),
       onTap: () {
-        context.read<DarkMode>().toggleMode();
+        context.read<DarkMode>().theme = text;
       },
     );
+  }
+}
+
+class ColorSquare extends StatelessWidget {
+  const ColorSquare({super.key, required this.color});
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(width: 50, height: 35, color: color);
   }
 }

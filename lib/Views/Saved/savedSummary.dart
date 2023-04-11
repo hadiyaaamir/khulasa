@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:khulasa/Controllers/Config/darkMode.dart';
 import 'package:khulasa/Models/colorTheme.dart';
+import 'package:khulasa/Models/savedArticle.dart';
 import 'package:khulasa/Models/savedSummary.dart';
 import 'package:khulasa/Views/Widgets/IconButtons/Share/shareButton.dart';
 import 'package:khulasa/Views/Widgets/IconButtons/deleteButton.dart';
@@ -8,10 +9,11 @@ import 'package:provider/provider.dart';
 import 'package:khulasa/constants/sizes.dart';
 
 class SavedSummary extends StatelessWidget {
-  const SavedSummary(
-      {super.key, required this.summary, required this.isSummary});
+  SavedSummary(
+      {super.key, this.ss, required this.isSummary});
 
-  final savedSummary summary;
+  var ss;
+  savedArticle? article;
   final bool isSummary;
   @override
   Widget build(BuildContext context) {
@@ -27,7 +29,7 @@ class SavedSummary extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(130, 0, 70, 0),
                   child: Text(
-                    summary.title,
+                    isSummary?ss.title:ss.art.title,
                     style: TextStyle(
                         fontSize: headingFont,
                         color: colors.text,
@@ -42,8 +44,8 @@ class SavedSummary extends StatelessWidget {
                       child: Column(
                         children: [
                           ShareButton(
-                              content: summary.summary, isRSSFeed: !isSummary),
-                          DeleteButton(isSummary: isSummary, ss: summary)
+                              content: isSummary?ss.summary:ss.art.summary, isRSSFeed: !isSummary),
+                          DeleteButton(isSummary: isSummary, ss:ss),
                         ],
                       ),
                     ),
@@ -52,7 +54,7 @@ class SavedSummary extends StatelessWidget {
               ],
             ),
             Text(
-              summary.summary,
+              isSummary?ss.summary:ss.art.summary,
               style: TextStyle(
                 fontSize: buttonFont,
                 color: colors.text,

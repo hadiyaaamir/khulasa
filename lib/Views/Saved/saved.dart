@@ -50,7 +50,7 @@ class _SavedState extends State<Saved> {
                     color: colors.primary,
                     child: ListTile(
                       title: Text(
-                        items[index].title,
+                        widget.isSummary?items[index].title:items[index].art.title,
                         style: TextStyle(
                             color: colors.text, fontWeight: FontWeight.bold),
                       ),
@@ -65,7 +65,7 @@ class _SavedState extends State<Saved> {
                       onTap: () => Navigation().navigation(
                         context,
                         SavedSummary(
-                          summary: items[index],
+                          ss: items[index],
                           isSummary: widget.isSummary,
                         ),
                       ),

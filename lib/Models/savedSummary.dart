@@ -37,4 +37,19 @@ class savedSummary {
         .then((value) => print("Summary Saved"))
         .catchError((error) => print("Failed to add: $error"));
   }
+
+  removeFromDB() async {
+    await articleList
+        .where('email', isEqualTo: email)
+        .where('title', isEqualTo: title)
+        .where('savedOn', isEqualTo: savedOn)
+        .get()
+        .then((value) {
+      articleList
+          .doc(value.docs[0].id)
+          .delete()
+          .then((value) => print("Summary Deleted"))
+          .catchError((error) => print("Failed to delete: $error"));
+    });
+  }
 }

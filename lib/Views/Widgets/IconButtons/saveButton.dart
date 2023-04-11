@@ -25,6 +25,7 @@ class SaveButton extends StatelessWidget {
             ? context.read<UserController>().addSummary(ss as savedSummary)
             : context.read<UserController>().addArticle(ss as savedArticle);
         // UserController().addSummaryDB(isSummary, ss);
+        print("Save summary/article" + ss.email);
       },
     );
   }

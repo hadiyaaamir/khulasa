@@ -7,6 +7,7 @@ import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Models/savedArticle.dart';
 import 'package:khulasa/Models/savedSummary.dart';
 import 'package:khulasa/Models/user.dart';
+import 'package:khulasa/Views/Widgets/IconButtons/deleteButton.dart';
 import 'package:khulasa/Views/Widgets/IconButtons/saveButton.dart';
 import 'package:khulasa/Views/Widgets/IconButtons/Share/shareButton.dart';
 import 'package:khulasa/Views/Widgets/IconButtons/speakButton.dart';
@@ -16,9 +17,11 @@ import 'package:khulasa/constants/sizes.dart';
 
 class Article extends StatefulWidget {
   // final int i;
-  const Article({Key? key, required this.art}) : super(key: key);
+  Article({Key? key, required this.art, required this.isSaved})
+      : super(key: key);
 
-  final article art;
+  var art;
+  final bool isSaved;
 
   @override
   State<Article> createState() => _ArticleState();
@@ -44,7 +47,9 @@ class _ArticleState extends State<Article> {
               Padding(
                 padding: const EdgeInsets.only(bottom: 30),
                 child: Text(
-                  widget.art.title,
+                  widget.isSaved
+                      ? (widget.art as savedArticle).art.title
+                      : (widget.art as article).title,
                   textAlign: TextAlign.right,
                   style: TextStyle(
                     fontFamily: 'Noto Nastaleeq Urdu',
@@ -57,15 +62,20 @@ class _ArticleState extends State<Article> {
 
               //options
               OptionsLine(
-                speakText: "${widget.art.title}.${widget.art.content}",
+                speakText: widget.isSaved
+                    ? "${(widget.art as savedArticle).art.title}.${(widget.art as savedArticle).art.content}"
+                    : "${(widget.art as article).title}.${(widget.art as article).content}",
                 art: widget.art,
+                isSaved: widget.isSaved,
               ),
 
               //article
               Expanded(
                 child: SingleChildScrollView(
                   child: Text(
-                    widget.art.content,
+                    widget.isSaved
+                        ? (widget.art as savedArticle).art.content
+                        : (widget.art as article).content,
                     textAlign: TextAlign.right,
                     style: TextStyle(color: colors.text, fontSize: buttonFont),
                   ),
@@ -80,17 +90,22 @@ class _ArticleState extends State<Article> {
 }
 
 class OptionsLine extends StatelessWidget {
-  const OptionsLine({super.key, required this.speakText, required this.art});
+  OptionsLine({
+    super.key,
+    required this.speakText,
+    required this.art,
+    required this.isSaved,
+  });
 
   final String speakText;
-  final article art;
+  var art;
+  final bool isSaved;
 
   @override
   Widget build(BuildContext context) {
     ColorTheme colors = context.watch<DarkMode>().mode;
     bool isDarkMode = context.watch<DarkMode>().isDarkMode;
     appUser user = context.watch<UserController>().user;
-    String speakText = "${art.title}.${art.content}";
 
     return Padding(
       padding: const EdgeInsets.only(top: 10, bottom: 25),
@@ -107,15 +122,17 @@ class OptionsLine extends StatelessWidget {
                 iconColor: isDarkMode ? colors.text2 : colors.secondary,
               ),
               Row(children: [
-                SaveButton(
-                  isSummary: false,
-                  ss: savedArticle(
-                    art: art,
-                    savedOn: DateTime.now(),
-                    email: user.email,
-                  ),
-                ),
-                ShareButton(isRSSFeed: true, content: art),
+                isSaved
+                    ? DeleteButton(isSummary: false, ss: art as savedArticle)
+                    : SaveButton(
+                        isSummary: false,
+                        ss: savedArticle(
+                            art: art,
+                            savedOn: DateTime.now(),
+                            email: user.email),
+                      ),
+                const SizedBox(width: 10),
+                ShareButton(isRSSFeed: true, content: isSaved ? art.art : art)
               ]),
             ],
           ),

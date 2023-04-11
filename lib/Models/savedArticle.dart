@@ -1,6 +1,8 @@
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:khulasa/Controllers/userController.dart';
 import 'package:khulasa/Models/article.dart';
 import 'package:khulasa/Models/link.dart';
+import 'package:khulasa/Models/savedSummary.dart';
 
 class savedArticle {
   DateTime savedOn;
@@ -42,9 +44,9 @@ class savedArticle {
   }
 
   addToDB() async {
-    await articleList
-        .add(toJson())
-        .then((value) => print("Article Saved"))
-        .catchError((error) => print("Failed to add: $error"));
+    await articleList.add(toJson()).then((value) {
+      print("Article Saved");
+      Fluttertoast.showToast(msg: 'Article Saved!');
+    }).catchError((error) => print("Failed to add: $error"));
   }
 }

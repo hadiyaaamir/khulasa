@@ -3,13 +3,13 @@ import 'package:khulasa/Models/savedSummary.dart';
 import 'package:khulasa/Views/Widgets/labelIcon.dart';
 
 class DeleteButton extends StatelessWidget {
-  const DeleteButton({
+  DeleteButton({
     Key? key,
     required this.isSummary,
     required this.ss,
   }) : super(key: key);
   final bool isSummary;
-  final savedSummary ss;
+  var ss;
   @override
   Widget build(BuildContext context) {
     return LabelIcon(

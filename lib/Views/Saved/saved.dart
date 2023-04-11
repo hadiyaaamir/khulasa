@@ -6,6 +6,7 @@ import 'package:khulasa/Controllers/Config/languageprovider.dart';
 import 'package:khulasa/Controllers/HelperFunctions/navigation.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Models/savedSummary.dart';
+import 'package:khulasa/Views/RSS/rssTile.dart';
 import 'package:khulasa/Views/Widgets/NavBar/AppBarPage.dart';
 import 'package:khulasa/Views/Widgets/NavBar/customAppBar.dart';
 import 'package:khulasa/Views/Saved/savedSummary.dart';
@@ -46,31 +47,45 @@ class _SavedState extends State<Saved> {
                   padding:
                       const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                   itemCount: items.length,
-                  itemBuilder: (context, index) => Card(
-                    color: colors.primary,
-                    child: ListTile(
-                      title: Text(
-                        widget.isSummary?items[index].title:items[index].art.title,
-                        style: TextStyle(
-                            color: colors.text, fontWeight: FontWeight.bold),
-                      ),
-                      subtitle: Text(
-                        'Saved on: ${items[index].savedOn.day}/${items[index].savedOn.month}/${items[index].savedOn.year}',
-                        style: TextStyle(color: colors.text2),
-                      ),
-                      trailing: Icon(
-                        Icons.keyboard_arrow_right_rounded,
-                        color: colors.text2,
-                      ),
-                      onTap: () => Navigation().navigation(
-                        context,
-                        SavedSummary(
-                          ss: items[index],
-                          isSummary: widget.isSummary,
+                  itemBuilder: (context, index) => widget.isSummary
+                      ? Card(
+                          color: colors.primary,
+                          child: ListTile(
+                            title: Text(
+                              items[index].title,
+                              style: TextStyle(
+                                  color: colors.text,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            subtitle: Text(
+                              'Saved on: ${items[index].savedOn.day}/${items[index].savedOn.month}/${items[index].savedOn.year}',
+                              style: TextStyle(color: colors.text2),
+                            ),
+                            trailing: Icon(
+                              Icons.keyboard_arrow_right_rounded,
+                              color: colors.text2,
+                            ),
+                            onTap: () => Navigation().navigation(
+                              context,
+                              SavedSummary(
+                                ss: items[index],
+                                isSummary: widget.isSummary,
+                              ),
+                            ),
+                          ),
+                        )
+                      : RssTile(
+                          title: items[index].art.title,
+                          source: isEnglish
+                              ? items[index].art.link.source.source
+                              : items[index].art.link.source.sourceUrdu,
+                          date: items[index].art.date,
+                          speakText:
+                              "${items[index].art.title}...${items[index].art.content}",
+                          summary: items[index].art.summary,
+                          art: items[index],
+                          isSaved: true,
                         ),
-                      ),
-                    ),
-                  ),
                 ),
               ),
             ],

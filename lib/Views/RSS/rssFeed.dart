@@ -2,20 +2,13 @@ import 'package:flutter/material.dart';
 
 import 'package:khulasa/Controllers/articleprovider.dart';
 import 'package:khulasa/Controllers/Config/darkMode.dart';
-import 'package:khulasa/Controllers/Backend/dateFormat.dart';
 import 'package:khulasa/Controllers/Config/languageprovider.dart';
-import 'package:khulasa/Controllers/HelperFunctions/navigation.dart';
-import 'package:khulasa/Models/article.dart';
 import 'package:khulasa/Models/category.dart';
 import 'package:khulasa/Models/colorTheme.dart';
-import 'package:khulasa/Views/Widgets/IconButtons/speakButton.dart';
-import 'package:khulasa/Views/Widgets/NavBar/AppBarPage.dart';
+import 'package:khulasa/Views/RSS/rssTile.dart';
 import 'package:khulasa/Views/Widgets/NavBar/customAppBar.dart';
-import 'package:khulasa/Views/RSS/article.dart';
 import 'package:khulasa/Views/RSS/Filter/filter.dart';
 import 'package:khulasa/Views/RSS/searchbar.dart';
-import 'package:khulasa/constants/colors.dart';
-import 'package:khulasa/constants/sizes.dart';
 import 'package:khulasa/constants/sources.dart';
 import 'package:provider/provider.dart';
 
@@ -112,154 +105,32 @@ class _RssFeedState extends State<RssFeed> {
                       padding: const EdgeInsets.only(
                           bottom: 20, left: 30, right: 30, top: 5),
                       itemCount: count ?? allArtList.length,
-                      itemBuilder: (context, index) => Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: Column(
-                          children: [
-                            Card(
-                              color: colors.primary,
-                              shape: const RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
-                              ),
-                              child: ListTile(
-                                contentPadding: const EdgeInsets.symmetric(
-                                    horizontal: 25, vertical: 30),
-                                title: Text(
-                                  artList == null
-                                      ? allArtList[index].title
-                                      : artList![index].title,
-                                  textAlign: TextAlign.right,
-                                  style: TextStyle(
-                                    color: colors.text,
-                                    fontWeight: FontWeight.w900,
-                                    fontSize: headingFont,
-                                  ),
-                                ),
-                                subtitle: Column(
-                                  children: [
-                                    SourceLine(
-                                      source: artList == null
-                                          ? isEnglish
-                                              ? allArtList[index]
-                                                  .link
-                                                  .source
-                                                  .source
-                                              : allArtList[index]
-                                                  .link
-                                                  .source
-                                                  .sourceUrdu
-                                          : isEnglish
-                                              ? artList![index]
-                                                  .link
-                                                  .source
-                                                  .source
-                                              : artList![index]
-                                                  .link
-                                                  .source
-                                                  .sourceUrdu,
-                                      date: DateFormatter().formatDate(
-                                        artList == null
-                                            ? allArtList[index].date
-                                            : artList![index].date,
-                                        isEnglish,
-                                      ),
-                                      speakText: artList == null
-                                          ? "${allArtList[index].title}.${allArtList[index].summary}"
-                                          : "${artList![index].title}.${artList![index].summary}",
-                                    ),
-                                    Text(
-                                      artList == null
-                                          ? allArtList[index].summary
-                                          : artList![index].summary,
-                                      textAlign: TextAlign.right,
-                                      style: TextStyle(
-                                        color: colors.text,
-                                        fontSize: buttonFont,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                onTap: () {
-                                  Navigation().navigation(
-                                      context,
-                                      Article(
-                                          art: artList == null
-                                              ? allArtList[index]
-                                              : artList![index]));
-                                },
-                              ),
-                            ),
-                            // if (!isFinished &&
-                            //     index == (count ?? allArtList.length) - 1) ...[
-                            //   Padding(
-                            //     padding: const EdgeInsets.only(top: 20),
-                            //     child: SizedBox(
-                            //       width: 25,
-                            //       height: 25,
-                            //       child: CircularProgressIndicator(
-                            //         color: colors.primary,
-                            //       ),
-                            //     ),
-                            //   )
-                            // ],
-                          ],
-                        ),
-                      ),
-                    ),
+                      itemBuilder: (context, index) => RssTile(
+                          title: artList == null
+                              ? allArtList[index].title
+                              : artList![index].title,
+                          source: artList == null
+                              ? isEnglish
+                                  ? allArtList[index].link.source.source
+                                  : allArtList[index].link.source.sourceUrdu
+                              : isEnglish
+                                  ? artList![index].link.source.source
+                                  : artList![index].link.source.sourceUrdu,
+                          date: artList == null
+                              ? allArtList[index].date
+                              : artList![index].date,
+                          speakText: artList == null
+                              ? "${allArtList[index].title}.${allArtList[index].summary}"
+                              : "${artList![index].title}.${artList![index].summary}",
+                          summary: artList == null
+                              ? allArtList[index].summary
+                              : artList![index].summary,
+                          art: artList == null
+                              ? allArtList[index]
+                              : artList![index])),
             )
           ],
         ),
-      ),
-    );
-  }
-}
-
-class SourceLine extends StatelessWidget {
-  const SourceLine({
-    super.key,
-    required this.source,
-    required this.date,
-    required this.speakText,
-  });
-
-  final String source;
-  final String date;
-  final String speakText;
-
-  @override
-  Widget build(BuildContext context) {
-    ColorTheme colors = context.watch<DarkMode>().mode;
-    bool isDarkMode = context.watch<DarkMode>().isDarkMode;
-    bool isEnglish = context.watch<Language>().isEnglish;
-
-    return Padding(
-      padding: const EdgeInsets.only(top: 15, bottom: 15),
-      child: Column(
-        children: [
-          Divider(
-              color: isDarkMode ? colors.background : colors.secondary,
-              thickness: 1.2),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              SpeakIconButton(
-                speakText: speakText,
-                vertPadding: 0,
-                iconColor: isDarkMode ? colors.text : colors.secondary,
-              ),
-              Directionality(
-                textDirection:
-                    isEnglish ? TextDirection.ltr : TextDirection.rtl,
-                child: Text('$source | $date',
-                    style: TextStyle(color: colors.text2)),
-              ),
-            ],
-          ),
-          Divider(
-              color: isDarkMode ? colors.background : colors.secondary,
-              thickness: 1.2),
-        ],
       ),
     );
   }

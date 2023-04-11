@@ -21,7 +21,7 @@ class _SavedMainState extends State<SavedMain> {
     ColorTheme colors = context.watch<DarkMode>().mode;
 
     return Scaffold(
-      appBar: CustomAppBar(title: 'Summary'),
+      appBar: CustomAppBar(title: 'Saved'),
       drawer: const Drawer(child: Draw()),
       backgroundColor: colors.background,
       body: Center(
@@ -33,7 +33,7 @@ class _SavedMainState extends State<SavedMain> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
-                padding: EdgeInsets.symmetric(vertical: 20, horizontal: 50),
+                padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
                 child: DecoratedBox(
                   decoration: BoxDecoration(
                     //This is for background color
@@ -48,7 +48,10 @@ class _SavedMainState extends State<SavedMain> {
                       labelStyle: TextStyle(fontWeight: FontWeight.bold),
                       labelColor: colors.text,
                       unselectedLabelColor: colors.text2,
-                      tabs: const [Tab(text: 'Text'), Tab(text: 'Link')],
+                      tabs: const [
+                        Tab(text: 'Summaries'),
+                        Tab(text: 'Articles')
+                      ],
                       indicatorColor: colors.text,
                       indicatorWeight: 3),
                 ),

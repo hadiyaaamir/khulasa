@@ -1,3 +1,4 @@
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:khulasa/Controllers/userController.dart';
 
 class savedSummary {
@@ -32,10 +33,10 @@ class savedSummary {
   }
 
   addToDB() async {
-    await summaryList
-        .add(toJson())
-        .then((value) => print("Summary Saved"))
-        .catchError((error) => print("Failed to add: $error"));
+    await summaryList.add(toJson()).then((value) {
+      print("Summary Saved");
+      Fluttertoast.showToast(msg: 'Summary Saved!');
+    }).catchError((error) => print("Failed to add: $error"));
   }
 
   removeFromDB() async {

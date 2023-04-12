@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:khulasa/Models/savedArticle.dart';
 import 'package:khulasa/Models/savedSummary.dart';
 import 'package:khulasa/Views/Widgets/labelIcon.dart';
 
@@ -6,7 +7,7 @@ class DeleteButton extends StatelessWidget {
   DeleteButton({
     Key? key,
     required this.isSummary,
-    required this.ss,
+    this.ss,
   }) : super(key: key);
   final bool isSummary;
   var ss;

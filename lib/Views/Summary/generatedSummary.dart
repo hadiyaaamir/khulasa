@@ -54,6 +54,7 @@ class GeneratedSummary extends StatelessWidget {
                           summary: summaryText,
                           email: user.email,
                         )),
+                    
                     SizedBox(width: 10),
                     ShareButton(isRSSFeed: false, content: summaryText),
                   ],

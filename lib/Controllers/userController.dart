@@ -18,7 +18,13 @@ FirebaseAuth auth = FirebaseAuth.instance;
 
 class UserController extends ChangeNotifier {
   // User get user => _user;
-  appUser user = appUser();
+  appUser _currentUser = appUser();
+  appUser get currentUser => _currentUser;
+  set currentUser(appUser u) {
+    _currentUser = u;
+    notifyListeners();
+  }
+
   List<savedSummary> savdSummary = [];
   List<savedArticle> savdArticles = [];
 
@@ -47,30 +53,32 @@ class UserController extends ChangeNotifier {
     }
   }
 
-  Future<void> getFromDB(String email) async {
+  getFromDB(String email) async {
     await userlist
         .where('email', isEqualTo: email)
         .get()
         .then((QuerySnapshot querySnapshot) {
-      querySnapshot.docs.forEach((doc) {
+      querySnapshot.docs.forEach((doc) async {
         appUser u = (appUser.fromJson(doc.data() as Map<String, dynamic>));
-        user = u;
+        currentUser = u;
         notifyListeners();
-        print(user.toString());
-        getUserArticles();
-        getUserSummaries();
+        print("from db: ${currentUser.toString()}");
+
+        await getUserArticles();
+        await getUserSummaries();
       });
     });
-    notifyListeners();
+    return currentUser;
   }
 
-  Future<String?> setLoggedIn(String e, String password) async {
+  setLoggedIn(String e, String password) async {
     try {
       UserCredential uc = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: e, password: password);
       User? us = uc.user;
-      getFromDB(e);
-      return us?.email;
+      appUser u = await getFromDB(e);
+      notifyListeners();
+      return u;
     } catch (e) {
       print(e);
       return "LoggedIn Failed";
@@ -88,7 +96,7 @@ class UserController extends ChangeNotifier {
   }
 
   bool userNotFound() {
-    return user.email == "";
+    return _currentUser.email == "";
   }
 
   addSummary(savedSummary ss) {
@@ -117,31 +125,29 @@ class UserController extends ChangeNotifier {
 
   getUserArticles() async {
     await articleList
-        .where('email', isEqualTo: user.email)
+        .where('email', isEqualTo: _currentUser.email)
         .get()
         .then((QuerySnapshot querySnapshot) {
       querySnapshot.docs.forEach((doc) async {
         savedArticle toAdd =
             savedArticle.fromJson(doc.data() as Map<String, dynamic>);
         savdArticles.add(toAdd);
+        notifyListeners();
       });
     });
-
-    notifyListeners();
   }
 
   getUserSummaries() async {
     await summaryList
-        .where('email', isEqualTo: user.email)
+        .where('email', isEqualTo: _currentUser.email)
         .get()
         .then((QuerySnapshot querySnapshot) {
       querySnapshot.docs.forEach((doc) async {
         savedSummary toAdd =
             savedSummary.fromJson(doc.data() as Map<String, dynamic>);
         savdSummary.add(toAdd);
+        notifyListeners();
       });
     });
-
-    notifyListeners();
   }
 }

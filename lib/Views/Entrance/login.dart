@@ -5,6 +5,7 @@ import 'package:khulasa/Controllers/Config/languageprovider.dart';
 import 'package:khulasa/Controllers/HelperFunctions/navigation.dart';
 import 'package:khulasa/Controllers/userController.dart';
 import 'package:khulasa/Models/colorTheme.dart';
+import 'package:khulasa/Models/user.dart';
 import 'package:khulasa/Views/Entrance/signup.dart';
 import 'package:khulasa/Views/Widgets/button.dart';
 import 'package:khulasa/Views/Widgets/textfield.dart';
@@ -24,12 +25,13 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  bool loggedInFailed = false;
 
   @override
   Widget build(BuildContext context) {
     ColorTheme colors = context.watch<DarkMode>().mode;
     bool isEnglish = context.watch<Language>().isEnglish;
-    bool loggedInFailed = false;
+    // appUser currentUser = context.watch<UserController>().currentUser;
 
     return Directionality(
       textDirection: isEnglish ? TextDirection.ltr : TextDirection.rtl,
@@ -78,15 +80,18 @@ class _LoginState extends State<Login> {
                   onPress: () async {
                     final FormState form = _formKey.currentState as FormState;
                     if (form.validate()) {
-                      String? result = await UserController().setLoggedIn(
+                      var result = await UserController().setLoggedIn(
                           emailController.text, passwordController.text);
                       if (result == "LoggedIn Failed") {
                         loggedInFailed = true;
                       } else {
                         loggedInFailed = false;
-                        // UserController().getFromDB(emailController.text);
-                        print(emailController.text);
-                        // print(context.watch<UserController>().user);
+
+                        context.read<UserController>().currentUser =
+                            result as appUser;
+
+                        // print(emailController.text);
+
                         Navigation().navigationReplace(context, const Option());
                       }
                     }

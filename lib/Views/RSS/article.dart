@@ -105,7 +105,9 @@ class OptionsLine extends StatelessWidget {
   Widget build(BuildContext context) {
     ColorTheme colors = context.watch<DarkMode>().mode;
     bool isDarkMode = context.watch<DarkMode>().isDarkMode;
-    appUser user = context.watch<UserController>().user;
+    appUser user = context.watch<UserController>().currentUser;
+
+    print('article: $user');
 
     return Padding(
       padding: const EdgeInsets.only(top: 10, bottom: 25),

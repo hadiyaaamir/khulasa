@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-// import 'package:intl/intl.dart';
 import 'package:khulasa/Controllers/Config/darkMode.dart';
 import 'package:khulasa/Controllers/Config/languageprovider.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Views/Settings/settingBtn.dart';
 import 'package:khulasa/Views/Widgets/NavBar/customAppBar.dart';
-import 'package:khulasa/constants/colors.dart';
 import 'package:khulasa/constants/sizes.dart';
 import 'package:provider/provider.dart';
 
@@ -34,9 +32,6 @@ class _ThemeSettingState extends State<ThemeSetting> {
         backgroundColor: colors.background,
         appBar: CustomAppBar(title: 'Theme Settings'),
         body: ListView.builder(
-          // gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          //   crossAxisCount: 2,
-          // ),
           padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
           itemCount: keys.length,
           itemBuilder: (context, index) =>

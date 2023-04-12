@@ -103,7 +103,8 @@ class _SignUpState extends State<SignUp> {
                             email: emailController.text);
                         //add to Database
 
-                        UserController().addToDB(user, passwordController.text);
+                        await UserController().addToDB(user, passwordController.text);
+                        await UserController().getFromDB(emailController.text);
                         Navigation().navigationReplace(context, const Option());
                       }
                     }),

@@ -68,7 +68,7 @@ class _SavedState extends State<Saved> {
                             onTap: () => Navigation().navigation(
                               context,
                               SavedSummary(
-                                summary: items[index],
+                                ss: items[index],
                                 isSummary: widget.isSummary,
                               ),
                             ),

@@ -49,4 +49,19 @@ class savedArticle {
       Fluttertoast.showToast(msg: 'Article Saved!');
     }).catchError((error) => print("Failed to add: $error"));
   }
+
+  removeFromDB() async {
+    await articleList
+        .where('email', isEqualTo: email)
+        .where('link', isEqualTo: art.link)
+        .where('savedOn', isEqualTo: savedOn)
+        .get()
+        .then((value) {
+      articleList
+          .doc(value.docs[0].id)
+          .delete()
+          .then((value) => print("Article Deleted"))
+          .catchError((error) => print("Failed to delete: $error"));
+    });
+  }
 }

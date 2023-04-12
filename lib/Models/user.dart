@@ -7,7 +7,7 @@ class appUser {
     this.lastName = "",
     this.email = "",
     this.darkMode = false,
-    this.english = false,
+    this.english = true,
     this.isLoggedIn = true,
   });
 
@@ -39,5 +39,9 @@ class appUser {
       darkMode: json['darkMode'],
       english: json['english'],
     );
+  }
+
+  String toString() {
+    return "email: $email, name: $firstName $lastName";
   }
 }

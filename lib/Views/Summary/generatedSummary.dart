@@ -20,8 +20,10 @@ class GeneratedSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ColorTheme colors = context.watch<DarkMode>().mode;
-    appUser user = context.watch<UserController>().user;
+    appUser user = context.watch<UserController>().currentUser;
     bool isEnglish = context.watch<Language>().isEnglish;
+
+    print('generated: $user');
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),

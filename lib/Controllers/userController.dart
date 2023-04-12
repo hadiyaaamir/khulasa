@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:khulasa/Models/article.dart';
 import 'package:khulasa/Models/savedArticle.dart';
 import 'package:khulasa/Models/savedSummary.dart';
+import 'package:khulasa/Views/RSS/article.dart';
 
 import '../Models/user.dart';
 
@@ -17,7 +18,13 @@ FirebaseAuth auth = FirebaseAuth.instance;
 
 class UserController extends ChangeNotifier {
   // User get user => _user;
-  appUser user = appUser();
+  appUser _currentUser = appUser();
+  appUser get currentUser => _currentUser;
+  set currentUser(appUser u) {
+    _currentUser = u;
+    notifyListeners();
+  }
+
   List<savedSummary> savdSummary = [];
   List<savedArticle> savdArticles = [];
 
@@ -46,33 +53,35 @@ class UserController extends ChangeNotifier {
     }
   }
 
-  Future<void> getFromDB(String email) async {
+  getFromDB(String email) async {
     await userlist
         .where('email', isEqualTo: email)
         .get()
         .then((QuerySnapshot querySnapshot) {
-      querySnapshot.docs.forEach((doc) {
-        user = (appUser.fromJson(doc.data() as Map<String, dynamic>));
+      querySnapshot.docs.forEach((doc) async {
+        appUser u = (appUser.fromJson(doc.data() as Map<String, dynamic>));
+        currentUser = u;
+        notifyListeners();
+        print("from db: ${currentUser.toString()}");
+
+        await getUserArticles();
+        await getUserSummaries();
       });
     });
-    // notifyListeners();
+    return currentUser;
   }
 
-  Future<void> setLoggedIn(String email, String password) async {
-    // await userlist.where('email', isEqualTo: user.email).get().then((value) {
-    //   userlist
-    //       .doc(value.docs[0].id)
-    //       .update({'isLoggedIn': login}).then((value) {
-    //     print("Logged in/out!");
-    //     user.isLoggedIn = login; // DB? or fine. Check
-    //   });
-    // });
-
+  setLoggedIn(String e, String password) async {
     try {
-      await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password);
+      UserCredential uc = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: e, password: password);
+      User? us = uc.user;
+      appUser u = await getFromDB(e);
+      notifyListeners();
+      return u;
     } catch (e) {
       print(e);
+      return "LoggedIn Failed";
     }
   }
 
@@ -87,7 +96,7 @@ class UserController extends ChangeNotifier {
   }
 
   bool userNotFound() {
-    return user.email == "";
+    return _currentUser.email == "";
   }
 
   addSummary(savedSummary ss) {
@@ -100,5 +109,45 @@ class UserController extends ChangeNotifier {
     savdArticles.add(art);
     notifyListeners();
     art.addToDB();
+  }
+
+  removeArticle(savedArticle art) {
+    savdArticles.remove(art);
+    notifyListeners();
+    art.removeFromDB();
+  }
+
+  removeSummary(savedSummary sum) {
+    savdSummary.remove(sum);
+    notifyListeners();
+    sum.removeFromDB();
+  }
+
+  getUserArticles() async {
+    await articleList
+        .where('email', isEqualTo: _currentUser.email)
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) async {
+        savedArticle toAdd =
+            savedArticle.fromJson(doc.data() as Map<String, dynamic>);
+        savdArticles.add(toAdd);
+        notifyListeners();
+      });
+    });
+  }
+
+  getUserSummaries() async {
+    await summaryList
+        .where('email', isEqualTo: _currentUser.email)
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) async {
+        savedSummary toAdd =
+            savedSummary.fromJson(doc.data() as Map<String, dynamic>);
+        savdSummary.add(toAdd);
+        notifyListeners();
+      });
+    });
   }
 }

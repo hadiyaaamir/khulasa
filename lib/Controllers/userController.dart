@@ -25,8 +25,20 @@ class UserController extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<savedSummary> savdSummary = [];
-  List<savedArticle> savdArticles = [];
+  List<savedSummary> _savdSummary = [];
+  List<savedArticle> _savdArticle = [];
+
+  List<savedSummary> get savdSummary => _savdSummary;
+  set savdSummary(List<savedSummary> ss) {
+    _savdSummary = ss;
+    notifyListeners();
+  }
+
+  List<savedArticle> get savdArticles => _savdArticle;
+  set savdArticles(List<savedArticle> ss) {
+    _savdArticle = ss;
+    notifyListeners();
+  }
 
   Future<void> addToDB(appUser user, String p) async {
     try {
@@ -63,9 +75,6 @@ class UserController extends ChangeNotifier {
         currentUser = u;
         notifyListeners();
         print("from db: ${currentUser.toString()}");
-
-        await getUserArticles();
-        await getUserSummaries();
       });
     });
     return currentUser;
@@ -77,6 +86,9 @@ class UserController extends ChangeNotifier {
           .signInWithEmailAndPassword(email: e, password: password);
       User? us = uc.user;
       appUser u = await getFromDB(e);
+
+      // savdArticles = getUserArticles();
+      // savdSummary = getUserSummaries();
       notifyListeners();
       return u;
     } catch (e) {
@@ -124,6 +136,7 @@ class UserController extends ChangeNotifier {
   }
 
   getUserArticles() async {
+    List<savedArticle> sa = [];
     await articleList
         .where('email', isEqualTo: _currentUser.email)
         .get()
@@ -131,13 +144,20 @@ class UserController extends ChangeNotifier {
       querySnapshot.docs.forEach((doc) async {
         savedArticle toAdd =
             savedArticle.fromJson(doc.data() as Map<String, dynamic>);
-        savdArticles.add(toAdd);
-        notifyListeners();
+        sa.add(toAdd);
+        // notifyListeners();
       });
+
+      notifyListeners();
     });
+
+    savdArticles = sa;
+    print(savdArticles);
+    return savdArticles;
   }
 
   getUserSummaries() async {
+    List<savedSummary> ss = [];
     await summaryList
         .where('email', isEqualTo: _currentUser.email)
         .get()
@@ -145,9 +165,11 @@ class UserController extends ChangeNotifier {
       querySnapshot.docs.forEach((doc) async {
         savedSummary toAdd =
             savedSummary.fromJson(doc.data() as Map<String, dynamic>);
-        savdSummary.add(toAdd);
-        notifyListeners();
+        ss.add(toAdd);
       });
     });
+    savdSummary = ss;
+    print(savdSummary);
+    return savdSummary;
   }
 }

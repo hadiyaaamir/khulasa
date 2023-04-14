@@ -3,6 +3,7 @@ import 'package:khulasa/Controllers/userController.dart';
 import 'package:khulasa/Models/article.dart';
 import 'package:khulasa/Models/link.dart';
 import 'package:khulasa/Models/savedSummary.dart';
+import 'package:khulasa/Models/source.dart';
 
 class savedArticle {
   DateTime savedOn;
@@ -22,6 +23,12 @@ class savedArticle {
     data['content'] = art.content;
     data['link'] = art.link!.link;
     data['source'] = art.link!.source.source;
+    data['sourceUrdu'] = art.link!.source.sourceUrdu;
+    data['webLink'] = art.link!.source.webLink;
+    data['dateTag'] = art.link!.source.dateTag;
+    data['titleTag'] = art.link!.source.titleTag;
+    data['contentTag'] = art.link!.source.contentTag;
+    data['rssSummaryRatio'] = art.link!.source.rssSummaryRatio;
     data['date'] = art.date;
     data['category'] = art.category;
     data['savedOn'] = savedOn;
@@ -37,9 +44,20 @@ class savedArticle {
           content: json['content'],
           date: json['date'].toDate(),
           category: json['category'],
-          link: Link(link: json['link'], source: json['source']),
+          link: Link(
+            link: json['link'],
+            source: Source(
+              source: json['source'],
+              sourceUrdu: json['sourceUrdu'],
+              titleTag: json['titleTag'],
+              contentTag: json['contentTag'],
+              dateTag: json['dateTag'],
+              webLink: json['webLink'],
+              rssSummaryRatio: json['rssSummaryRatio'],
+            ),
+          ),
         ),
-        savedOn: json['savedOn'],
+        savedOn: json['savedOn'].toDate(),
         email: json['email']);
   }
 

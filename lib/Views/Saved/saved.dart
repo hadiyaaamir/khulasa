@@ -7,6 +7,7 @@ import 'package:khulasa/Controllers/HelperFunctions/navigation.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Models/savedSummary.dart';
 import 'package:khulasa/Views/RSS/rssTile.dart';
+import 'package:khulasa/Views/Saved/summaryView.dart';
 import 'package:khulasa/Views/Widgets/NavBar/AppBarPage.dart';
 import 'package:khulasa/Views/Widgets/NavBar/customAppBar.dart';
 import 'package:khulasa/Views/Saved/savedSummary.dart';
@@ -67,10 +68,11 @@ class _SavedState extends State<Saved> {
                             ),
                             onTap: () => Navigation().navigation(
                               context,
-                              SavedSummary(
-                                ss: items[index],
-                                isSummary: widget.isSummary,
-                              ),
+                              // SavedSummary(
+                              //   ss: items[index],
+                              //   isSummary: widget.isSummary,
+                              // ),
+                              SummaryView(summary: items[index])
                             ),
                           ),
                         )

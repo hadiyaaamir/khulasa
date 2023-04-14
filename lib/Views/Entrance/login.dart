@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:khulasa/Controllers/Config/darkMode.dart';
@@ -5,6 +6,8 @@ import 'package:khulasa/Controllers/Config/languageprovider.dart';
 import 'package:khulasa/Controllers/HelperFunctions/navigation.dart';
 import 'package:khulasa/Controllers/userController.dart';
 import 'package:khulasa/Models/colorTheme.dart';
+import 'package:khulasa/Models/savedArticle.dart';
+import 'package:khulasa/Models/savedSummary.dart';
 import 'package:khulasa/Models/user.dart';
 import 'package:khulasa/Views/Entrance/signup.dart';
 import 'package:khulasa/Views/Widgets/button.dart';
@@ -90,6 +93,15 @@ class _LoginState extends State<Login> {
                         context.read<UserController>().currentUser =
                             result as appUser;
 
+                        var s = await UserController().getUserSummaries();
+                        if (s != null) {
+                          context.read<UserController>().savdSummary = s;
+                        }
+
+                        var a = await UserController().getUserArticles();
+                        if (a != null) {
+                          context.read<UserController>().savdArticles = a;
+                        }
                         // print(emailController.text);
 
                         Navigation().navigationReplace(context, const Option());

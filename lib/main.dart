@@ -60,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context.read<articleprovider>().getArticles();
+      context.read<articleprovider>().getArticlesSimultaneous();
     });
 
     // CategoryExcel().toExcel();

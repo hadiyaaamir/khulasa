@@ -31,7 +31,7 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     ColorTheme colors = context.watch<DarkMode>().mode;
     bool isEnglish = context.watch<Language>().isEnglish;
-    // appUser currentUser = context.watch<UserController>().currentUser;
+    appUser user = context.watch<UserController>().currentUser;
 
     return Directionality(
       textDirection: isEnglish ? TextDirection.ltr : TextDirection.rtl,
@@ -53,12 +53,14 @@ class _LoginState extends State<Login> {
                 controller: emailController,
                 allowEmpty: true,
                 validate: (value) {
-                  return (value == null ||
-                          value.isEmpty ||
-                          !value.contains('@') ||
-                          !value.contains('.'))
-                      ? 'Invalid Email'
-                      : null;
+                  return
+                      // (value == null ||
+                      //         value.isEmpty ||
+                      //         !value.contains('@') ||
+                      //         !value.contains('.'))
+                      //     ? 'Invalid Email'
+                      //     :
+                      null;
                 },
               ),
 
@@ -80,15 +82,17 @@ class _LoginState extends State<Login> {
                   onPress: () async {
                     final FormState form = _formKey.currentState as FormState;
                     if (form.validate()) {
-                      var result = await UserController().setLoggedIn(
-                          emailController.text, passwordController.text);
-                      if (result == "LoggedIn Failed") {
+                      var result = await context
+                          .read<UserController>()
+                          .setLoggedIn(emailController.text.trim(),
+                              passwordController.text);
+                      if (!result) {
                         loggedInFailed = true;
                       } else {
                         loggedInFailed = false;
 
-                        context.read<UserController>().currentUser =
-                            result as appUser;
+                        // context.read<UserController>().currentUser =
+                        //     result as appUser;
 
                         // print(emailController.text);
 
@@ -105,7 +109,7 @@ class _LoginState extends State<Login> {
                       style: TextStyle(color: colors.text),
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
-                          Navigation().navigation(context, const SignUp());
+                          Navigation().navigation(context, const ApiCall());
                         }))
             ],
           ),

@@ -9,7 +9,9 @@ import 'package:khulasa/Views/Widgets/NavBar/customAppBar.dart';
 import 'package:provider/provider.dart';
 
 class SavedMain extends StatefulWidget {
-  const SavedMain({super.key});
+  const SavedMain({super.key, this.initIndex = 0});
+
+  final int initIndex;
 
   @override
   State<SavedMain> createState() => _SavedMainState();
@@ -27,7 +29,7 @@ class _SavedMainState extends State<SavedMain> {
       body: Center(
         child: DefaultTabController(
           length: 2, // length of tabs
-          initialIndex: 0,
+          initialIndex: widget.initIndex,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             mainAxisAlignment: MainAxisAlignment.center,

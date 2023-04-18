@@ -29,7 +29,7 @@ class _ApiCallState extends State<ApiCall> {
   List<Link> links = [];
   List articles = [];
 
-  List<Source> formatSources = [];
+  List<NewsSource> formatSources = [];
   List<String> formatSourceLinks = [];
   List formattedDates = [];
 

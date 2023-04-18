@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:khulasa/Controllers/Config/darkMode.dart';
 import 'package:khulasa/Controllers/Config/languageprovider.dart';
 import 'package:khulasa/Controllers/HelperFunctions/navigation.dart';
-
-import 'package:khulasa/Controllers/usercontroller.dart';
+import 'package:khulasa/Controllers/userController.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Models/user.dart';
 
@@ -103,8 +102,12 @@ class _SignUpState extends State<SignUp> {
                             email: emailController.text);
                         //add to Database
 
-                        await UserController().addToDB(user, passwordController.text);
-                        await UserController().getFromDB(emailController.text);
+                        await context
+                            .read<UserController>()
+                            .addToDB(user, passwordController.text);
+                        await context
+                            .read<UserController>()
+                            .getFromDB(emailController.text);
                         Navigation().navigationReplace(context, const Option());
                       }
                     }),

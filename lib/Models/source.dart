@@ -1,7 +1,7 @@
 import 'package:html/dom.dart';
 import 'package:khulasa/Controllers/Backend/dateFormat.dart';
 
-class Source {
+class NewsSource {
   String source;
   String sourceUrdu;
   String titleTag;
@@ -19,7 +19,7 @@ class Source {
   int dateIndex;
   bool isDateTime;
 
-  Source({
+  NewsSource({
     required this.source,
     required this.sourceUrdu,
     required this.titleTag,

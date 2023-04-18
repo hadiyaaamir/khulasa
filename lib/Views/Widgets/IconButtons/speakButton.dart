@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:khulasa/Controllers/savedProvider.dart';
-import 'package:khulasa/Controllers/userController.dart';
 import 'package:khulasa/Models/colorTheme.dart';
-import 'package:khulasa/Models/savedSummary.dart';
-import 'package:khulasa/Views/Widgets/labelIcon.dart';
 import 'package:khulasa/Controllers/Config/darkMode.dart';
 import 'package:khulasa/Controllers/HelperFunctions/tts.dart';
-import 'package:khulasa/Models/colorTheme.dart';
 import 'package:provider/provider.dart';
 import 'package:khulasa/constants/sizes.dart';
 

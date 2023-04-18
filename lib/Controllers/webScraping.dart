@@ -38,7 +38,7 @@ class WebScraping {
         return article(
           title: "",
           summary: "",
-          content: 'Source does not match the link address.',
+          content: 'error!: $e',
           // date: "",
           date: DateTime.now(),
         );

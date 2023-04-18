@@ -1,7 +1,7 @@
 import 'package:khulasa/Models/source.dart';
 
-List<Source> sources = [
-  Source(
+List<NewsSource> sources = [
+  NewsSource(
     source: 'Dawn News',
     sourceUrdu: 'ڈان نیوز',
     titleTag: 'story__link',
@@ -21,7 +21,7 @@ List<Source> sources = [
   //   rssSummaryRatio: 0.2,
   //   attributeName: 'datetime',
   // ),
-  Source(
+  NewsSource(
     source: 'Jang',
     sourceUrdu: 'جنگ',
     titleTag: 'h1',
@@ -34,7 +34,7 @@ List<Source> sources = [
     webLink: "https://jang.com.pk/",
     rssSummaryRatio: 0.1,
   ),
-  Source(
+  NewsSource(
     source: 'Express News',
     sourceUrdu: 'ایکسپریس نیوز',
     titleTag: 'title',
@@ -57,7 +57,7 @@ List<Source> sources = [
   //   webLink: 'https://www.nawaiwaqt.com.pk/home',
   //   rssSummaryRatio: 0.3,
   // ),
-  Source(
+  NewsSource(
     source: 'Jasarat',
     sourceUrdu: 'جسارت',
     titleTag: 'entry-title',
@@ -69,7 +69,7 @@ List<Source> sources = [
     webLink: 'https://www.jasarat.com/',
     rssSummaryRatio: 0.2,
   ),
-  Source(
+  NewsSource(
     source: 'BBC Urdu',
     sourceUrdu: 'بی بی سی',
     titleTag: 'bbc-1gvq3vt e1p3vdyi0',

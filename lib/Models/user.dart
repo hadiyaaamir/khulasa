@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:khulasa/Models/savedSummary.dart';
 import 'package:khulasa/Models/summary.dart';
+
+CollectionReference userlist = FirebaseFirestore.instance.collection('Users');
 
 class appUser {
   appUser({
@@ -39,6 +42,29 @@ class appUser {
       darkMode: json['darkMode'],
       english: json['english'],
     );
+  }
+
+  addToDB() async {
+    await userlist.add(toJson()).then((value) {
+      print("User Created: $email");
+    }).catchError((error) => print("Failed to add: $error"));
+  }
+
+  static getFromDB(String email) async {
+    appUser u = appUser();
+
+    await userlist.where('email', isEqualTo: email).get().then(
+      (QuerySnapshot querySnapshot) {
+        if (querySnapshot.docs.isNotEmpty) {
+          u = appUser.fromJson(
+              querySnapshot.docs.first.data() as Map<String, dynamic>);
+        } else {
+          u = appUser(email: 'noUser');
+        }
+      },
+    ).catchError((e) => {u = appUser(email: 'issue')});
+    print("from db: ${u.toString()}");
+    return u;
   }
 
   String toString() {

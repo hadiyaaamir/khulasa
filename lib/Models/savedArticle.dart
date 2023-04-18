@@ -1,9 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:khulasa/Controllers/userController.dart';
 import 'package:khulasa/Models/article.dart';
 import 'package:khulasa/Models/link.dart';
-import 'package:khulasa/Models/savedSummary.dart';
-import 'package:khulasa/Models/source.dart';
+import 'package:khulasa/constants/sources.dart';
+
+CollectionReference articleList =
+    FirebaseFirestore.instance.collection('SavedArticles');
 
 class savedArticle {
   DateTime savedOn;
@@ -23,12 +25,6 @@ class savedArticle {
     data['content'] = art.content;
     data['link'] = art.link!.link;
     data['source'] = art.link!.source.source;
-    data['sourceUrdu'] = art.link!.source.sourceUrdu;
-    data['webLink'] = art.link!.source.webLink;
-    data['dateTag'] = art.link!.source.dateTag;
-    data['titleTag'] = art.link!.source.titleTag;
-    data['contentTag'] = art.link!.source.contentTag;
-    data['rssSummaryRatio'] = art.link!.source.rssSummaryRatio;
     data['date'] = art.date;
     data['category'] = art.category;
     data['savedOn'] = savedOn;
@@ -37,6 +33,9 @@ class savedArticle {
   }
 
   static savedArticle fromJson(Map<String, dynamic> json) {
+    int sourceIndex =
+        sources.indexWhere((element) => element.source == json['source']);
+
     return savedArticle(
         art: article(
           title: json['title'],
@@ -46,15 +45,7 @@ class savedArticle {
           category: json['category'],
           link: Link(
             link: json['link'],
-            source: Source(
-              source: json['source'],
-              sourceUrdu: json['sourceUrdu'],
-              titleTag: json['titleTag'],
-              contentTag: json['contentTag'],
-              dateTag: json['dateTag'],
-              webLink: json['webLink'],
-              rssSummaryRatio: json['rssSummaryRatio'],
-            ),
+            source: sourceIndex != -1 ? sources[sourceIndex] : sources[0],
           ),
         ),
         savedOn: json['savedOn'].toDate(),
@@ -70,16 +61,36 @@ class savedArticle {
 
   removeFromDB() async {
     await articleList
+        .where('title', isEqualTo: art.title)
         .where('email', isEqualTo: email)
-        .where('link', isEqualTo: art.link)
+        .where('summary', isEqualTo: art.summary)
+        .where('link', isEqualTo: art.link!.link)
+        .where('source', isEqualTo: art.link!.source.source)
+        .where('date', isEqualTo: art.date)
+        .where('category', isEqualTo: art.category)
         .where('savedOn', isEqualTo: savedOn)
         .get()
         .then((value) {
-      articleList
-          .doc(value.docs[0].id)
-          .delete()
-          .then((value) => print("Article Deleted"))
-          .catchError((error) => print("Failed to delete: $error"));
+      articleList.doc(value.docs[0].id).delete().then((value) {
+        print("Article Deleted");
+        Fluttertoast.showToast(msg: 'Article Deleted!');
+      }).catchError((error) => print("Failed to delete: $error"));
     });
+  }
+
+  static Future<List<savedArticle>> getArticlesFromDB(String email) async {
+    List<savedArticle> sa = [];
+    await articleList
+        .where('email', isEqualTo: email)
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) async {
+        savedArticle toAdd =
+            savedArticle.fromJson(doc.data() as Map<String, dynamic>);
+        sa.add(toAdd);
+        // notifyListeners();
+      });
+    });
+    return sa;
   }
 }

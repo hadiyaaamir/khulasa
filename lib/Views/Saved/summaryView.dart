@@ -6,7 +6,6 @@ import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Models/savedSummary.dart';
 import 'package:khulasa/Models/user.dart';
 import 'package:khulasa/Views/Widgets/IconButtons/deleteButton.dart';
-import 'package:khulasa/Views/Widgets/IconButtons/saveButton.dart';
 import 'package:khulasa/Views/Widgets/IconButtons/Share/shareButton.dart';
 import 'package:khulasa/Views/Widgets/IconButtons/speakButton.dart';
 import 'package:khulasa/Views/Widgets/NavBar/customAppBar.dart';
@@ -67,7 +66,7 @@ class _SummaryViewState extends State<SummaryView> {
                   ),
                   Row(children: [
                     DeleteButton(
-                        isSummary: false, ss: widget.summary as savedSummary),
+                        isSummary: true, ss: widget.summary as savedSummary),
                     const SizedBox(width: 10),
                     ShareButton(
                         isRSSFeed: true,

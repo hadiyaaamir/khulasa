@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:khulasa/Controllers/savedProvider.dart';
 import 'package:khulasa/Controllers/userController.dart';
 import 'package:khulasa/Controllers/Config/darkMode.dart';
 import 'package:khulasa/Controllers/Config/languageprovider.dart';
 import 'package:khulasa/Controllers/HelperFunctions/navigation.dart';
 import 'package:khulasa/Models/colorTheme.dart';
-import 'package:khulasa/Models/savedSummary.dart';
 import 'package:khulasa/Views/RSS/rssTile.dart';
 import 'package:khulasa/Views/Saved/summaryView.dart';
-import 'package:khulasa/Views/Widgets/NavBar/AppBarPage.dart';
-import 'package:khulasa/Views/Widgets/NavBar/customAppBar.dart';
-import 'package:khulasa/Views/Saved/savedSummary.dart';
 import 'package:provider/provider.dart';
 
 class Saved extends StatefulWidget {
@@ -67,13 +62,12 @@ class _SavedState extends State<Saved> {
                               color: colors.text2,
                             ),
                             onTap: () => Navigation().navigation(
-                              context,
-                              // SavedSummary(
-                              //   ss: items[index],
-                              //   isSummary: widget.isSummary,
-                              // ),
-                              SummaryView(summary: items[index])
-                            ),
+                                context,
+                                // SavedSummary(
+                                //   ss: items[index],
+                                //   isSummary: widget.isSummary,
+                                // ),
+                                SummaryView(summary: items[index])),
                           ),
                         )
                       : RssTile(

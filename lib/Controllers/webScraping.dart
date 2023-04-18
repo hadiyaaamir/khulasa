@@ -54,7 +54,7 @@ class WebScraping {
     }
   }
 
-  Future<List<Link>> getLinksFromLink(Source source) async {
+  Future<List<Link>> getLinksFromLink(NewsSource source) async {
     final header = {
       "Access-Control-Allow-Origin": "*", // Required for CORS support to work
       "Access-Control-Allow-Credentials":

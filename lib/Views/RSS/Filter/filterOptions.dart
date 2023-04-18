@@ -66,8 +66,9 @@ class _FilterOptionsBoxState extends State<FilterOptionsBox> {
               padding: const EdgeInsets.symmetric(vertical: 25),
               child: SourceFilter(
                 checkedSources: checkedSources,
-                addSource: (Source s) => setState(() => checkedSources.add(s)),
-                removeSource: (Source s) =>
+                addSource: (NewsSource s) =>
+                    setState(() => checkedSources.add(s)),
+                removeSource: (NewsSource s) =>
                     setState(() => checkedSources.remove(s)),
               ),
             ),

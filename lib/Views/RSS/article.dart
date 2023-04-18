@@ -5,7 +5,6 @@ import 'package:khulasa/Controllers/userController.dart';
 import 'package:khulasa/Models/article.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Models/savedArticle.dart';
-import 'package:khulasa/Models/savedSummary.dart';
 import 'package:khulasa/Models/user.dart';
 import 'package:khulasa/Views/Widgets/IconButtons/deleteButton.dart';
 import 'package:khulasa/Views/Widgets/IconButtons/saveButton.dart';
@@ -106,6 +105,7 @@ class OptionsLine extends StatelessWidget {
     ColorTheme colors = context.watch<DarkMode>().mode;
     bool isDarkMode = context.watch<DarkMode>().isDarkMode;
     appUser user = context.watch<UserController>().currentUser;
+    // appUser user = appUser();
 
     print('article: $user');
 

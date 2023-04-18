@@ -15,9 +15,9 @@ class SourceCheckbox extends StatefulWidget {
     required this.isChecked,
   });
 
-  final Source source;
-  final Function(Source) addSource;
-  final Function(Source) removeSource;
+  final NewsSource source;
+  final Function(NewsSource) addSource;
+  final Function(NewsSource) removeSource;
   final bool isChecked;
 
   @override

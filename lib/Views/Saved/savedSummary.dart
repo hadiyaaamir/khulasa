@@ -9,8 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:khulasa/constants/sizes.dart';
 
 class SavedSummary extends StatelessWidget {
-  SavedSummary(
-      {super.key, this.ss, required this.isSummary});
+  SavedSummary({super.key, this.ss, required this.isSummary});
 
   var ss;
   savedArticle? article;
@@ -29,7 +28,7 @@ class SavedSummary extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(130, 0, 70, 0),
                   child: Text(
-                    isSummary?ss.title:ss.art.title,
+                    isSummary ? ss.title : ss.art.title,
                     style: TextStyle(
                         fontSize: headingFont,
                         color: colors.text,
@@ -44,8 +43,9 @@ class SavedSummary extends StatelessWidget {
                       child: Column(
                         children: [
                           ShareButton(
-                              content: isSummary?ss.summary:ss.art.summary, isRSSFeed: !isSummary),
-                          DeleteButton(isSummary: isSummary, ss:ss),
+                              content: isSummary ? ss.summary : ss.art.summary,
+                              isRSSFeed: !isSummary),
+                          DeleteButton(isSummary: isSummary, ss: ss),
                         ],
                       ),
                     ),
@@ -54,7 +54,7 @@ class SavedSummary extends StatelessWidget {
               ],
             ),
             Text(
-              isSummary?ss.summary:ss.art.summary,
+              isSummary ? ss.summary : ss.art.summary,
               style: TextStyle(
                 fontSize: buttonFont,
                 color: colors.text,

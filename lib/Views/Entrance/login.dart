@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:khulasa/Controllers/Config/darkMode.dart';
@@ -6,8 +5,6 @@ import 'package:khulasa/Controllers/Config/languageprovider.dart';
 import 'package:khulasa/Controllers/HelperFunctions/navigation.dart';
 import 'package:khulasa/Controllers/userController.dart';
 import 'package:khulasa/Models/colorTheme.dart';
-import 'package:khulasa/Models/savedArticle.dart';
-import 'package:khulasa/Models/savedSummary.dart';
 import 'package:khulasa/Models/user.dart';
 import 'package:khulasa/Views/Entrance/signup.dart';
 import 'package:khulasa/Views/Widgets/button.dart';
@@ -34,7 +31,7 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     ColorTheme colors = context.watch<DarkMode>().mode;
     bool isEnglish = context.watch<Language>().isEnglish;
-    // appUser currentUser = context.watch<UserController>().currentUser;
+    appUser user = context.watch<UserController>().currentUser;
 
     return Directionality(
       textDirection: isEnglish ? TextDirection.ltr : TextDirection.rtl,
@@ -56,12 +53,14 @@ class _LoginState extends State<Login> {
                 controller: emailController,
                 allowEmpty: true,
                 validate: (value) {
-                  return (value == null ||
-                          value.isEmpty ||
-                          !value.contains('@') ||
-                          !value.contains('.'))
-                      ? 'Invalid Email'
-                      : null;
+                  return
+                      // (value == null ||
+                      //         value.isEmpty ||
+                      //         !value.contains('@') ||
+                      //         !value.contains('.'))
+                      //     ? 'Invalid Email'
+                      //     :
+                      null;
                 },
               ),
 
@@ -83,25 +82,18 @@ class _LoginState extends State<Login> {
                   onPress: () async {
                     final FormState form = _formKey.currentState as FormState;
                     if (form.validate()) {
-                      var result = await UserController().setLoggedIn(
-                          emailController.text, passwordController.text);
-                      if (result == "LoggedIn Failed") {
+                      var result = await context
+                          .read<UserController>()
+                          .setLoggedIn(emailController.text.trim(),
+                              passwordController.text);
+                      if (!result) {
                         loggedInFailed = true;
                       } else {
                         loggedInFailed = false;
 
-                        context.read<UserController>().currentUser =
-                            result as appUser;
+                        // context.read<UserController>().currentUser =
+                        //     result as appUser;
 
-                        var s = await UserController().getUserSummaries();
-                        if (s != null) {
-                          context.read<UserController>().savdSummary = s;
-                        }
-
-                        var a = await UserController().getUserArticles();
-                        if (a != null) {
-                          context.read<UserController>().savdArticles = a;
-                        }
                         // print(emailController.text);
 
                         Navigation().navigationReplace(context, const Option());
@@ -117,7 +109,7 @@ class _LoginState extends State<Login> {
                       style: TextStyle(color: colors.text),
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
-                          Navigation().navigation(context, const SignUp());
+                          Navigation().navigation(context, const ApiCall());
                         }))
             ],
           ),

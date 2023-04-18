@@ -17,8 +17,8 @@ class SourceFilter extends StatefulWidget {
     required this.checkedSources,
   });
 
-  final Function(Source) addSource;
-  final Function(Source) removeSource;
+  final Function(NewsSource) addSource;
+  final Function(NewsSource) removeSource;
   final List checkedSources;
 
   @override
@@ -50,8 +50,8 @@ class _SourceFilterState extends State<SourceFilter> {
             sources.length,
             (index) => SourceCheckbox(
               source: sources[index],
-              addSource: (Source s) => setState(() => widget.addSource(s)),
-              removeSource: (Source s) =>
+              addSource: (NewsSource s) => setState(() => widget.addSource(s)),
+              removeSource: (NewsSource s) =>
                   setState(() => widget.removeSource(s)),
               isChecked: checkedSources.contains(sources[index]),
             ),

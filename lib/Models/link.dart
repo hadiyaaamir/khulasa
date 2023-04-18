@@ -2,7 +2,7 @@ import 'package:khulasa/Models/source.dart';
 
 class Link {
   String link;
-  Source source;
+  NewsSource source;
 
   Link({
     required this.link,

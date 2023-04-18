@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:khulasa/Controllers/userController.dart';
+
+CollectionReference summaryList =
+    FirebaseFirestore.instance.collection('SavedSummaries');
 
 class savedSummary {
   String title;
@@ -40,17 +43,32 @@ class savedSummary {
   }
 
   removeFromDB() async {
-    await articleList
+    await summaryList
         .where('email', isEqualTo: email)
         .where('title', isEqualTo: title)
         .where('savedOn', isEqualTo: savedOn)
         .get()
         .then((value) {
-      articleList
-          .doc(value.docs[0].id)
-          .delete()
-          .then((value) => print("Summary Deleted"))
-          .catchError((error) => print("Failed to delete: $error"));
+      summaryList.doc(value.docs[0].id).delete().then((value) {
+        print("Summary Deleted");
+        Fluttertoast.showToast(msg: 'Summary Deleted');
+      }).catchError((error) => print("Failed to delete: $error"));
     });
+  }
+
+  static Future<List<savedSummary>> getSummariesFromDB(String email) async {
+    List<savedSummary> ss = [];
+    await summaryList
+        .where('email', isEqualTo: email)
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) async {
+        savedSummary toAdd =
+            savedSummary.fromJson(doc.data() as Map<String, dynamic>);
+        ss.add(toAdd);
+        // notifyListeners();
+      });
+    });
+    return ss;
   }
 }

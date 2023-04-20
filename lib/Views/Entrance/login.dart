@@ -13,8 +13,6 @@ import 'package:khulasa/Views/Entrance/option.dart';
 import 'package:khulasa/Views/apicall.dart';
 import 'package:provider/provider.dart';
 
-final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
 class Login extends StatefulWidget {
   const Login({super.key});
 
@@ -26,6 +24,9 @@ class _LoginState extends State<Login> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool loggedInFailed = false;
+  bool loggingIn = false;
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -38,82 +39,120 @@ class _LoginState extends State<Login> {
       child: Scaffold(
         backgroundColor: colors.background,
         body: Center(
-            child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              loggedInFailed
-                  ? const Text('Email or Password Incorrect')
-                  : Text('none'),
-              //email textfield
-              textField(
-                label: isEnglish ? "Email" : "email in urdu",
-                icon: Icons.email,
-                controller: emailController,
-                allowEmpty: true,
-                validate: (value) {
-                  return
-                      // (value == null ||
-                      //         value.isEmpty ||
-                      //         !value.contains('@') ||
-                      //         !value.contains('.'))
-                      //     ? 'Invalid Email'
-                      //     :
-                      null;
-                },
-              ),
+          child: loggingIn
+              ? CircularProgressIndicator(color: colors.primary)
+              : Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      //error message
+                      if (loggedInFailed) ...[
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 40, vertical: 10),
+                            child: Text(
+                              '* Email or password is incorrect',
+                              style: TextStyle(color: colors.caution),
+                            ),
+                          ),
+                        ),
+                      ],
 
-              //password textfield
-              textField(
-                label: isEnglish ? "Password" : "email in urdu",
-                controller: passwordController,
-                icon: Icons.password_rounded,
-                password: true,
-                allowEmpty: true,
-                validate: (value) {
-                  return null;
-                },
-              ),
+                      //email textfield
+                      textField(
+                        label: isEnglish ? "Email" : "email in urdu",
+                        icon: Icons.email,
+                        controller: emailController,
+                        allowEmpty: true,
+                        validate: (value) {
+                          return
+                              // (value == null ||
+                              //         value.isEmpty ||
+                              //         !value.contains('@') ||
+                              //         !value.contains('.'))
+                              //     ? 'Invalid Email'
+                              //     :
+                              null;
+                        },
+                      ),
 
-              //button
-              Btn(
-                  label: isEnglish ? "LOGIN" : "LOGIN in urdu",
-                  onPress: () async {
-                    final FormState form = _formKey.currentState as FormState;
-                    if (form.validate()) {
-                      var result = await context
-                          .read<UserController>()
-                          .setLoggedIn(emailController.text.trim(),
-                              passwordController.text);
-                      if (!result) {
-                        loggedInFailed = true;
-                      } else {
-                        loggedInFailed = false;
+                      //password textfield
+                      textField(
+                        label: isEnglish ? "Password" : "email in urdu",
+                        controller: passwordController,
+                        icon: Icons.password_rounded,
+                        password: true,
+                        allowEmpty: true,
+                        validate: (value) {
+                          return null;
+                        },
+                      ),
 
-                        // context.read<UserController>().currentUser =
-                        //     result as appUser;
+                      //button
+                      Btn(
+                          label: isEnglish ? "LOGIN" : "LOGIN in urdu",
+                          onPress: () async {
+                            final FormState form =
+                                _formKey.currentState as FormState;
+                            if (form.validate()) {
+                              //show loading circle
+                              setState(() => loggingIn = true);
 
-                        // print(emailController.text);
+                              //log in function
+                              var result = await context
+                                  .read<UserController>()
+                                  .setLoggedIn(emailController.text.trim(),
+                                      passwordController.text);
 
-                        Navigation().navigationReplace(context, const Option());
-                      }
-                    }
-                  }),
+                              //stop loading circle
+                              setState(() => loggingIn = false);
 
-              RichText(
-                  text: TextSpan(
-                      text: isEnglish
-                          ? "Don't have an account? Sign Up!"
-                          : "urdu text",
-                      style: TextStyle(color: colors.text),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          Navigation().navigation(context, const ApiCall());
-                        }))
-            ],
-          ),
-        )),
+                              //if wrong credentials
+                              if (!result) {
+                                setState(() {
+                                  loggedInFailed = true; //error message
+                                  loggingIn = false; //stop loading circle
+                                });
+                              }
+
+                              //log in!
+                              else {
+                                setState(() => loggedInFailed = false);
+                                Navigation()
+                                    .navigationReplace(context, const Option());
+                              }
+                            }
+                          }),
+
+                      RichText(
+                        text: TextSpan(
+                          text: isEnglish ? "Don't have an account? " : "",
+                          style: TextStyle(color: colors.text),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: isEnglish ? 'Signup!' : 'urdu signup',
+                              style: TextStyle(
+                                  color: colors.secondary,
+                                  fontWeight: FontWeight.bold),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () => Navigation()
+                                    .navigation(context, const SignUp()),
+                            ),
+                          ],
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () => {
+                                  Navigation()
+                                      .navigation(context, const SignUp()),
+                                },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+        ),
       ),
     );
   }

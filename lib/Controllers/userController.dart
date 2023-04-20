@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:khulasa/Controllers/HelperFunctions/navigation.dart';
 import 'package:khulasa/Models/article.dart';
 import 'package:khulasa/Models/savedArticle.dart';
 import 'package:khulasa/Models/savedSummary.dart';
+import 'package:khulasa/Views/Entrance/login.dart';
 import 'package:khulasa/Views/RSS/article.dart';
 
 import '../Models/user.dart';
@@ -36,7 +38,7 @@ class UserController extends ChangeNotifier {
   }
 
   //Create new user
-  Future<void> addToDB(appUser user, String p) async {
+  addToDB(appUser user, String p) async {
     try {
       await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
@@ -47,14 +49,21 @@ class UserController extends ChangeNotifier {
                 await user.addToDB(),
                 print('Firebase user created'),
               });
+      return 'Success';
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
+        return 'The password provided is too weak';
       } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
+        print('An account already exists for this email.');
+        return 'An account already exists for this email';
       }
+      return 'Cannot sign you up due to an issue. Please try again.';
+      // return e.code;
     } catch (e) {
       print(e);
+      return 'An unknown error occurred';
+      // return e.toString();
     }
   }
 
@@ -72,7 +81,10 @@ class UserController extends ChangeNotifier {
     try {
       UserCredential uc = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: e, password: password);
-      //   User? us = uc.user;
+
+      // User? us = uc.user;
+      // print('us: $us');
+
       var user = await appUser.getFromDB(e);
       currentUser = user;
       print('in function: current user is $currentUser');
@@ -89,11 +101,12 @@ class UserController extends ChangeNotifier {
   }
 
   //sign out
-  Future<void> setSignOut() async {
+  Future<void> setSignOut(BuildContext context) async {
     try {
-      await FirebaseAuth.instance
-          .signOut()
-          .then((value) => print("Logged Out"));
+      await FirebaseAuth.instance.signOut().then((value) {
+        print("Logged Out");
+        Navigation().navigationReplace(context, const Login());
+      });
     } catch (e) {
       print(e);
     }

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:khulasa/Controllers/userController.dart';
 import 'package:khulasa/Controllers/Backend/categoryExcel.dart';
@@ -9,6 +10,7 @@ import 'package:khulasa/Controllers/Config/languageprovider.dart';
 import 'package:khulasa/Controllers/HelperFunctions/navigation.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Views/Entrance/login.dart';
+import 'package:khulasa/Views/Entrance/option.dart';
 import 'package:khulasa/constants/sizes.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -76,7 +78,15 @@ class _MyHomePageState extends State<MyHomePage> {
 
   route() async {
     // bool result = await InternetConnectionChecker().hasConnection;
-    Navigation().navigationReplace(context, const Login());
+
+    var currUser = FirebaseAuth.instance.currentUser;
+    print('current User: $currUser');
+    if (currUser != null) {
+      print('user not null!');
+      Navigation().navigationReplace(context, const Option());
+    } else {
+      Navigation().navigationReplace(context, const Login());
+    }
   }
 
   Widget build(BuildContext context) {

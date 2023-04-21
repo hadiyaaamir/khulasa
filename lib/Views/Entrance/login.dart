@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:khulasa/Controllers/Config/darkMode.dart';
@@ -7,6 +8,7 @@ import 'package:khulasa/Controllers/userController.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Models/user.dart';
 import 'package:khulasa/Views/Entrance/signup.dart';
+import 'package:khulasa/Views/Entrance/verifyEmail.dart';
 import 'package:khulasa/Views/Widgets/button.dart';
 import 'package:khulasa/Views/Widgets/textfield.dart';
 import 'package:khulasa/Views/Entrance/option.dart';
@@ -121,8 +123,12 @@ class _LoginState extends State<Login> {
                               //log in!
                               else {
                                 setState(() => loggedInFailed = false);
-                                Navigation()
-                                    .navigationReplace(context, const Option());
+                                Navigation().navigationReplace(
+                                    context,
+                                    FirebaseAuth
+                                            .instance.currentUser!.emailVerified
+                                        ? const Option()
+                                        : const VerifyEmail());
                               }
                             }
                           }),
@@ -145,7 +151,7 @@ class _LoginState extends State<Login> {
                           recognizer: TapGestureRecognizer()
                             ..onTap = () => {
                                   Navigation()
-                                      .navigation(context, const SignUp()),
+                                      .navigation(context, const ApiCall()),
                                 },
                         ),
                       ),

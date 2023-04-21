@@ -6,12 +6,14 @@ import 'package:khulasa/Controllers/HelperFunctions/navigation.dart';
 import 'package:khulasa/Controllers/userController.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Models/user.dart';
+import 'package:khulasa/Views/Entrance/verifyEmail.dart';
 
 import 'package:khulasa/Views/Widgets/button.dart';
 import 'package:khulasa/Views/Entrance/login.dart';
 import 'package:khulasa/Views/Widgets/textfield.dart';
 import 'package:khulasa/Views/Entrance/option.dart';
 import 'package:provider/provider.dart';
+import 'package:email_validator/email_validator.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 
 class SignUp extends StatefulWidget {
@@ -57,7 +59,7 @@ class _SignUpState extends State<SignUp> {
                           Align(
                             alignment: Alignment.centerLeft,
                             child: Padding(
-                              padding: EdgeInsets.symmetric(
+                              padding: const EdgeInsets.symmetric(
                                   horizontal: 40, vertical: 10),
                               child: Text(
                                 signUpError,
@@ -95,8 +97,7 @@ class _SignUpState extends State<SignUp> {
                           validate: (value) {
                             return (value == null ||
                                     value.isEmpty ||
-                                    !value.contains('@') ||
-                                    !value.contains('.'))
+                                    !EmailValidator.validate(value.trim()))
                                 ? 'Invalid Email'
                                 : null;
                           },
@@ -109,6 +110,11 @@ class _SignUpState extends State<SignUp> {
                           icon: Icons.password_rounded,
                           password: true,
                           validate: (value) {
+                            if (value != null) {
+                              if (value.length < 8) {
+                                return 'Password must be atleast 8 characters long';
+                              }
+                            }
                             return null;
                           },
                         ),
@@ -121,9 +127,9 @@ class _SignUpState extends State<SignUp> {
                                   _formKey2.currentState as FormState;
                               if (form.validate()) {
                                 appUser user = appUser(
-                                    firstName: firstNameController.text,
-                                    lastName: lastNameController.text,
-                                    email: emailController.text);
+                                    firstName: firstNameController.text.trim(),
+                                    lastName: lastNameController.text.trim(),
+                                    email: emailController.text.trim());
                                 //add to Database
 
                                 var result = await context
@@ -136,11 +142,16 @@ class _SignUpState extends State<SignUp> {
                                         {signingUp = true, signUpError = ""});
                                     await context
                                         .read<UserController>()
-                                        .getFromDB(emailController.text);
+                                        .getFromDB(emailController.text.trim());
                                     setState(() => signingUp = false);
-                                    Navigation().navigationReplace(
-                                        context, const Option());
+                                    Navigation()
+                                        .navigation(context, VerifyEmail());
                                   } else {
+                                    if (result ==
+                                        'An account already exists for this email') {
+                                      Navigation()
+                                          .navigation(context, VerifyEmail());
+                                    }
                                     setState(() => signUpError = result);
                                   }
                                 }

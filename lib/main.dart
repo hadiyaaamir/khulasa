@@ -11,6 +11,7 @@ import 'package:khulasa/Controllers/HelperFunctions/navigation.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Views/Entrance/login.dart';
 import 'package:khulasa/Views/Entrance/option.dart';
+import 'package:khulasa/Views/Entrance/verifyEmail.dart';
 import 'package:khulasa/constants/sizes.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -82,8 +83,8 @@ class _MyHomePageState extends State<MyHomePage> {
     var currUser = FirebaseAuth.instance.currentUser;
     print('current User: $currUser');
     if (currUser != null) {
-      print('user not null!');
-      Navigation().navigationReplace(context, const Option());
+      Navigation().navigationReplace(context,
+          currUser.emailVerified ? const Option() : const VerifyEmail());
     } else {
       Navigation().navigationReplace(context, const Login());
     }

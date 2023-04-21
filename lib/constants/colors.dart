@@ -5,7 +5,7 @@ const Color blue = Color(0xff0C2A36);
 const Color lightBlue = Color(0xff466471);
 const Color darkBlue = Color(0xff00070B);
 const Color grey = Color(0xffA9AEB0);
-const Color red = Color(0xffA46666);
+const Color red = Color(0xffeb5252);
 
 const Color white = Color.fromRGBO(255, 255, 255, 1);
 

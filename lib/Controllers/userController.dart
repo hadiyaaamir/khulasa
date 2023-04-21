@@ -42,13 +42,16 @@ class UserController extends ChangeNotifier {
     try {
       await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
-            email: user.email,
-            password: p,
-          )
-          .then((value) async => {
-                await user.addToDB(),
-                print('Firebase user created'),
-              });
+        email: user.email,
+        password: p,
+      )
+          .then((value) async {
+        // if (value.user != null && !value.user!.emailVerified) {
+        //   await value.user!.sendEmailVerification();
+        // }
+        await user.addToDB();
+        print('Firebase user created');
+      });
       return 'Success';
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -56,6 +59,7 @@ class UserController extends ChangeNotifier {
         return 'The password provided is too weak';
       } else if (e.code == 'email-already-in-use') {
         print('An account already exists for this email.');
+
         return 'An account already exists for this email';
       }
       return 'Cannot sign you up due to an issue. Please try again.';

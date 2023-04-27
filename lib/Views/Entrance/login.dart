@@ -7,12 +7,14 @@ import 'package:khulasa/Controllers/HelperFunctions/navigation.dart';
 import 'package:khulasa/Controllers/userController.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Models/user.dart';
+import 'package:khulasa/Views/Entrance/homePage.dart';
 import 'package:khulasa/Views/Entrance/signup.dart';
 import 'package:khulasa/Views/Entrance/verifyEmail.dart';
 import 'package:khulasa/Views/Widgets/button.dart';
 import 'package:khulasa/Views/Widgets/textfield.dart';
 import 'package:khulasa/Views/Entrance/option.dart';
 import 'package:khulasa/Views/apicall.dart';
+import 'package:khulasa/constants/colors.dart';
 import 'package:provider/provider.dart';
 
 class Login extends StatefulWidget {
@@ -127,7 +129,7 @@ class _LoginState extends State<Login> {
                                     context,
                                     FirebaseAuth
                                             .instance.currentUser!.emailVerified
-                                        ? const Option()
+                                        ? const HomePage()
                                         : const VerifyEmail());
                               }
                             }
@@ -141,7 +143,9 @@ class _LoginState extends State<Login> {
                             TextSpan(
                               text: isEnglish ? 'Signup!' : 'urdu signup',
                               style: TextStyle(
-                                  color: colors.secondary,
+                                  color: colors == blueDarkMode
+                                      ? colors.primary
+                                      : colors.secondary,
                                   fontWeight: FontWeight.bold),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () => Navigation()

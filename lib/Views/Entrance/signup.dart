@@ -12,6 +12,7 @@ import 'package:khulasa/Views/Widgets/button.dart';
 import 'package:khulasa/Views/Entrance/login.dart';
 import 'package:khulasa/Views/Widgets/textfield.dart';
 import 'package:khulasa/Views/Entrance/option.dart';
+import 'package:khulasa/constants/colors.dart';
 import 'package:provider/provider.dart';
 import 'package:email_validator/email_validator.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
@@ -166,7 +167,9 @@ class _SignUpState extends State<SignUp> {
                               TextSpan(
                                 text: isEnglish ? 'Login!' : 'urdu login',
                                 style: TextStyle(
-                                    color: colors.secondary,
+                                    color: colors == blueDarkMode
+                                        ? colors.primary
+                                        : colors.secondary,
                                     fontWeight: FontWeight.bold),
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () => Navigation()

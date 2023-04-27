@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:khulasa/Controllers/Config/darkMode.dart';
 import 'package:khulasa/Controllers/Config/languageprovider.dart';
+import 'package:khulasa/Controllers/userController.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Views/Entrance/login.dart';
 import 'package:khulasa/Views/Saved/savedOptions.dart';
@@ -117,8 +118,8 @@ class _DrawState extends State<Draw> {
                   DrawerOption(
                     text: isEnglish ? 'Logout' : 'اردو logout',
                     onPress: () {
-                      // context.read<UserProvider>().setSignOut(context);
-                      Navigation().navigationReplace(context, const Login());
+                      context.read<UserController>().setSignOut(context);
+                      // Navigation().navigationReplace(context, const Login());
                     },
                     icon: Icons.logout_outlined,
                   ),

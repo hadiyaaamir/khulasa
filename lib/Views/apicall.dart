@@ -120,40 +120,42 @@ class _ApiCallState extends State<ApiCall> {
 
                 //web scraping
                 final response = await http.Client().get(
-                    Uri.parse('https://jang.com.pk/news/1213078'),
+                    Uri.parse(
+                        'https://dailypakistan.com.pk/28-Apr-2023/1574382'),
                     headers: {'User-Agent': 'Mozilla/5.0'});
                 if (response.statusCode == 200) {
                   var document = parser.parse(response.body);
 
-                  int index =
-                      sources.indexWhere((element) => element.source == 'Jang');
+                  int index = sources.indexWhere(
+                      (element) => element.source == 'Daily Pakistan');
 
-                  // String title =
-                  //     index != -1 ? sources[index].getTitle(document) : "";
+                  String title =
+                      index != -1 ? sources[index].getTitle(document) : "";
 
                   String content =
-                      // sources[index].getArticle(document)
+                      //       // sources[index].getArticle(document)
                       index != -1 ? sources[index].getArticle(document) : "";
 
-                  String date = document
-                      .getElementsByClassName(sources[index].dateTag)[2]
-                      .text;
+                  // var date = document
+                  //     .getElementsByClassName(sources[index].dateTag)[0]
+                  //     .text;
 
                   //date formatter code
-                  var d = DateFormatter().toDateTime(date, false);
+                  // var d = DateFormatter().toDateTime(date, false);
 
-                  // DateTime date = index != -1
-                  //     ? sources[index].getDate(document)
-                  //     : DateTime(2001);
-                  article = '$content';
+                  var date = index != -1
+                      ? sources[index].getDate(document)
+                      : DateTime(2001);
+                  article = '$date';
+
                   setState(() {});
                 }
 
                 //  rss feed
                 // for (var element in sources) {
-                //   var l = await WebScraping().getLinksFromLink(element);
-                //   print(l);
-                //   links.addAll(l);
+                // var l = await WebScraping().getLinksFromLink(sources[5]);
+                // print(l);
+                // links.addAll(l);
                 // }
                 // if (links.isNotEmpty) {
                 //   var a = await WebScraping().getArticleFromLink(

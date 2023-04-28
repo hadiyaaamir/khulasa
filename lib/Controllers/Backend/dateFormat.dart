@@ -109,6 +109,7 @@ class DateFormatter {
       } catch (e) {
         try {
           DateFormat formatter = DateFormat('yyyy-MMMM-dd');
+
           return formatter
               .parse('${int.parse(yearText)}-$monthDate-${int.parse(dayText)}');
         } catch (e) {

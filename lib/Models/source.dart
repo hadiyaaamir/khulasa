@@ -161,6 +161,15 @@ class NewsSource {
       return exp.hasMatch(l) || exp2.hasMatch(l);
     }
 
+    //daily pakistan
+    if (source == 'Daily Pakistan') {
+      RegExp exp = RegExp(
+          r"https://dailypakistan.com.pk/(\d+)-(\w+)-(\d+)/(.*)",
+          multiLine: true,
+          caseSensitive: true);
+      return exp.hasMatch(l);
+    }
+
     return false;
   }
 

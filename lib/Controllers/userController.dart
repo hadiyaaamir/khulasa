@@ -120,6 +120,27 @@ class UserController extends ChangeNotifier {
     return _currentUser.email == "";
   }
 
+  //toggle DarkMode
+  setDarkMode(bool isDarkMode) {
+    currentUser.darkMode = isDarkMode;
+    currentUser.updateInDB(label: 'darkMode', data: isDarkMode);
+    notifyListeners();
+  }
+
+  //change colour theme
+  setColorTheme(String colors) {
+    currentUser.colors = colors;
+    currentUser.updateInDB(label: 'colorTheme', data: colors);
+    notifyListeners();
+  }
+
+  //toggle language
+  setLanguage(bool isEnglish) {
+    currentUser.english = isEnglish;
+    currentUser.updateInDB(label: 'english', data: isEnglish);
+    notifyListeners();
+  }
+
   //saved summary functions
 
   addSummary(savedSummary ss) {

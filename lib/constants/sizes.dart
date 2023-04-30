@@ -22,3 +22,8 @@ double screenWidth =
     MediaQueryData.fromWindow(WidgetsBinding.instance.window).size.width;
 double screenHeight =
     MediaQueryData.fromWindow(WidgetsBinding.instance.window).size.height;
+
+//system darkmode
+Brightness brightness =
+    MediaQueryData.fromWindow(WidgetsBinding.instance.window)
+        .platformBrightness;

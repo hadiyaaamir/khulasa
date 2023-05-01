@@ -36,6 +36,7 @@ class textField extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 40, vertical: paddingVert),
       child: TextFormField(
+        
         textAlign: textAlign,
         cursorColor: colors.text,
         autovalidateMode: AutovalidateMode.onUserInteraction,

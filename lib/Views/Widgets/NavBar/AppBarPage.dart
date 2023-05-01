@@ -3,7 +3,6 @@ import 'package:khulasa/Controllers/Config/darkMode.dart';
 import 'package:khulasa/Controllers/Config/languageprovider.dart';
 import 'package:khulasa/Controllers/userController.dart';
 import 'package:khulasa/Models/colorTheme.dart';
-import 'package:khulasa/Views/Entrance/login.dart';
 import 'package:khulasa/Views/Saved/savedOptions.dart';
 import 'package:khulasa/Views/Settings/settings.dart';
 import 'package:khulasa/Views/RSS/categories.dart';
@@ -24,7 +23,6 @@ class _DrawState extends State<Draw> {
   @override
   Widget build(BuildContext context) {
     ColorTheme colors = context.watch<DarkMode>().mode;
-    String drawerLanguage = context.watch<Language>().drawerLanguage;
     bool isDarkMode = context.watch<DarkMode>().isDarkMode;
     bool isEnglish = context.watch<Language>().isEnglish;
 
@@ -93,7 +91,7 @@ class _DrawState extends State<Draw> {
                   //toggle options
                   Divider(color: colors.secondary),
                   DrawerOption(
-                    text: drawerLanguage,
+                    text: isEnglish ? 'اردو' : 'English',
                     onPress: () {
                       context.read<Language>().toggleLanguage();
                     },

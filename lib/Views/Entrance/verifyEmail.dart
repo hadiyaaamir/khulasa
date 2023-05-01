@@ -89,23 +89,23 @@ class _VerifyEmailState extends State<VerifyEmail> {
       textDirection: isEnglish ? TextDirection.ltr : TextDirection.rtl,
       child: Scaffold(
         backgroundColor: colors.background,
-        appBar: CustomAppBar(title: "Verify Email"),
+        appBar: CustomAppBar(title: isEnglish ? "Verify Email" : ""),
         body: Center(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 40),
+            padding: const EdgeInsets.symmetric(horizontal: 40),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 if (isEmailVerified) ...[
                   Text(
-                    'Email Verified!',
+                    isEnglish ? 'Email Verified!' : "",
                     style: TextStyle(color: colors.text, fontSize: buttonFont),
                   ),
                 ],
                 if (!isEmailVerified) ...[
                   Text(
-                    "Verify your Email to proceed",
+                    isEnglish ? "Verify your Email to proceed" : "",
                     style: TextStyle(
                         color: colors.text,
                         fontSize: buttonFont,
@@ -113,11 +113,13 @@ class _VerifyEmailState extends State<VerifyEmail> {
                   ),
                   const SizedBox(height: 15),
                   Text(
-                    "A verification email has been sent to your account.",
+                    isEnglish
+                        ? "A verification email has been sent to your account."
+                        : "",
                     style: TextStyle(color: colors.text),
                   ),
                   Btn(
-                      label: 'Resend Email',
+                      label: isEnglish ? 'Resend Email' : "",
                       paddingHor: 0,
                       onPress: () => sendVerificationEmail()),
                 ],

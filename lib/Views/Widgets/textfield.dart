@@ -13,6 +13,7 @@ class textField extends StatefulWidget {
     this.icon,
     this.lines = 1,
     this.paddingVert = 10,
+    this.paddingHor = 40,
     this.textAlign = TextAlign.left,
     this.allowEmpty = false,
     this.isLoading = false,
@@ -25,6 +26,7 @@ class textField extends StatefulWidget {
   final IconData? icon;
   final int lines;
   final double paddingVert;
+  final double paddingHor;
   final TextAlign textAlign;
 
   final bool allowEmpty;
@@ -42,8 +44,8 @@ class _textFieldState extends State<textField> {
     ColorTheme colors = context.watch<DarkMode>().mode;
 
     return Padding(
-      padding:
-          EdgeInsets.symmetric(horizontal: 40, vertical: widget.paddingVert),
+      padding: EdgeInsets.symmetric(
+          horizontal: widget.paddingHor, vertical: widget.paddingVert),
       child: TextFormField(
         textAlign: widget.textAlign,
         cursorColor: colors.text,

@@ -106,7 +106,10 @@ class _VerifyEmailState extends State<VerifyEmail> {
                 if (!isEmailVerified) ...[
                   Text(
                     "Verify your Email to proceed",
-                    style: TextStyle(color: colors.text, fontSize: buttonFont),
+                    style: TextStyle(
+                        color: colors.text,
+                        fontSize: buttonFont,
+                        fontWeight: FontWeight.w600),
                   ),
                   const SizedBox(height: 15),
                   Text(

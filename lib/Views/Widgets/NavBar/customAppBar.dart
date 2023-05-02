@@ -11,6 +11,7 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
     this.foreground,
     this.title = "",
     this.fakeRTL = false,
+    this.trailing,
   })  : preferredSize = Size.fromHeight(kToolbarHeight),
         super(key: key);
 
@@ -20,7 +21,7 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final Color? background;
   final Color? foreground;
   final bool fakeRTL;
-
+  final Widget? trailing;
   @override
   State<CustomAppBar> createState() => _CustomAppBarState();
 }
@@ -51,7 +52,10 @@ class _CustomAppBarState extends State<CustomAppBar> {
             onPressed: () => Navigation().navigationPop(context),
             icon: const Icon(Icons.arrow_forward),
           )
-        ]
+        ],
+        if (widget.trailing != null) ...[
+          widget.trailing!,
+        ],
       ],
     );
   }

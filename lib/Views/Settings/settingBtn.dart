@@ -9,10 +9,14 @@ class SettingBtn extends StatelessWidget {
     super.key,
     required this.content,
     required this.isSelected,
+    this.perpetualShadow = false,
+    this.paddingBottom = 20,
   });
 
   final Widget content;
   final bool isSelected;
+  final bool perpetualShadow;
+  final double paddingBottom;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +24,7 @@ class SettingBtn extends StatelessWidget {
     bool isDarkMode = context.watch<DarkMode>().isDarkMode;
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
+      padding: EdgeInsets.only(bottom: paddingBottom),
       child: Container(
         padding: const EdgeInsets.all(30),
         width: double.infinity,
@@ -35,7 +39,7 @@ class SettingBtn extends StatelessWidget {
               width: isSelected ? 2 : 1),
           borderRadius: BorderRadius.circular(10),
           boxShadow: [
-            if (isSelected) ...[
+            if (isSelected || perpetualShadow) ...[
               BoxShadow(
                 color: Colors.grey.withOpacity(0.5),
                 spreadRadius: 0,

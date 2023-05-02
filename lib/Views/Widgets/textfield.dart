@@ -17,6 +17,7 @@ class textField extends StatefulWidget {
     this.textAlign = TextAlign.left,
     this.allowEmpty = false,
     this.isLoading = false,
+    this.isEnabled = true,
   });
 
   final TextEditingController controller;
@@ -31,6 +32,7 @@ class textField extends StatefulWidget {
 
   final bool allowEmpty;
   final bool isLoading;
+  final bool isEnabled;
 
   @override
   State<textField> createState() => _textFieldState();
@@ -49,6 +51,7 @@ class _textFieldState extends State<textField> {
       child: TextFormField(
         textAlign: widget.textAlign,
         cursorColor: colors.text,
+        enabled: widget.isEnabled,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         obscureText: widget.password && !showPassword,
         controller: widget.controller,

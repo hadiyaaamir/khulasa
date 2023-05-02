@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:khulasa/Controllers/HelperFunctions/navigation.dart';
 import 'package:khulasa/Models/article.dart';
 import 'package:khulasa/Models/savedArticle.dart';
@@ -118,6 +119,53 @@ class UserController extends ChangeNotifier {
 
   bool userNotFound() {
     return _currentUser.email == "";
+  }
+
+  //update password
+  Future<bool> updatePassword({
+    required String newPassword,
+    required String oldPassword,
+  }) async {
+    User? u = auth.currentUser;
+    bool success = false;
+    if (u != null) {
+      var cred =
+          EmailAuthProvider.credential(email: u.email!, password: oldPassword);
+      await u.reauthenticateWithCredential(cred).then((value) async {
+        await u.updatePassword(newPassword).then((_) {
+          Fluttertoast.showToast(msg: "Password updated!");
+          success = true;
+        }).catchError((error) {
+          success = false;
+          print(error);
+        });
+      }).catchError((err) {
+        success = false;
+        print(err);
+      });
+    }
+    return success;
+  }
+
+  //toggle DarkMode
+  setDarkMode(bool isDarkMode) {
+    currentUser.darkMode = isDarkMode;
+    currentUser.updateInDB(label: 'darkMode', data: isDarkMode);
+    notifyListeners();
+  }
+
+  //change colour theme
+  setColorTheme(String colors) {
+    currentUser.colors = colors;
+    currentUser.updateInDB(label: 'colorTheme', data: colors);
+    notifyListeners();
+  }
+
+  //toggle language
+  setLanguage(bool isEnglish) {
+    currentUser.english = isEnglish;
+    currentUser.updateInDB(label: 'english', data: isEnglish);
+    notifyListeners();
   }
 
   //saved summary functions

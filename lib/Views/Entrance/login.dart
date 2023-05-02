@@ -7,6 +7,7 @@ import 'package:khulasa/Controllers/HelperFunctions/navigation.dart';
 import 'package:khulasa/Controllers/userController.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Models/user.dart';
+import 'package:khulasa/Views/Entrance/forgotPassword.dart';
 import 'package:khulasa/Views/Entrance/homePage.dart';
 import 'package:khulasa/Views/Entrance/signup.dart';
 import 'package:khulasa/Views/Entrance/verifyEmail.dart';
@@ -15,6 +16,7 @@ import 'package:khulasa/Views/Widgets/textfield.dart';
 import 'package:khulasa/Views/Entrance/option.dart';
 import 'package:khulasa/Views/apicall.dart';
 import 'package:khulasa/constants/colors.dart';
+import 'package:khulasa/constants/sizes.dart';
 import 'package:provider/provider.dart';
 
 class Login extends StatefulWidget {
@@ -35,6 +37,7 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     ColorTheme colors = context.watch<DarkMode>().mode;
+    bool isDarkMode = context.watch<DarkMode>().isDarkMode;
     bool isEnglish = context.watch<Language>().isEnglish;
     appUser user = context.watch<UserController>().currentUser;
 
@@ -55,7 +58,7 @@ class _LoginState extends State<Login> {
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Padding(
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                                 horizontal: 40, vertical: 10),
                             child: Text(
                               '* Email or password is incorrect',
@@ -93,6 +96,45 @@ class _LoginState extends State<Login> {
                         validate: (value) {
                           return null;
                         },
+                      ),
+
+                      //forgot password
+                      Align(
+                        alignment: isEnglish
+                            ? Alignment.centerRight
+                            : Alignment.centerLeft,
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              right: isEnglish ? 40 : 0,
+                              left: isEnglish ? 0 : 40,
+                              top: 5),
+                          child: RichText(
+                            text: TextSpan(
+                              text:
+                                  isEnglish ? 'Forgot Password?' : 'urdu thing',
+                              style: TextStyle(
+                                  color: Colors.transparent,
+                                  fontWeight: isDarkMode
+                                      ? FontWeight.w400
+                                      : FontWeight.w600,
+                                  // fontSize: largerSmallFont,
+                                  decorationColor: colors.text,
+                                  shadows: [
+                                    Shadow(
+                                      color: colors.text,
+                                      offset: const Offset(0, -3),
+                                    )
+                                  ],
+                                  decoration: TextDecoration.underline,
+                                  decorationThickness: 2),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () => {
+                                      Navigation().navigation(
+                                          context, const ForgotPassword()),
+                                    },
+                            ),
+                          ),
+                        ),
                       ),
 
                       //button

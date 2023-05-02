@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 //font sizes
 const double titleFont = 50;
 const double largerFont = 35;
+const double smallerLargerFont = 30;
 const double largeFont = 25;
 const double headingFont = 18;
 const double buttonFont = 16;
@@ -22,3 +23,8 @@ double screenWidth =
     MediaQueryData.fromWindow(WidgetsBinding.instance.window).size.width;
 double screenHeight =
     MediaQueryData.fromWindow(WidgetsBinding.instance.window).size.height;
+
+//system darkmode
+Brightness brightness =
+    MediaQueryData.fromWindow(WidgetsBinding.instance.window)
+        .platformBrightness;

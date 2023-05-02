@@ -72,7 +72,8 @@ List<NewsSource> sources = [
   NewsSource(
     source: 'BBC Urdu',
     sourceUrdu: 'بی بی سی',
-    titleTag: 'bbc-1gvq3vt e1p3vdyi0',
+    titleTag: 'h1',
+    titleTagType: 'tag',
     contentTag: 'p',
     contentTagType: 'paragraph',
     dateTag: 'time',
@@ -80,5 +81,17 @@ List<NewsSource> sources = [
     attributeName: 'datetime',
     webLink: 'https://www.bbc.com/urdu',
     rssSummaryRatio: 0.05,
+  ),
+  NewsSource(
+    source: 'Daily Pakistan',
+    sourceUrdu: 'روزنامہ پاکستان',
+    titleTag: 'h1',
+    titleTagType: 'tag',
+    contentTag: 'post-desc',
+    contentTagType: 'paragraph',
+    dateTag: 'large-post-meta',
+    isDateTime: false,
+    webLink: 'https://dailypakistan.com.pk/latest',
+    rssSummaryRatio: 0.4,
   ),
 ];

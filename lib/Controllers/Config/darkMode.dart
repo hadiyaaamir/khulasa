@@ -1,8 +1,18 @@
 import 'package:flutter/cupertino.dart';
+import 'package:khulasa/Controllers/userController.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/constants/colors.dart';
 
 class DarkMode extends ChangeNotifier {
+  DarkMode({
+    required this.user,
+  }) {
+    isDarkMode = user.currentUser.darkMode;
+    _theme = user.currentUser.colors;
+  }
+
+  final UserController user;
+
   bool isDarkMode = true;
 
   final Map<String, ColorTheme> _lightMode = {
@@ -23,6 +33,7 @@ class DarkMode extends ChangeNotifier {
   String get theme => _theme;
   set theme(String t) {
     _theme = t;
+    user.setColorTheme(t);
     notifyListeners();
   }
 
@@ -32,6 +43,7 @@ class DarkMode extends ChangeNotifier {
 
   void toggleMode() {
     isDarkMode = !isDarkMode;
+    user.setDarkMode(isDarkMode);
     notifyListeners();
   }
 

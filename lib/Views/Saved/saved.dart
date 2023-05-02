@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:khulasa/Controllers/Backend/dateFormat.dart';
 import 'package:khulasa/Controllers/userController.dart';
 import 'package:khulasa/Controllers/Config/darkMode.dart';
 import 'package:khulasa/Controllers/Config/languageprovider.dart';
@@ -31,7 +32,9 @@ class _SavedState extends State<Saved> {
     bool isEnglish = context.watch<Language>().isEnglish;
 
     return Directionality(
-      textDirection: isEnglish ? TextDirection.ltr : TextDirection.rtl,
+      textDirection: isEnglish || !widget.isSummary
+          ? TextDirection.ltr
+          : TextDirection.rtl,
       child: Scaffold(
         backgroundColor: colors.background,
         body: Center(
@@ -54,11 +57,14 @@ class _SavedState extends State<Saved> {
                                   fontWeight: FontWeight.bold),
                             ),
                             subtitle: Text(
-                              'Saved on: ${items[index].savedOn.day}/${items[index].savedOn.month}/${items[index].savedOn.year}',
+                              '${isEnglish ? 'Saved on' : 'تاریخ محفوظ'}: '
+                              '${DateFormatter().formatDate(items[index].savedOn, isEnglish)}',
                               style: TextStyle(color: colors.text2),
                             ),
                             trailing: Icon(
-                              Icons.keyboard_arrow_right_rounded,
+                              isEnglish
+                                  ? Icons.keyboard_arrow_right_rounded
+                                  : Icons.keyboard_arrow_left_rounded,
                               color: colors.text2,
                             ),
                             onTap: () => Navigation().navigation(

@@ -25,10 +25,30 @@ Future<void> main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => Language()),
-        ChangeNotifierProvider(create: (context) => DarkMode()),
+        // ChangeNotifierProvider(create: (context) => Language()),
+        // ChangeNotifierProvider(create: (context) => DarkMode()),
         ChangeNotifierProvider(create: (context) => articleprovider()),
         ChangeNotifierProvider(create: (context) => UserController()),
+
+        //dark mode provider with user passed in
+        ChangeNotifierProxyProvider<UserController, DarkMode>(
+          create: (BuildContext context) => DarkMode(
+            user: Provider.of<UserController>(context, listen: false),
+          ),
+          update:
+              (BuildContext context, UserController user, DarkMode? darkMode) =>
+                  DarkMode(user: user),
+        ),
+
+        //language provider with user
+        ChangeNotifierProxyProvider<UserController, Language>(
+          create: (BuildContext context) => Language(
+            user: Provider.of<UserController>(context, listen: false),
+          ),
+          update:
+              (BuildContext context, UserController user, Language? language) =>
+                  Language(user: user),
+        ),
       ],
       child: const MyApp(),
     ),

@@ -3,8 +3,8 @@ import 'package:khulasa/Controllers/Config/darkMode.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:provider/provider.dart';
 
-class textField extends StatelessWidget {
-  const textField({
+class textField extends StatefulWidget {
+  textField({
     super.key,
     required this.label,
     required this.controller,
@@ -33,22 +33,31 @@ class textField extends StatelessWidget {
   final bool isLoading;
 
   @override
+  State<textField> createState() => _textFieldState();
+}
+
+class _textFieldState extends State<textField> {
+  bool showPassword = false;
+
+  @override
   Widget build(BuildContext context) {
     ColorTheme colors = context.watch<DarkMode>().mode;
+
     return Padding(
-      padding:
-          EdgeInsets.symmetric(horizontal: paddingHor, vertical: paddingVert),
+      padding: EdgeInsets.symmetric(
+          horizontal: widget.paddingHor, vertical: widget.paddingVert),
       child: TextFormField(
-        textAlign: textAlign,
+        textAlign: widget.textAlign,
         cursorColor: colors.text,
         autovalidateMode: AutovalidateMode.onUserInteraction,
-        obscureText: password,
-        controller: controller,
-        keyboardType: lines > 1 ? TextInputType.multiline : TextInputType.text,
-        minLines: lines,
-        maxLines: lines,
+        obscureText: widget.password && !showPassword,
+        controller: widget.controller,
+        keyboardType:
+            widget.lines > 1 ? TextInputType.multiline : TextInputType.text,
+        minLines: widget.lines,
+        maxLines: widget.lines,
         decoration: InputDecoration(
-          suffix: isLoading ? const CircularProgressIndicator() : null,
+          suffix: widget.isLoading ? const CircularProgressIndicator() : null,
           border: OutlineInputBorder(
             borderSide: const BorderSide(width: 0, style: BorderStyle.none),
             borderRadius: BorderRadius.circular(5),
@@ -56,18 +65,27 @@ class textField extends StatelessWidget {
           filled: true,
           fillColor: colors.primary,
           // icon: Icon(icon, color: text),
-          labelText: label,
+          labelText: widget.label,
           labelStyle: TextStyle(color: colors.text),
+          suffixIcon: widget.password
+              ? IconButton(
+                  onPressed: () => setState(() => showPassword = !showPassword),
+                  icon: Icon(
+                    showPassword ? Icons.visibility : Icons.visibility_off,
+                    color: colors.secondary,
+                  ),
+                )
+              : null,
         ),
         onSaved: (String? value) {
           // This optional block of code can be used to run
           // code when the user saves the form.
         },
         validator: (value) {
-          if (!allowEmpty && value != null && value.isEmpty) {
+          if (!widget.allowEmpty && value != null && value.isEmpty) {
             return "Field cannot be empty";
           }
-          return validate == null ? null : validate!(value);
+          return widget.validate == null ? null : widget.validate!(value);
         },
         style: (TextStyle(color: colors.text)),
       ),

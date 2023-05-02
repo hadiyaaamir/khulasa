@@ -20,13 +20,13 @@ class articleprovider extends ChangeNotifier {
   List _articleList = [];
   List get articlesList => _articleList;
 
-  bool _isFinished = false;
-  bool get isFinished => _isFinished;
+  // bool _isFinished = false;
+  // bool get isFinished => _isFinished;
 
-  setFinished(bool finish) {
-    _isFinished = finish;
-    notifyListeners();
-  }
+  // setFinished(bool finish) {
+  //   _isFinished = finish;
+  //   notifyListeners();
+  // }
 
   addByDate(article a) {
     articlesList.add(a);
@@ -43,15 +43,15 @@ class articleprovider extends ChangeNotifier {
     }
   }
 
-  getArticles() async {
+  getArticles(NewsSource source) async {
     List<Link> links = [];
     _articleList = [];
-    setFinished(false);
+    // setFinished(false);
 
-    for (var element in sources) {
-      var l = await WebScraping().getLinksFromLink(element);
-      links.addAll(l);
-    }
+    // for (var element in sources) {
+    var l = await WebScraping().getLinksFromLink(source);
+    links.addAll(l);
+    // }
 
     for (int i = 0; i < links.length; i++) {
       var a = await WebScraping().getArticleFromLink(
@@ -87,7 +87,13 @@ class articleprovider extends ChangeNotifier {
         notifyListeners();
       }
     }
-    setFinished(true);
+    // setFinished(true);
+  }
+
+  getArticlesSimultaneous() {
+    for (var element in sources) {
+      getArticles(element);
+    }
   }
 
   // int get count => _article.length;

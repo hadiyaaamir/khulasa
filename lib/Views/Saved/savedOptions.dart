@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:khulasa/Controllers/Config/darkMode.dart';
+import 'package:khulasa/Controllers/HelperFunctions/navigation.dart';
 import 'package:khulasa/Models/colorTheme.dart';
+import 'package:khulasa/Views/Entrance/homePage.dart';
 import 'package:khulasa/Views/Saved/saved.dart';
 import 'package:khulasa/Views/Widgets/NavBar/AppBarPage.dart';
 import 'package:khulasa/Views/Summary/linkSummary.dart';
@@ -22,56 +24,60 @@ class _SavedMainState extends State<SavedMain> {
   Widget build(BuildContext context) {
     ColorTheme colors = context.watch<DarkMode>().mode;
 
-    return Scaffold(
-      appBar: CustomAppBar(title: 'Saved'),
-      drawer: const Drawer(child: Draw()),
-      backgroundColor: colors.background,
-      body: Center(
-        child: DefaultTabController(
-          length: 2, // length of tabs
-          initialIndex: widget.initIndex,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    //This is for background color
-                    color: Colors.white.withOpacity(0.0),
+    return WillPopScope(
+      onWillPop: () async =>
+          Navigation().navigationReplace(context, const HomePage()),
+      child: Scaffold(
+        appBar: CustomAppBar(title: 'Saved'),
+        drawer: const Drawer(child: Draw()),
+        backgroundColor: colors.background,
+        body: Center(
+          child: DefaultTabController(
+            length: 2, // length of tabs
+            initialIndex: widget.initIndex,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      //This is for background color
+                      color: Colors.white.withOpacity(0.0),
 
-                    //This is for bottom border that is needed
-                    border: Border(
-                      bottom: BorderSide(color: colors.primary, width: 3),
+                      //This is for bottom border that is needed
+                      border: Border(
+                        bottom: BorderSide(color: colors.primary, width: 3),
+                      ),
                     ),
+                    child: TabBar(
+                        labelStyle: TextStyle(fontWeight: FontWeight.bold),
+                        labelColor: colors.text,
+                        unselectedLabelColor: colors.text2,
+                        tabs: const [
+                          Tab(text: 'Summaries'),
+                          Tab(text: 'Articles')
+                        ],
+                        indicatorColor: colors.text,
+                        indicatorWeight: 3),
                   ),
-                  child: TabBar(
-                      labelStyle: TextStyle(fontWeight: FontWeight.bold),
-                      labelColor: colors.text,
-                      unselectedLabelColor: colors.text2,
-                      tabs: const [
-                        Tab(text: 'Summaries'),
-                        Tab(text: 'Articles')
-                      ],
-                      indicatorColor: colors.text,
-                      indicatorWeight: 3),
                 ),
-              ),
-              //height of TabBarView
-              const Expanded(
-                child: TabBarView(
-                  children: [
-                    Saved(
-                      isSummary: true,
-                    ),
-                    Saved(
-                      isSummary: false,
-                    )
-                  ],
+                //height of TabBarView
+                const Expanded(
+                  child: TabBarView(
+                    children: [
+                      Saved(
+                        isSummary: true,
+                      ),
+                      Saved(
+                        isSummary: false,
+                      )
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

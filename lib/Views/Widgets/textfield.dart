@@ -13,6 +13,7 @@ class textField extends StatelessWidget {
     this.icon,
     this.lines = 1,
     this.paddingVert = 10,
+    this.paddingHor = 40,
     this.textAlign = TextAlign.left,
     this.allowEmpty = false,
     this.isLoading = false,
@@ -25,6 +26,7 @@ class textField extends StatelessWidget {
   final IconData? icon;
   final int lines;
   final double paddingVert;
+  final double paddingHor;
   final TextAlign textAlign;
 
   final bool allowEmpty;
@@ -34,9 +36,9 @@ class textField extends StatelessWidget {
   Widget build(BuildContext context) {
     ColorTheme colors = context.watch<DarkMode>().mode;
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 40, vertical: paddingVert),
+      padding:
+          EdgeInsets.symmetric(horizontal: paddingHor, vertical: paddingVert),
       child: TextFormField(
-        
         textAlign: textAlign,
         cursorColor: colors.text,
         autovalidateMode: AutovalidateMode.onUserInteraction,

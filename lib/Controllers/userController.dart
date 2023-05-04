@@ -168,6 +168,16 @@ class UserController extends ChangeNotifier {
     notifyListeners();
   }
 
+  //update name
+  updateName(String firstname, String lastname) async {
+    currentUser.firstName = firstname;
+    currentUser.lastName = lastname;
+    notifyListeners();
+    await currentUser.updateInDB(label: 'firstName', data: firstname);
+    await currentUser.updateInDB(label: 'lastName', data: lastname);
+    Fluttertoast.showToast(msg: 'User details updated!');
+  }
+
   //saved summary functions
 
   addSummary(savedSummary ss) {

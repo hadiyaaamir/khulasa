@@ -185,6 +185,14 @@ class _PersonalState extends State<Personal> {
                           final FormState form =
                               _formKey.currentState as FormState;
                           if (form.validate()) {
+                            //only update if change
+                            if (user.firstName != _firstNameController.text ||
+                                user.lastName != _lastNameController.text) {
+                              await context.read<UserController>().updateName(
+                                  _firstNameController.text,
+                                  _lastNameController.text);
+                            }
+
                             setState(() => isEditing = false);
                           }
                         },

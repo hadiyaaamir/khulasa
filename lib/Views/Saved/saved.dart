@@ -50,6 +50,8 @@ class _SavedState extends State<Saved> {
                       ? Card(
                           color: colors.primary,
                           child: ListTile(
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 7, horizontal: 25),
                             title: Text(
                               items[index].title,
                               style: TextStyle(

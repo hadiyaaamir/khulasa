@@ -54,25 +54,28 @@ class _SummaryViewState extends State<SummaryView> {
               ),
 
               //options
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SpeakIconButton(
-                    speakText:
-                        "${(widget.summary as savedSummary).title}.${(widget.summary as savedSummary).summary}",
-                    vertPadding: 0,
-                    iconSize: iconLarge,
-                    iconColor: isDarkMode ? colors.text2 : colors.secondary,
-                  ),
-                  Row(children: [
-                    DeleteButton(
-                        isSummary: true, ss: widget.summary as savedSummary),
-                    const SizedBox(width: 10),
-                    ShareButton(
-                        isRSSFeed: true,
-                        content: (widget.summary as savedSummary).summary)
-                  ]),
-                ],
+              Padding(
+                padding: const EdgeInsets.only(bottom: 25),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SpeakIconButton(
+                      speakText:
+                          "${(widget.summary as savedSummary).title}.${(widget.summary as savedSummary).summary}",
+                      vertPadding: 0,
+                      iconSize: iconLarge,
+                      iconColor: isDarkMode ? colors.text2 : colors.secondary,
+                    ),
+                    Row(children: [
+                      DeleteButton(
+                          isSummary: true, ss: widget.summary as savedSummary),
+                      const SizedBox(width: 10),
+                      ShareButton(
+                          isRSSFeed: true,
+                          content: (widget.summary as savedSummary).summary)
+                    ]),
+                  ],
+                ),
               ),
               //SummaryView
               Expanded(

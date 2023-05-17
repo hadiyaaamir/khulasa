@@ -13,7 +13,7 @@ import 'package:khulasa/Views/Settings/changePassword.dart';
 import 'package:khulasa/Views/Settings/settingBtn.dart';
 import 'package:khulasa/Views/Widgets/NavBar/customAppBar.dart';
 import 'package:khulasa/Views/Widgets/button.dart';
-import 'package:khulasa/Views/Widgets/labelIcon.dart';
+import 'package:khulasa/Views/Widgets/IconButtons/labelIcon.dart';
 import 'package:khulasa/Views/Widgets/textfield.dart';
 import 'package:khulasa/constants/colors.dart';
 import 'package:khulasa/constants/sizes.dart';

@@ -4,9 +4,9 @@ import 'package:khulasa/Models/category.dart';
 List categories = [
   category(
     cat: 'politics',
-    name: 'Current Affairs',
+    name: 'National News',
     nameUrdu: 'اردو',
-    icon: Icons.person_outline,
+    icon: Icons.newspaper_outlined,
   ),
   category(
     cat: 'entertainment',

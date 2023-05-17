@@ -119,15 +119,15 @@ class _ApiCallState extends State<ApiCall> {
                 // }
 
                 //web scraping
-                final response = await http.Client().get(
-                    Uri.parse(
-                        'https://dailypakistan.com.pk/28-Apr-2023/1574382'),
+                String link =
+                    'https://www.nawaiwaqt.com.pk/25-Mar-2023/1695681';
+                final response = await http.Client().get(Uri.parse(link),
                     headers: {'User-Agent': 'Mozilla/5.0'});
                 if (response.statusCode == 200) {
                   var document = parser.parse(response.body);
 
-                  int index = sources.indexWhere(
-                      (element) => element.source == 'Daily Pakistan');
+                  int index = sources.indexWhere((element) =>
+                      element.source == NewsSource.getSourceFromLink(link));
 
                   String title =
                       index != -1 ? sources[index].getTitle(document) : "";
@@ -143,11 +143,13 @@ class _ApiCallState extends State<ApiCall> {
                   //date formatter code
                   // var d = DateFormatter().toDateTime(date, false);
 
-                  var date = index != -1
-                      ? sources[index].getDate(document)
-                      : DateTime(2001);
-                  article = '$date';
-
+                  // var date = index != -1
+                  //     ? sources[index].getDate(document)
+                  //     : DateTime(2001);
+                  article = '${index == -1 ? -1 : sources[index]}';
+                  setState(() {});
+                } else {
+                  article = '${response.statusCode}';
                   setState(() {});
                 }
 

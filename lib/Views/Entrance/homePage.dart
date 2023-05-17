@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:khulasa/Controllers/Config/darkMode.dart';
 import 'package:khulasa/Controllers/Config/languageprovider.dart';
+import 'package:khulasa/Controllers/Dialogs/exitPopup.dart';
 import 'package:khulasa/Controllers/HelperFunctions/navigation.dart';
-import 'package:khulasa/Controllers/dialog.dart';
 import 'package:khulasa/Controllers/userController.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Models/user.dart';
 import 'package:khulasa/Views/Widgets/NavBar/customAppBar.dart';
-import 'package:khulasa/Views/Widgets/button.dart';
 import 'package:khulasa/Views/Widgets/NavBar/AppBarPage.dart';
 import 'package:khulasa/Views/RSS/categories.dart';
 import 'package:khulasa/Views/Summary/summary.dart';

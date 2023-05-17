@@ -3,7 +3,7 @@ import 'package:khulasa/Controllers/Config/darkMode.dart';
 import 'package:khulasa/Controllers/Config/languageprovider.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Views/Widgets/IconButtons/Share/shareOptionsBox.dart';
-import 'package:khulasa/Views/Widgets/labelIcon.dart';
+import 'package:khulasa/Views/Widgets/IconButtons/labelIcon.dart';
 import 'package:khulasa/constants/sizes.dart';
 import 'package:provider/provider.dart';
 

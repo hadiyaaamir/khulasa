@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:khulasa/Controllers/HelperFunctions/navigation.dart';
 import 'package:khulasa/Controllers/userController.dart';
 import 'package:khulasa/Views/Saved/savedOptions.dart';
-import 'package:khulasa/Views/Widgets/labelIcon.dart';
+import 'package:khulasa/Views/Widgets/IconButtons/labelIcon.dart';
 import 'package:provider/provider.dart';
 
 class DeleteButton extends StatelessWidget {

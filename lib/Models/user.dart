@@ -12,7 +12,7 @@ class appUser {
     this.firstName = "",
     this.lastName = "",
     this.email = "",
-    this.darkMode = false,
+    this.darkMode = true,
     this.english = true,
     this.isLoggedIn = true,
     this.colors = 'green',

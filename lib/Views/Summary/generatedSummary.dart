@@ -42,7 +42,7 @@ class GeneratedSummary extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      isEnglish ? "Summary" : 'اردو',
+                      isEnglish ? "Summary" : 'خلاصہ',
                       style: TextStyle(
                           color: colors.text,
                           fontSize: largeFont,

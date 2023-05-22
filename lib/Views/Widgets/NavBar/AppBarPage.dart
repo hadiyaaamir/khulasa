@@ -73,7 +73,7 @@ class _DrawState extends State<Draw> {
                     icon: Icons.text_fields,
                   ),
                   DrawerOption(
-                    text: isEnglish ? 'Saved' : 'اردو saved',
+                    text: isEnglish ? 'Saved' : 'محفوظ شدہ اشیاء',
                     onPress: () {
                       Navigation()
                           .navigationReplace(context, const SavedMain());
@@ -81,7 +81,7 @@ class _DrawState extends State<Draw> {
                     icon: Icons.bookmark_border_outlined,
                   ),
                   DrawerOption(
-                    text: isEnglish ? 'Settings' : 'اردو settings',
+                    text: isEnglish ? 'Settings' : 'ترتیبات',
                     onPress: () {
                       Navigation().navigationReplace(context, const Settings());
                     },
@@ -101,10 +101,10 @@ class _DrawState extends State<Draw> {
                     text: isDarkMode
                         ? isEnglish
                             ? 'Light Mode'
-                            : 'اردو light'
+                            : 'لائٹ موڈ'
                         : isEnglish
                             ? 'Dark Mode'
-                            : 'اردو dark',
+                            : 'ڈارک موڈ',
                     onPress: () {
                       context.read<DarkMode>().toggleMode();
                     },
@@ -114,7 +114,7 @@ class _DrawState extends State<Draw> {
                   //logout
                   Divider(color: colors.secondary),
                   DrawerOption(
-                    text: isEnglish ? 'Logout' : 'اردو logout',
+                    text: isEnglish ? 'Logout' : 'لاگ آؤٹ',
                     onPress: () {
                       context.read<UserController>().setSignOut(context);
                       // Navigation().navigationReplace(context, const Login());

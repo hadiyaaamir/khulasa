@@ -62,13 +62,14 @@ class _TextSummaryState extends State<TextSummary> {
                       isLoading: true,
                     )
                   : textField(
-                      label: isEnglish ? "Enter text here" : 'اردو',
+                      label:
+                          isEnglish ? "Enter text here" : 'یہاں متن درج کریں',
                       controller: textController,
                       lines: 5,
                       textAlign: TextAlign.right,
                     ),
               Btn(
-                label: isEnglish ? "Attach file" : 'اردو',
+                label: isEnglish ? "Attach file" : 'منسلک کریں',
                 background: colors.secondary,
                 height: 30,
                 width: 130,
@@ -81,18 +82,6 @@ class _TextSummaryState extends State<TextSummary> {
                     scanning = true;
                   });
 
-                  // var result = await ImagePicker()
-                  //     .pickImage(source: ImageSource.gallery);
-
-                  // if (result != null) {
-                  //   imagePicked = result;
-
-                  //   var p = imagePicked.path;
-                  //   extractedText =
-                  //       await TesseractOcr.extractText(p, language: 'urd'
-                  //       );
-                  // }
-
                   String? extractedText = await getText();
                   extractedText == null
                       ? null
@@ -104,7 +93,9 @@ class _TextSummaryState extends State<TextSummary> {
                 },
               ),
               Dropdown(
-                label: isEnglish ? "Summarising Algorithm" : 'اردو',
+                label: isEnglish
+                    ? "Summarising Algorithm"
+                    : 'خلاصہ کنندہ الگورتھم',
                 categories: [summaryChoice1, summaryChoice2],
                 paddingVert: 20,
                 setAlgo: (algorithm) => algo = algorithm,
@@ -113,7 +104,7 @@ class _TextSummaryState extends State<TextSummary> {
                 setSize: (String size) => ratio = getRatio(size),
               ),
               Btn(
-                label: isEnglish ? "GENERATE SUMMARY" : 'اردو',
+                label: isEnglish ? "GENERATE SUMMARY" : 'خلاصہ تشکیل دیں',
                 onPress: () async {
                   final FormState form =
                       _summaryFormKey.currentState as FormState;

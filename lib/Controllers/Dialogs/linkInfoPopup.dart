@@ -16,48 +16,60 @@ showLinkInfoPopup(context) async {
       context: context,
       builder: (BuildContext context) {
         ColorTheme colors = context.watch<DarkMode>().mode;
+        bool isEnglish = context.watch<Language>().isEnglish;
+
         return AlertDialog(
           backgroundColor: colors.background,
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _getCloseButton(context, colors.secondary),
-              Text(
-                "Supported News Sources",
-                style: TextStyle(
-                    color: colors.text,
-                    fontSize: headingFont,
-                    fontWeight: FontWeight.w600),
-              ),
-              const SizedBox(height: 10),
-
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: List.generate(
-                  sources.length,
-                  (index) => Text('\u2022   ${sources[index].source}'),
+          content: Directionality(
+            textDirection: isEnglish ? TextDirection.ltr : TextDirection.rtl,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _getCloseButton(context, colors.secondary, isEnglish),
+                Text(
+                  isEnglish
+                      ? "Supported News Sources"
+                      : 'تائید شدہ خبروں کے ماخذ',
+                  style: TextStyle(
+                      color: colors.text,
+                      fontSize: headingFont,
+                      fontWeight: FontWeight.w600),
                 ),
-              )
-              // SizedBox(
-              //   height: screenHeight / 3,
-              //   child: ListView.builder(
-              //     itemCount: sources.length,
-              //     itemBuilder: (context, index) =>
-              //         Text(sources[index].source),
-              //   ),
-              // ),
-            ],
+                const SizedBox(height: 10),
+
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: List.generate(
+                    sources.length,
+                    (index) => Text(
+                        isEnglish
+                            ? '\u2022   ${sources[index].source}'
+                            : '\u2022   ${sources[index].sourceUrdu}',
+                        style: TextStyle(color: colors.text)),
+                  ),
+                )
+                // SizedBox(
+                //   height: screenHeight / 3,
+                //   child: ListView.builder(
+                //     itemCount: sources.length,
+                //     itemBuilder: (context, index) =>
+                //         Text(sources[index].source),
+                //   ),
+                // ),
+              ],
+            ),
           ),
         );
       });
 }
 
-_getCloseButton(context, Color color) {
+_getCloseButton(context, Color color, bool isEnglish) {
   return GestureDetector(
     onTap: () {},
     child: Container(
-      alignment: FractionalOffset.topRight,
+      alignment:
+          isEnglish ? FractionalOffset.topRight : FractionalOffset.topLeft,
       child: GestureDetector(
         child: Icon(
           Icons.clear,

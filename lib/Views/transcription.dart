@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:khulasa/Controllers/Backend/openAi.dart';
 import 'package:khulasa/Controllers/HelperFunctions/navigation.dart';
 import 'package:khulasa/Views/gpt2.dart';
 import 'package:khulasa/constants/apiKeys.dart';
@@ -17,9 +18,9 @@ class Transcription extends StatefulWidget {
 }
 
 class _TranscriptionState extends State<Transcription> {
+  var tran = '';
   @override
   Widget build(BuildContext context) {
-    var tran = '';
     OpenAI.apiKey = Chatgptapi;
     TextEditingController textController = TextEditingController();
     return Scaffold(
@@ -31,41 +32,50 @@ class _TranscriptionState extends State<Transcription> {
           ),
           ElevatedButton(
               onPressed: () async {
-                var yt = YoutubeExplode();
+                var result = await OpenAi()
+                    .youtubeToAudio(textController.text)
+                    .then((file) async => await OpenAi().transcription(file));
 
-                var manifest = await yt.videos.streamsClient
-                    .getManifest(textController.text);
-                var streamInfo = manifest.audioOnly.withHighestBitrate();
-
-                // Get the actual stream
-                var stream = yt.videos.streamsClient.get(streamInfo);
-                final directory = await getApplicationDocumentsDirectory();
-                var file = File('${directory.path}/audio.mp3');
-                file.createSync();
-                var fileStream = file.openWrite();
-                await stream.pipe(fileStream);
-                await fileStream.flush();
-                await fileStream.close();
-
-                yt.close();
-
-                OpenAIAudioModel translation =
-                    await OpenAI.instance.audio.createTranscription(
-                  file: file,
-                  model: "whisper-1",
-                  responseFormat: OpenAIAudioResponseFormat.json,
-                );
-                print(translation);
                 setState(() {
-                  tran = translation.text;
+                  tran = result;
                 });
-                Navigation().navigation(
-                    context,
-                    Chatgpt(
-                      transcription: tran,
-                    ));
+
+                // var yt = YoutubeExplode();
+
+                // var manifest = await yt.videos.streamsClient
+                //     .getManifest(textController.text);
+                // var streamInfo = manifest.audioOnly.withHighestBitrate();
+
+                // // Get the actual stream
+                // var stream = yt.videos.streamsClient.get(streamInfo);
+                // final directory = await getApplicationDocumentsDirectory();
+                // var file = File('${directory.path}/audio.mp3');
+                // file.createSync();
+                // var fileStream = file.openWrite();
+                // await stream.pipe(fileStream);
+                // await fileStream.flush();
+                // await fileStream.close();
+
+                // yt.close();
+
+                // OpenAIAudioModel translation =
+                //     await OpenAI.instance.audio.createTranscription(
+                //   file: file,
+                //   model: "whisper-1",
+                //   responseFormat: OpenAIAudioResponseFormat.json,
+                // );
+                // print(translation);
+                // setState(() {
+                //   tran = translation.text;
+                // });
+                // Navigation().navigation(
+                //     context,
+                //     Chatgpt(
+                //       transcription: tran,
+                //     ));
               },
               child: const Text("Get audio")),
+          Text(tran),
         ],
       )),
     );

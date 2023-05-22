@@ -71,7 +71,7 @@ class _RssFeedState extends State<RssFeed> {
                     filteredSources = List.from(l);
                   }),
                 ),
-                SearchBar(
+                RSSSearchBar(
                   setArtList: (List list) => setState(() => artList = list),
                   setItemCount: (int itemcount) =>
                       setState(() => count = itemcount),

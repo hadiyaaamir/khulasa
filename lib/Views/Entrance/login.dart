@@ -197,7 +197,7 @@ class _LoginState extends State<Login> {
                           recognizer: TapGestureRecognizer()
                             ..onTap = () => {
                                   Navigation()
-                                      .navigation(context, const ApiCall()),
+                                      .navigation(context, const SignUp()),
                                 },
                         ),
                       ),

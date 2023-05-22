@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:khulasa/Controllers/Config/darkMode.dart';
 import 'package:khulasa/Controllers/Config/languageprovider.dart';
+import 'package:khulasa/Controllers/Dialogs/exitPopup.dart';
 import 'package:khulasa/Controllers/HelperFunctions/navigation.dart';
-import 'package:khulasa/Controllers/dialog.dart';
 import 'package:khulasa/Controllers/userController.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Models/user.dart';
+import 'package:khulasa/Views/Saved/savedOptions.dart';
+import 'package:khulasa/Views/Transcription/transcription.dart';
 import 'package:khulasa/Views/Widgets/NavBar/customAppBar.dart';
-import 'package:khulasa/Views/Widgets/button.dart';
 import 'package:khulasa/Views/Widgets/NavBar/AppBarPage.dart';
 import 'package:khulasa/Views/RSS/categories.dart';
 import 'package:khulasa/Views/Summary/summary.dart';
@@ -41,7 +42,7 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: colors.background,
           body: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
+              padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -75,7 +76,7 @@ class _HomePageState extends State<HomePage> {
 
                   //what would you like to do
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 35),
+                    padding: const EdgeInsets.only(top: 20, bottom: 25),
                     child: Text(
                       isEnglish
                           ? 'What would you like to do today?'
@@ -103,6 +104,30 @@ class _HomePageState extends State<HomePage> {
                             : "آر ایس ایس فیڈ",
                         navTo: const Categories(),
                         imgPath: 'assets/images/news.png',
+                      ),
+                    ],
+                  ),
+
+                  //space
+                  const SizedBox(height: 15),
+
+                  //option tiles
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      OptionTile(
+                        text: isEnglish
+                            ? "Transcribe an Audio or Video"
+                            : "تقریر کی تحریر",
+                        navTo: const Transcription(),
+                        imgPath: 'assets/images/transcribe.png',
+                      ),
+                      const SizedBox(width: 15),
+                      OptionTile(
+                        text:
+                            isEnglish ? "View Saved Items" : "محفوظ کردہ اشیاء",
+                        navTo: const SavedMain(),
+                        imgPath: 'assets/images/saved.png',
                       ),
                     ],
                   ),
@@ -136,7 +161,7 @@ class OptionTile extends StatelessWidget {
       child: GestureDetector(
         onTap: () => Navigation().navigation(context, navTo),
         child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 15),
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
           // width: double.infinity,
           // height: screenHeight / 3,
           decoration: BoxDecoration(
@@ -155,7 +180,7 @@ class OptionTile extends StatelessWidget {
             children: [
               Image(image: AssetImage(imgPath)),
               Padding(
-                padding: const EdgeInsets.only(top: 20),
+                padding: const EdgeInsets.only(top: 10),
                 child: Text(
                   text,
                   style: TextStyle(color: colors.text, fontSize: buttonFont),

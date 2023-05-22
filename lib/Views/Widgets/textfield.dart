@@ -18,6 +18,7 @@ class textField extends StatefulWidget {
     this.allowEmpty = false,
     this.isLoading = false,
     this.isEnabled = true,
+    this.suffixIcon,
   });
 
   final TextEditingController controller;
@@ -33,6 +34,8 @@ class textField extends StatefulWidget {
   final bool allowEmpty;
   final bool isLoading;
   final bool isEnabled;
+
+  final Widget? suffixIcon;
 
   @override
   State<textField> createState() => _textFieldState();
@@ -78,7 +81,7 @@ class _textFieldState extends State<textField> {
                     color: colors.secondary,
                   ),
                 )
-              : null,
+              : widget.suffixIcon,
         ),
         onSaved: (String? value) {
           // This optional block of code can be used to run

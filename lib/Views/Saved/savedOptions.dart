@@ -37,7 +37,7 @@ class _SavedMainState extends State<SavedMain> {
           backgroundColor: colors.background,
           body: Center(
             child: DefaultTabController(
-              length: 2, // length of tabs
+              length: 3, // length of tabs
               initialIndex: widget.initIndex,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -61,7 +61,11 @@ class _SavedMainState extends State<SavedMain> {
                           unselectedLabelColor: colors.text2,
                           tabs: [
                             Tab(text: isEnglish ? 'Summaries' : 'urdu summ'),
-                            Tab(text: isEnglish ? 'Articles' : 'urdu art')
+                            Tab(text: isEnglish ? 'Articles' : 'urdu art'),
+                            Tab(
+                                text: isEnglish
+                                    ? 'Transcriptions'
+                                    : 'urdu transc'),
                           ],
                           indicatorColor: colors.text,
                           indicatorWeight: 3),
@@ -71,12 +75,9 @@ class _SavedMainState extends State<SavedMain> {
                   const Expanded(
                     child: TabBarView(
                       children: [
-                        Saved(
-                          isSummary: true,
-                        ),
-                        Saved(
-                          isSummary: false,
-                        )
+                        Saved(isSummary: true),
+                        Saved(isSummary: false),
+                        Saved(isSummary: false, isTanscript: true),
                       ],
                     ),
                   ),

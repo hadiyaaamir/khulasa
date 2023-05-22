@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:khulasa/Controllers/Backend/api.dart';
 import 'package:khulasa/Controllers/Config/languageprovider.dart';
 import 'package:khulasa/Controllers/Backend/webScraping.dart';
+import 'package:khulasa/Models/source.dart';
+import 'package:khulasa/Views/Widgets/IconButtons/linkInfoButton.dart';
 import 'package:khulasa/Views/Widgets/button.dart';
 import 'package:khulasa/Views/Widgets/textfield.dart';
 import 'package:khulasa/Views/Summary/generatedSummary.dart';
@@ -26,9 +28,10 @@ class _LinkSummaryState extends State<LinkSummary> {
   String algo = "";
   double ratio = 0;
   String title = "";
-  String website = "";
+  // String website = "";
 
   final GlobalKey<FormState> _summaryFormKey = GlobalKey<FormState>();
+  bool isError = false;
 
   @override
   Widget build(BuildContext context) {
@@ -42,15 +45,16 @@ class _LinkSummaryState extends State<LinkSummary> {
           child: Center(
             child: Column(
               children: [
-                Dropdown(
-                  label: isEnglish ? "Select Source" : 'اردو',
-                  categories: sources.map((source) => source.source).toList(),
-                  setAlgo: (source) => website = source,
-                ),
+                // Dropdown(
+                //   label: isEnglish ? "Select Source" : 'اردو',
+                //   categories: sources.map((source) => source.source).toList(),
+                //   setAlgo: (source) => website = source,
+                // ),
                 textField(
                   label: isEnglish ? "Link" : 'اردو',
                   controller: linkController,
                   lines: 1,
+                  suffixIcon: LinkInfoButton(),
                 ),
                 Dropdown(
                   label: isEnglish ? "Summarising Algorithm" : 'اردو',
@@ -68,28 +72,43 @@ class _LinkSummaryState extends State<LinkSummary> {
                       if (form.validate()) {
                         var article = await WebScraping().getArticleFromLink(
                           link: linkController.text,
-                          source: website,
+                          source:
+                              NewsSource.getSourceFromLink(linkController.text),
+                          isLinkSummary: true,
+                          isEnglish: isEnglish,
                         );
 
-                        print(article);
+                        print(
+                            NewsSource.getSourceFromLink(linkController.text));
 
-                        await Api()
-                            .generateSummary(
-                              algo: getAlgorithm(algo),
-                              text: article.content,
-                              ratio: ratio,
-                            )
-                            .then((value) => {
-                                  summaryText = value.summary.isNotEmpty
-                                      ? value.summary
-                                      : article.content
-                                });
-                        title = article.title;
+                        if (article.summary == 'error') {
+                          isError = true;
+                          summaryText = article.content;
+                          title = article.title;
+                        } else {
+                          isError = false;
+                          await Api()
+                              .generateSummary(
+                                algo: getAlgorithm(algo),
+                                text: article.content,
+                                ratio: ratio,
+                              )
+                              .then((value) => {
+                                    summaryText = value.summary.isNotEmpty
+                                        ? value.summary
+                                        : article.content
+                                  });
+                          title = article.title;
+                        }
                         // summaryText = article.content;
                         setState(() {});
                       }
                     }),
-                GeneratedSummary(summaryText: summaryText, title: title),
+                GeneratedSummary(
+                  summaryText: summaryText,
+                  title: title,
+                  alignment: isError ? TextAlign.left : TextAlign.right,
+                ),
               ],
             ),
           ),

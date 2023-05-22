@@ -12,10 +12,16 @@ import 'package:provider/provider.dart';
 import 'package:khulasa/constants/sizes.dart';
 
 class GeneratedSummary extends StatelessWidget {
-  const GeneratedSummary({super.key, required this.summaryText, this.title});
+  const GeneratedSummary({
+    super.key,
+    required this.summaryText,
+    this.title,
+    this.alignment = TextAlign.right,
+  });
 
   final String summaryText;
   final String? title;
+  final TextAlign alignment;
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +79,7 @@ class GeneratedSummary extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: 20, top: 10),
                     child: Text(
                       title!,
-                      textAlign: TextAlign.right,
+                      textAlign: alignment,
                       style: TextStyle(
                         color: colors.text,
                         fontSize: headingFont,
@@ -82,10 +88,15 @@ class GeneratedSummary extends StatelessWidget {
                     ),
                   ),
                 ],
-                Text(
-                  summaryText,
-                  textAlign: TextAlign.right,
-                  style: TextStyle(color: colors.text, fontSize: buttonFont),
+                Align(
+                  alignment: alignment == TextAlign.left
+                      ? Alignment.bottomLeft
+                      : Alignment.bottomRight,
+                  child: Text(
+                    summaryText,
+                    textAlign: alignment,
+                    style: TextStyle(color: colors.text, fontSize: buttonFont),
+                  ),
                 ),
               ],
             ),

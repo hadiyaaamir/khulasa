@@ -111,36 +111,29 @@ class OptionsLine extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.only(top: 10, bottom: 25),
-      child: Column(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          // const Divider(color: secondary, thickness: 1.2),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              SpeakIconButton(
-                speakText: speakText,
-                vertPadding: 0,
-                iconSize: iconLarge,
-                iconColor: isDarkMode ? colors.text2 : colors.secondary,
-              ),
-              Row(children: [
-                isSaved
-                    ? DeleteButton(isSummary: false, ss: art as savedArticle)
-                    : SaveButton(
-                        isSummary: false,
-                        ss: savedArticle(
-                            art: art,
-                            savedOn: DateTime.now(),
-                            email: user.email),
-                      ),
-                const SizedBox(width: 10),
-                ShareButton(isRSSFeed: true, content: isSaved ? art.art : art)
-              ]),
-            ],
+          SpeakIconButton(
+            speakText: speakText,
+            vertPadding: 0,
+            iconSize: iconLarge,
+            iconColor: isDarkMode ? colors.text2 : colors.secondary,
           ),
-          // const Divider(color: secondary, thickness: 1.2),
+          Row(children: [
+            isSaved
+                ? DeleteButton(isSummary: false, ss: art as savedArticle)
+                : SaveButton(
+                    isSummary: false,
+                    ss: savedArticle(
+                        art: art, savedOn: DateTime.now(), email: user.email),
+                  ),
+            const SizedBox(width: 10),
+            ShareButton(isRSSFeed: true, content: isSaved ? art.art : art)
+          ]),
         ],
       ),
+      // const Divider(color: secondary, thickness: 1.2),
     );
   }
 }

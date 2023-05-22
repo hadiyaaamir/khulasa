@@ -13,7 +13,7 @@ import 'package:khulasa/Views/Settings/changePassword.dart';
 import 'package:khulasa/Views/Settings/settingBtn.dart';
 import 'package:khulasa/Views/Widgets/NavBar/customAppBar.dart';
 import 'package:khulasa/Views/Widgets/button.dart';
-import 'package:khulasa/Views/Widgets/labelIcon.dart';
+import 'package:khulasa/Views/Widgets/IconButtons/labelIcon.dart';
 import 'package:khulasa/Views/Widgets/textfield.dart';
 import 'package:khulasa/constants/colors.dart';
 import 'package:khulasa/constants/sizes.dart';
@@ -185,6 +185,14 @@ class _PersonalState extends State<Personal> {
                           final FormState form =
                               _formKey.currentState as FormState;
                           if (form.validate()) {
+                            //only update if change
+                            if (user.firstName != _firstNameController.text ||
+                                user.lastName != _lastNameController.text) {
+                              await context.read<UserController>().updateName(
+                                  _firstNameController.text,
+                                  _lastNameController.text);
+                            }
+
                             setState(() => isEditing = false);
                           }
                         },

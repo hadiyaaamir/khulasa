@@ -8,6 +8,7 @@ import 'package:khulasa/Controllers/HelperFunctions/navigation.dart';
 import 'package:khulasa/Controllers/userController.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Models/user.dart';
+import 'package:khulasa/Views/Entrance/homePage.dart';
 import 'package:khulasa/Views/Entrance/option.dart';
 import 'package:khulasa/Views/Widgets/NavBar/customAppBar.dart';
 import 'package:khulasa/Views/Widgets/button.dart';
@@ -72,12 +73,15 @@ class _VerifyEmailState extends State<VerifyEmail> {
 
     if (isEmailVerified) {
       timer?.cancel();
-      var setuser = await appUser.getFromDB(user!.email!);
+      // var setuser = await appUser.getFromDB(user!.email!);
 
-      context.read<UserController>().currentUser = setuser;
-      context.read<UserController>().getUserArticles();
-      context.read<UserController>().getUserSummaries();
-      Navigation().navigationReplace(context, Option());
+      // context.read<UserController>().currentUser = setuser;
+      // context.read<UserController>().getUserArticles();
+      // context.read<UserController>().getUserSummaries();
+
+      context.read<UserController>().saveUserInfo(user!.email!);
+
+      Navigation().navigationReplace(context, HomePage());
     }
   }
 

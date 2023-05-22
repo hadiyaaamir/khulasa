@@ -12,7 +12,22 @@ class WebScraping {
   Future<article> getArticleFromLink({
     required String source,
     required String link,
+    bool isLinkSummary = false,
+    bool isEnglish = true,
   }) async {
+    int index = sources.indexWhere((element) => element.source == source);
+
+    if (isLinkSummary && index == -1) {
+      return article(
+        title:
+            "Please make sure your link is correct and belongs to one of our approved news sources.",
+        summary: "error",
+        content: "List of Approved Sources: \n"
+            "${NewsSource.getNamesList(isEnglish)}",
+        date: DateTime.now(),
+      );
+    }
+
     // api call
     final response = await http.Client()
         .get(Uri.parse(link), headers: {'User-Agent': 'Mozilla/5.0'});
@@ -21,7 +36,7 @@ class WebScraping {
       var document = parser.parse(response.body);
       try {
         //Scraping the first article title
-        int index = sources.indexWhere((element) => element.source == source);
+
         String title = index != -1 ? sources[index].getTitle(document) : "";
         String content = index != -1 ? sources[index].getArticle(document) : "";
         DateTime date =
@@ -37,7 +52,7 @@ class WebScraping {
       } catch (e) {
         return article(
           title: "",
-          summary: "",
+          summary: "error",
           content: 'Source does not match the link address.',
           // date: "",
           date: DateTime.now(),
@@ -46,7 +61,7 @@ class WebScraping {
     } else {
       return article(
         title: "",
-        summary: "",
+        summary: "error",
         content: 'error ${response.statusCode}',
         // date: "",
         date: DateTime.now(),

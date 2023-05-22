@@ -1,5 +1,6 @@
 import 'package:html/dom.dart';
 import 'package:khulasa/Controllers/Backend/dateFormat.dart';
+import 'package:khulasa/constants/sources.dart';
 
 class NewsSource {
   String source;
@@ -179,6 +180,21 @@ class NewsSource {
       return webLink + arr[1];
     }
     return l;
+  }
+
+  static String getSourceFromLink(String l) {
+    for (var i = 0; i < sources.length; i++) {
+      if (sources[i].isArticleLink(l)) return sources[i].source;
+    }
+    return '';
+  }
+
+  static String getNamesList(bool isEnglish) {
+    String s = "";
+    for (var source in sources) {
+      s += "${isEnglish ? source.source : source.sourceUrdu}\n";
+    }
+    return s;
   }
 
   @override

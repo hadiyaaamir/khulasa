@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Models/savedSummary.dart';
 import 'package:khulasa/Models/summary.dart';
@@ -11,7 +12,7 @@ class appUser {
     this.firstName = "",
     this.lastName = "",
     this.email = "",
-    this.darkMode = false,
+    this.darkMode = true,
     this.english = true,
     this.isLoggedIn = true,
     this.colors = 'green',

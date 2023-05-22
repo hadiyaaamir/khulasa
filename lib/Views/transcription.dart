@@ -1,6 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:khulasa/Controllers/HelperFunctions/navigation.dart';
+import 'package:khulasa/Views/gpt2.dart';
+import 'package:khulasa/constants/api.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'package:dart_openai/openai.dart';
@@ -16,8 +19,8 @@ class Transcription extends StatefulWidget {
 class _TranscriptionState extends State<Transcription> {
   @override
   Widget build(BuildContext context) {
-    String tran = '';
-    OpenAI.apiKey = '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';
+    var tran = '';
+    OpenAI.apiKey = Chatgptapi;
     TextEditingController textController = TextEditingController();
     return Scaffold(
       body: Container(
@@ -47,17 +50,18 @@ class _TranscriptionState extends State<Transcription> {
                 yt.close();
 
                 OpenAIAudioModel translation =
-                    await OpenAI.instance.audio.createTranslation(
+                    await OpenAI.instance.audio.createTranscription(
                   file: file,
                   model: "whisper-1",
-                  responseFormat: OpenAIAudioResponseFormat.text,
+                  responseFormat: OpenAIAudioResponseFormat.json,
                 );
+                print(translation);
                 setState(() {
                   tran = translation.text;
                 });
+                Navigation().navigation(context,  Chatgpt(transcription: tran,));
               },
-              child: Text("Get audio")),
-          Text("Translation" + tran)
+              child: const Text("Get audio")),
         ],
       )),
     );

@@ -1,5 +1,3 @@
-String apiUrl = "https://khulasa.pythonanywhere.com";
-
 //summary
 String summaryType1 = "summa";
 String summaryType2 = "apna";

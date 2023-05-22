@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:khulasa/Models/summary.dart';
-import 'package:khulasa/constants/api.dart';
+import 'package:khulasa/constants/apiKeys.dart';
 import 'package:http/http.dart' as http;
 
 class Api {
@@ -10,7 +10,7 @@ class Api {
       {required String algo,
       required String text,
       required double ratio}) async {
-    var url = Uri.parse("${apiUrl}/api");
+    var url = Uri.parse("$apiUrl/api");
     final headers = {'Content-Type': 'application/json'};
     var response = await http.post(
       url,
@@ -27,7 +27,7 @@ class Api {
 
   //get category
   Future<String> getCategory(String text) async {
-    var url = Uri.parse("${apiUrl}/category");
+    var url = Uri.parse("$apiUrl/category");
     final headers = {'Content-Type': 'application/json'};
     var response = await http.post(
       url,

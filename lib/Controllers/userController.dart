@@ -6,6 +6,7 @@ import 'package:khulasa/Controllers/HelperFunctions/navigation.dart';
 import 'package:khulasa/Models/article.dart';
 import 'package:khulasa/Models/savedArticle.dart';
 import 'package:khulasa/Models/savedSummary.dart';
+import 'package:khulasa/Models/savedTranscript.dart';
 import 'package:khulasa/Views/Entrance/login.dart';
 import 'package:khulasa/Views/RSS/article.dart';
 
@@ -35,6 +36,14 @@ class UserController extends ChangeNotifier {
   List<savedArticle> get savdArticles => _savdArticle;
   set savdArticles(List<savedArticle> ss) {
     _savdArticle = ss;
+    notifyListeners();
+  }
+
+  //list of saved transcriptions
+  List<savedTranscript> _savdTranscripts = [];
+  List<savedTranscript> get savdTranscripts => _savdTranscripts;
+  set savdTranscripts(List<savedTranscript> ss) {
+    _savdTranscripts = ss;
     notifyListeners();
   }
 
@@ -87,22 +96,28 @@ class UserController extends ChangeNotifier {
       UserCredential uc = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: e, password: password);
 
+      saveUserInfo(e);
       // User? us = uc.user;
       // print('us: $us');
 
-      var user = await appUser.getFromDB(e);
-      currentUser = user;
-      print('in function: current user is $currentUser');
-      notifyListeners();
-
-      getUserArticles();
-      getUserSummaries();
       //   notifyListeners();
       return true;
     } catch (e) {
       print(e);
       return false;
     }
+  }
+
+  //set User Info
+  saveUserInfo(String email) async {
+    var user = await appUser.getFromDB(email);
+    currentUser = user;
+    // print('in function: current user is $currentUser');
+    notifyListeners();
+
+    getUserArticles();
+    getUserSummaries();
+    getUserTranscriptions();
   }
 
   //sign out
@@ -192,6 +207,13 @@ class UserController extends ChangeNotifier {
     sum.removeFromDB();
   }
 
+  getUserSummaries() async {
+    List<savedSummary> ss =
+        await savedSummary.getSummariesFromDB(_currentUser.email);
+    savdSummary = ss;
+    notifyListeners();
+  }
+
   // saved article functions
 
   addArticle(savedArticle art) {
@@ -213,10 +235,25 @@ class UserController extends ChangeNotifier {
     notifyListeners();
   }
 
-  getUserSummaries() async {
-    List<savedSummary> ss =
-        await savedSummary.getSummariesFromDB(_currentUser.email);
-    savdSummary = ss;
+  //saved transcription functions
+
+  addTranscription(savedTranscript t) {
+    savdTranscripts.add(t);
+    notifyListeners();
+    t.addToDB();
+    // art.addToDB();
+  }
+
+  removeTranscription(savedTranscript t) {
+    savdTranscripts.remove(t);
+    notifyListeners();
+    t.removeFromDB();
+  }
+
+  getUserTranscriptions() async {
+    List<savedTranscript> st =
+        await savedTranscript.getTranscriptsFromDB(_currentUser.email);
+    savdTranscripts = st;
     notifyListeners();
   }
 }

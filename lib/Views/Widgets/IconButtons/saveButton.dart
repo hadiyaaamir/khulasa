@@ -9,9 +9,12 @@ class SaveButton extends StatelessWidget {
   SaveButton({
     Key? key,
     required this.isSummary,
+    this.isTranscript = false,
     required this.ss,
   }) : super(key: key);
+
   final bool isSummary;
+  final bool isTranscript;
   var ss;
 
   @override
@@ -21,8 +24,11 @@ class SaveButton extends StatelessWidget {
       label: "Save",
       onPress: () {
         isSummary
-            ? showSummarySavePopup(context, ss)
-            : context.read<UserController>().addArticle(ss as savedArticle);
+            ? showSummarySavePopup(context: context, ss: ss)
+            : isTranscript
+                ? showSummarySavePopup(
+                    context: context, ss: ss, isSummary: false)
+                : context.read<UserController>().addArticle(ss as savedArticle);
         // UserController().addSummaryDB(isSummary, ss);
         // print("Save summary/article" + ss.email);
       },

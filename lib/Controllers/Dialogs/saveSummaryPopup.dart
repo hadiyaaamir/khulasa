@@ -5,14 +5,17 @@ import 'package:khulasa/Controllers/HelperFunctions/navigation.dart';
 import 'package:khulasa/Controllers/userController.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Models/savedSummary.dart';
+import 'package:khulasa/Models/savedTranscript.dart';
 import 'package:khulasa/Views/Widgets/button.dart';
 import 'package:khulasa/Views/Widgets/textfield.dart';
 import 'package:khulasa/constants/sizes.dart';
 import 'package:provider/provider.dart';
 
-Future<bool> showSummarySavePopup(context, var ss) async {
+Future<bool> showSummarySavePopup(
+    {context, var ss, bool isSummary = true}) async {
   TextEditingController titleController = TextEditingController();
-  titleController.text = "Summary " + DateTime.now().toString();
+  titleController.text =
+      isSummary ? "Summary ${DateTime.now()}" : "Transcript ${DateTime.now()}";
 
   return await showDialog(
       context: context,
@@ -27,7 +30,13 @@ Future<bool> showSummarySavePopup(context, var ss) async {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                isEnglish ? "Save Summary" : "Save Urdu",
+                isSummary
+                    ? isEnglish
+                        ? "Save Summary"
+                        : "Save Urdu"
+                    : isEnglish
+                        ? "Save Transcript"
+                        : "Save Urdu",
                 style: TextStyle(color: colors.text, fontSize: headingFont),
               ),
               const SizedBox(height: 20),
@@ -63,10 +72,19 @@ Future<bool> showSummarySavePopup(context, var ss) async {
                         paddingHor: 0,
                         height: 40,
                         onPress: () {
-                          (ss as savedSummary).title = titleController.text;
-                          context
-                              .read<UserController>()
-                              .addSummary(ss as savedSummary);
+                          if (isSummary) {
+                            (ss as savedSummary).title = titleController.text;
+                            context
+                                .read<UserController>()
+                                .addSummary(ss as savedSummary);
+                          } else {
+                            (ss as savedTranscript).title =
+                                titleController.text;
+                            context
+                                .read<UserController>()
+                                .addTranscription(ss as savedTranscript);
+                          }
+
                           Navigation().navigationPop(context);
                         }),
                   ),

@@ -105,10 +105,12 @@ class _MyHomePageState extends State<MyHomePage> {
     var currUser = FirebaseAuth.instance.currentUser;
     print('current User: $currUser');
     if (currUser != null) {
-      var user = await appUser.getFromDB(currUser.email!);
-      context.read<UserController>().currentUser = user;
-      context.read<UserController>().getUserArticles();
-      context.read<UserController>().getUserSummaries();
+      // var user = await appUser.getFromDB(currUser.email!);
+      // context.read<UserController>().currentUser = user;
+      // context.read<UserController>().getUserArticles();
+      // context.read<UserController>().getUserSummaries();
+
+      context.read<UserController>().saveUserInfo(currUser.email!);
 
       Navigation().navigationReplace(context,
           currUser.emailVerified ? const HomePage() : const VerifyEmail());

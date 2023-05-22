@@ -9,9 +9,11 @@ class DeleteButton extends StatelessWidget {
   DeleteButton({
     Key? key,
     required this.isSummary,
+    this.isTranscript = false,
     this.ss,
   }) : super(key: key);
   final bool isSummary;
+  final bool isTranscript;
   var ss;
   @override
   Widget build(BuildContext context) {
@@ -21,9 +23,19 @@ class DeleteButton extends StatelessWidget {
       onPress: () {
         isSummary
             ? context.read<UserController>().removeSummary(ss)
-            : context.read<UserController>().removeArticle(ss);
+            : isTranscript
+                ? context.read<UserController>().removeTranscription(ss)
+                : context.read<UserController>().removeArticle(ss);
         Navigation().navigationReplace(
-            context, SavedMain(initIndex: isSummary ? 0 : 1));
+          context,
+          SavedMain(
+            initIndex: isSummary
+                ? 0
+                : isTranscript
+                    ? 2
+                    : 1,
+          ),
+        );
       },
     );
   }

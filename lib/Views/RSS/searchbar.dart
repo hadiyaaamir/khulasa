@@ -5,8 +5,8 @@ import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/constants/sizes.dart';
 import 'package:provider/provider.dart';
 
-class SearchBar extends StatefulWidget {
-  SearchBar({
+class RSSSearchBar extends StatefulWidget {
+  RSSSearchBar({
     super.key,
     required this.setArtList,
     required this.allArtList,
@@ -18,10 +18,10 @@ class SearchBar extends StatefulWidget {
   final Function(int) setItemCount;
 
   @override
-  State<SearchBar> createState() => _SearchBarState();
+  State<RSSSearchBar> createState() => _RSSSearchBarState();
 }
 
-class _SearchBarState extends State<SearchBar> {
+class _RSSSearchBarState extends State<RSSSearchBar> {
   // List allArtList;
   TextEditingController _searchController = TextEditingController();
   List artList = [];

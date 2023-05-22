@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:khulasa/Controllers/HelperFunctions/navigation.dart';
 import 'package:khulasa/Views/gpt2.dart';
-import 'package:khulasa/constants/api.dart';
+import 'package:khulasa/constants/apiKeys.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'package:dart_openai/openai.dart';
@@ -59,7 +59,11 @@ class _TranscriptionState extends State<Transcription> {
                 setState(() {
                   tran = translation.text;
                 });
-                Navigation().navigation(context,  Chatgpt(transcription: tran,));
+                Navigation().navigation(
+                    context,
+                    Chatgpt(
+                      transcription: tran,
+                    ));
               },
               child: const Text("Get audio")),
         ],

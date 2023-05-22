@@ -1,8 +1,6 @@
 import 'package:dart_openai/openai.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:khulasa/constants/api.dart';
+import 'package:khulasa/constants/apiKeys.dart';
 
 class Chatgpt extends StatefulWidget {
   const Chatgpt({super.key, required this.transcription});
@@ -41,28 +39,27 @@ class _ChatgptState extends State<Chatgpt> {
                       }
                     }
 
-                  for (var message  in messages) {
-                    OpenAIChatCompletionModel chatCompletion =
-                        await OpenAI.instance.chat.create(
-                      model: "gpt-3.5-turbo",
-                      messages: [
-                        OpenAIChatCompletionChoiceMessageModel(
-                          content:
-                              "Write this in proper urdu format with punctuations. Use urdu letters and not roma urdu" +
-                               message,
-                          role: OpenAIChatMessageRole.user,
-                        ),
-                      ],
-                    );
-                    print(chatCompletion.toString());
-                    setState(() {
-                      text +=
-                          chatCompletion.choices[0].message.content.toString() + " ";
-                    });
-                 
-                  }
-                   },
-                   
+                    for (var message in messages) {
+                      OpenAIChatCompletionModel chatCompletion =
+                          await OpenAI.instance.chat.create(
+                        model: "gpt-3.5-turbo",
+                        messages: [
+                          OpenAIChatCompletionChoiceMessageModel(
+                            content:
+                                "Write this in proper urdu format with punctuations. Use urdu letters and not roma urdu" +
+                                    message,
+                            role: OpenAIChatMessageRole.user,
+                          ),
+                        ],
+                      );
+                      print(chatCompletion.toString());
+                      setState(() {
+                        text += chatCompletion.choices[0].message.content
+                                .toString() +
+                            " ";
+                      });
+                    }
+                  },
                   child: Text("Send")),
               Text("Result: " + text)
             ],

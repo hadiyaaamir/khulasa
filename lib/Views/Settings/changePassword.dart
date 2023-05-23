@@ -1,12 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:khulasa/Controllers/Config/darkMode.dart';
 import 'package:khulasa/Controllers/Config/languageprovider.dart';
 import 'package:khulasa/Controllers/HelperFunctions/navigation.dart';
 import 'package:khulasa/Controllers/userController.dart';
 import 'package:khulasa/Models/colorTheme.dart';
-import 'package:khulasa/Models/user.dart';
 import 'package:khulasa/Views/Widgets/NavBar/customAppBar.dart';
 import 'package:khulasa/Views/Widgets/button.dart';
 import 'package:khulasa/Views/Widgets/textfield.dart';
@@ -38,7 +35,7 @@ class _ChangePasswordState extends State<ChangePassword> {
     return Scaffold(
       backgroundColor: colors.background,
       appBar: CustomAppBar(
-        title: isEnglish ? 'Change Password' : '',
+        title: isEnglish ? 'Change Password' : 'پاس ورڈ تبدیل ',
       ),
       body: Directionality(
         textDirection: isEnglish ? TextDirection.ltr : TextDirection.rtl,
@@ -65,7 +62,7 @@ class _ChangePasswordState extends State<ChangePassword> {
 
                   //old password textfield
                   textField(
-                    label: isEnglish ? "Old Password" : "",
+                    label: isEnglish ? "Old Password" : "پرانا پاس ورڈ",
                     controller: _oldPasswordController,
                     password: true,
                     validate: (value) {
@@ -75,13 +72,15 @@ class _ChangePasswordState extends State<ChangePassword> {
 
                   //new password textfield
                   textField(
-                    label: isEnglish ? "New Password" : "",
+                    label: isEnglish ? "New Password" : "نیا پاس ورڈ",
                     controller: _newPasswordController,
                     password: true,
                     validate: (value) {
                       if (value != null) {
                         if (value.length < 8) {
-                          return 'Password must be atleast 8 characters long';
+                          return isEnglish
+                              ? 'Password must be atleast 8 characters long'
+                              : 'پاس ورڈ کم از کم 8 حروف کا ہونا ضروری ہے';
                         }
                       }
                       return null;
@@ -89,13 +88,15 @@ class _ChangePasswordState extends State<ChangePassword> {
                   ),
                   //confirm password textfield
                   textField(
-                    label: isEnglish ? "Confirm Password" : "",
+                    label: isEnglish ? "Confirm Password" : "پاس ورڈ کی تصدیق",
                     controller: _confirmPasswordController,
                     password: true,
                     validate: (value) {
                       if (value != null) {
                         if (value != _newPasswordController.text) {
-                          return 'Passwords do not match';
+                          return isEnglish
+                              ? 'Passwords do not match'
+                              : 'پاس ورڈ مماثل نہیں ہیں';
                         }
                       }
                       return null;
@@ -103,7 +104,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                   ),
                   //save button
                   Btn(
-                    label: isEnglish ? "CHANGE PASSWORD" : "",
+                    label: isEnglish ? "CHANGE PASSWORD" : "پاس ورڈ تبدیل",
                     onPress: () async {
                       final FormState form = _formKey.currentState as FormState;
                       if (form.validate()) {
@@ -117,8 +118,9 @@ class _ChangePasswordState extends State<ChangePassword> {
                           if (value) {
                             Navigation().navigationPop(context);
                           } else {
-                            setState(
-                                () => passwordError = "Incorrect Password");
+                            setState(() => passwordError = isEnglish
+                                ? "Incorrect Password"
+                                : 'غلط پاس ورڈ');
                           }
                         });
                       }

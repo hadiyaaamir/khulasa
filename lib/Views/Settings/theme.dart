@@ -18,7 +18,6 @@ class _ThemeSettingState extends State<ThemeSetting> {
   @override
   Widget build(BuildContext context) {
     ColorTheme colors = context.watch<DarkMode>().mode;
-    bool isDarkMode = context.watch<DarkMode>().isDarkMode;
 
     Map<String, ColorTheme> themes = context.watch<DarkMode>().getThemes();
 
@@ -30,7 +29,8 @@ class _ThemeSettingState extends State<ThemeSetting> {
       textDirection: isEnglish ? TextDirection.ltr : TextDirection.rtl,
       child: Scaffold(
         backgroundColor: colors.background,
-        appBar: CustomAppBar(title: 'Theme Settings'),
+        appBar: CustomAppBar(
+            title: isEnglish ? 'Theme Settings' : 'تھیم کی ترتیبات'),
         body: ListView.builder(
           padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
           itemCount: keys.length,

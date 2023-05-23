@@ -1,4 +1,3 @@
-import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +36,6 @@ class _PersonalState extends State<Personal> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     appUser user = context.read<UserController>().currentUser;
     _emailController.text = user.email;
@@ -55,12 +53,12 @@ class _PersonalState extends State<Personal> {
     return Scaffold(
       backgroundColor: colors.background,
       appBar: CustomAppBar(
-        title: isEnglish ? 'Personal Details' : '',
+        title: isEnglish ? 'Personal Details' : 'ذاتی تفصیلات',
         trailing: Padding(
-          padding: EdgeInsets.only(top: 5, right: 20),
+          padding: const EdgeInsets.only(top: 5, right: 20),
           child: LabelIcon(
             icon: Icons.edit,
-            label: 'Edit',
+            label: isEnglish ? 'Edit' : 'ترمیم',
             color: isEditing ? Colors.transparent : colors.text,
             onPress: () => setState(() => isEditing = true),
           ),
@@ -94,7 +92,7 @@ class _PersonalState extends State<Personal> {
                       ),
                       const SizedBox(height: 5),
                       Text(
-                        'Member since ${DateFormatter().formatDate(FirebaseAuth.instance.currentUser!.metadata.creationTime!, isEnglish)}',
+                        '${isEnglish ? 'Member since ' : 'شمولیت کی تاریخ: '}${DateFormatter().formatDate(FirebaseAuth.instance.currentUser!.metadata.creationTime!, isEnglish)}',
                         style: TextStyle(color: colors.text2),
                       ),
                     ],
@@ -112,29 +110,33 @@ class _PersonalState extends State<Personal> {
 
                     //first name textfield
                     textField(
-                      label: isEnglish ? "First Name" : "",
+                      label: isEnglish ? "First Name" : "پہلا نام",
                       controller: _firstNameController,
                       isEnabled: isEditing,
                       validate: (value) {
                         return (value == null || value.isEmpty)
-                            ? 'Invalid First Name'
+                            ? isEnglish
+                                ? 'Invalid First Name'
+                                : 'غلط پہلا نام'
                             : null;
                       },
                     ),
                     //last name textfield
                     textField(
-                      label: isEnglish ? "Last Name" : "",
+                      label: isEnglish ? "Last Name" : "آخری نام",
                       controller: _lastNameController,
                       isEnabled: isEditing,
                       validate: (value) {
                         return (value == null || value.isEmpty)
-                            ? 'Invalid Last Name'
+                            ? isEnglish
+                                ? 'Invalid Last Name'
+                                : 'غلط آخری نام'
                             : null;
                       },
                     ),
                     //email textfield
                     textField(
-                      label: isEnglish ? "Email" : "",
+                      label: isEnglish ? "Email" : "ای میل",
                       controller: _emailController,
                       isEnabled: false,
                     ),
@@ -153,8 +155,9 @@ class _PersonalState extends State<Personal> {
                               top: 5),
                           child: RichText(
                             text: TextSpan(
-                              text:
-                                  isEnglish ? 'Change Password' : 'urdu thing',
+                              text: isEnglish
+                                  ? 'Change Password'
+                                  : 'پاس ورڈ تبدیل کریں',
                               style: TextStyle(
                                   color: Colors.transparent,
                                   fontWeight: isDarkMode
@@ -180,7 +183,7 @@ class _PersonalState extends State<Personal> {
 
                       //save button
                       Btn(
-                        label: isEnglish ? "SAVE" : "",
+                        label: isEnglish ? "SAVE" : "محفوظ کریں",
                         onPress: () async {
                           final FormState form =
                               _formKey.currentState as FormState;

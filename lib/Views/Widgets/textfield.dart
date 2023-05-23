@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:khulasa/Controllers/Config/darkMode.dart';
+import 'package:khulasa/Controllers/Config/languageprovider.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:provider/provider.dart';
 
@@ -47,6 +48,7 @@ class _textFieldState extends State<textField> {
   @override
   Widget build(BuildContext context) {
     ColorTheme colors = context.watch<DarkMode>().mode;
+    bool isEnglish = context.watch<Language>().isEnglish;
 
     return Padding(
       padding: EdgeInsets.symmetric(
@@ -89,7 +91,9 @@ class _textFieldState extends State<textField> {
         },
         validator: (value) {
           if (!widget.allowEmpty && value != null && value.isEmpty) {
-            return "Field cannot be empty";
+            return isEnglish
+                ? "Field cannot be empty"
+                : "خانہ خالی نہیں ہو سکتا";
           }
           return widget.validate == null ? null : widget.validate!(value);
         },

@@ -4,7 +4,6 @@ import 'package:khulasa/Controllers/Config/languageprovider.dart';
 import 'package:khulasa/Controllers/HelperFunctions/navigation.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Views/Entrance/homePage.dart';
-import 'package:khulasa/Views/Settings/font.dart';
 import 'package:khulasa/Views/Settings/language.dart';
 import 'package:khulasa/Views/Settings/mode.dart';
 import 'package:khulasa/Views/Settings/personal.dart';
@@ -24,18 +23,19 @@ class Settings extends StatefulWidget {
 class _SettingsState extends State<Settings> {
   List<SettingsOption> options = const [
     SettingsOption(
-        title: 'Personal Details', titleUrdu: 'اردو', navTo: Personal()),
+        title: 'Personal Details',
+        titleUrdu: 'ذاتی تفصیلات',
+        navTo: Personal()),
     SettingsOption(
-        title: 'Language', titleUrdu: 'اردو', navTo: LanguageSetting()),
-    SettingsOption(title: 'Theme', titleUrdu: 'اردو', navTo: ThemeSetting()),
-    SettingsOption(title: 'Mode', titleUrdu: 'اردو', navTo: ModeSetting()),
+        title: 'Language', titleUrdu: 'زبان', navTo: LanguageSetting()),
+    SettingsOption(title: 'Theme', titleUrdu: 'تھیم', navTo: ThemeSetting()),
+    SettingsOption(title: 'Mode', titleUrdu: 'موڈ', navTo: ModeSetting()),
     // SettingsOption(title: 'Font', titleUrdu: 'اردو', navTo: FontSetting()),
   ];
 
   @override
   Widget build(BuildContext context) {
     ColorTheme colors = context.watch<DarkMode>().mode;
-    bool isDarkMode = context.watch<DarkMode>().isDarkMode;
     bool isEnglish = context.watch<Language>().isEnglish;
 
     return WillPopScope(
@@ -45,7 +45,7 @@ class _SettingsState extends State<Settings> {
         textDirection: isEnglish ? TextDirection.ltr : TextDirection.rtl,
         child: Scaffold(
           backgroundColor: colors.background,
-          appBar: CustomAppBar(title: isEnglish ? 'Settings' : ''),
+          appBar: CustomAppBar(title: isEnglish ? 'Settings' : 'ترتیبات'),
           drawer: const Drawer(child: Draw()),
           body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),

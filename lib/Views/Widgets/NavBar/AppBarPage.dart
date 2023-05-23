@@ -79,7 +79,7 @@ class _DrawState extends State<Draw> {
                       Navigation()
                           .navigationReplace(context, const Transcription());
                     },
-                    icon: Icons.mic_none_outlined,
+                    icon: Icons.video_collection_outlined,
                   ),
                   DrawerOption(
                     text: isEnglish ? 'Saved' : 'محفوظ شدہ اشیاء',

@@ -7,9 +7,8 @@ import 'package:khulasa/Controllers/Config/languageprovider.dart';
 import 'package:khulasa/Controllers/HelperFunctions/navigation.dart';
 import 'package:khulasa/Controllers/userController.dart';
 import 'package:khulasa/Models/colorTheme.dart';
-import 'package:khulasa/Models/user.dart';
 import 'package:khulasa/Views/Entrance/homePage.dart';
-import 'package:khulasa/Views/Entrance/option.dart';
+import 'package:khulasa/Views/Entrance/login.dart';
 import 'package:khulasa/Views/Widgets/NavBar/customAppBar.dart';
 import 'package:khulasa/Views/Widgets/button.dart';
 import 'package:khulasa/constants/sizes.dart';
@@ -28,7 +27,6 @@ class _VerifyEmailState extends State<VerifyEmail> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
 
@@ -43,7 +41,6 @@ class _VerifyEmailState extends State<VerifyEmail> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     timer?.cancel();
     super.dispose();
   }
@@ -91,43 +88,54 @@ class _VerifyEmailState extends State<VerifyEmail> {
     bool isEnglish = context.watch<Language>().isEnglish;
     return Directionality(
       textDirection: isEnglish ? TextDirection.ltr : TextDirection.rtl,
-      child: Scaffold(
-        backgroundColor: colors.background,
-        appBar: CustomAppBar(title: isEnglish ? "Verify Email" : ""),
-        body: Center(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 40),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (isEmailVerified) ...[
-                  Text(
-                    isEnglish ? 'Email Verified!' : "",
-                    style: TextStyle(color: colors.text, fontSize: buttonFont),
-                  ),
+      child: WillPopScope(
+        onWillPop: () async =>
+            Navigation().navigationReplace(context, const Login()),
+        child: Scaffold(
+          backgroundColor: colors.background,
+          appBar: CustomAppBar(
+            title: isEnglish ? "Verify Email" : "ای میل کی تصدیق",
+            toLogin: true,
+          ),
+          body: Center(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 40),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (isEmailVerified) ...[
+                    Text(
+                      isEnglish ? 'Email Verified!' : "ای میل تصدیق شد!",
+                      style:
+                          TextStyle(color: colors.text, fontSize: buttonFont),
+                    ),
+                  ],
+                  if (!isEmailVerified) ...[
+                    Text(
+                      isEnglish
+                          ? "Verify your Email to proceed"
+                          : "اپنے ای میل کی تصدیق کریں",
+                      style: TextStyle(
+                          color: colors.text,
+                          fontSize: buttonFont,
+                          fontWeight: FontWeight.w600),
+                    ),
+                    const SizedBox(height: 15),
+                    Text(
+                      isEnglish
+                          ? "A verification email has been sent to your account."
+                          : "ایک تصدیقی ای میل آپ کے اکاؤنٹ پر بھیجی گئی ہے۔",
+                      style: TextStyle(color: colors.text),
+                    ),
+                    Btn(
+                        label:
+                            isEnglish ? 'Resend Email' : "ای میل دوبارہ بھیجیں",
+                        paddingHor: 0,
+                        onPress: () => sendVerificationEmail()),
+                  ],
                 ],
-                if (!isEmailVerified) ...[
-                  Text(
-                    isEnglish ? "Verify your Email to proceed" : "",
-                    style: TextStyle(
-                        color: colors.text,
-                        fontSize: buttonFont,
-                        fontWeight: FontWeight.w600),
-                  ),
-                  const SizedBox(height: 15),
-                  Text(
-                    isEnglish
-                        ? "A verification email has been sent to your account."
-                        : "",
-                    style: TextStyle(color: colors.text),
-                  ),
-                  Btn(
-                      label: isEnglish ? 'Resend Email' : "",
-                      paddingHor: 0,
-                      onPress: () => sendVerificationEmail()),
-                ],
-              ],
+              ),
             ),
           ),
         ),

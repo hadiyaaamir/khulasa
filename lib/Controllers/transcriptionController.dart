@@ -45,21 +45,20 @@ class TranscriptionController extends ChangeNotifier {
 
         //get summary
         await Api()
-            .generateSummary(algo: summaryType1, ratio: 0.25, text: result)
+            .generateSummary(algo: summaryType1, ratio: 0.2, text: result)
             .then(
           (value) async {
             transcript.summary = value.summary;
 
             if (value.summary.isEmpty) {
               await Api()
-                  .generateSummary(
-                      algo: summaryType1, ratio: 0.35, text: result)
+                  .generateSummary(algo: summaryType1, ratio: 0.3, text: result)
                   .then((value) async {
                 transcript.summary = value.summary;
                 if (value.summary.isEmpty) {
                   await Api()
                       .generateSummary(
-                          algo: summaryType1, ratio: 0.45, text: result)
+                          algo: summaryType1, ratio: 0.4, text: result)
                       .then((value) => transcript.summary =
                           value.summary.isNotEmpty ? value.summary : result);
                 }

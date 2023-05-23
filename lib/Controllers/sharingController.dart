@@ -4,6 +4,7 @@ import 'package:flutter_share_me/flutter_share_me.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:khulasa/Models/article.dart';
 import 'package:khulasa/Models/summary.dart';
+import 'package:khulasa/Models/transcript.dart';
 
 class SharingController {
   FlutterShareMe fsm = FlutterShareMe();
@@ -11,6 +12,7 @@ class SharingController {
   shareOnSocial({
     required String social,
     isRSSFeed = false,
+    isTranscript = false,
     required var content,
     bool onlyLink = false,
     bool isAdvert = true,
@@ -20,18 +22,19 @@ class SharingController {
     isRSSFeed
         ? message = getRSSMessage(
             art: content as article, onlyLink: onlyLink, advert: isAdvert)
-        : message =
-            getSummaryMessage(summary: content as String, advert: isAdvert);
+        : isTranscript
+            ? message = getTranscriptMessage(transcript: content as Transcript)
+            : message =
+                getSummaryMessage(summary: content as String, advert: isAdvert);
 
     switch (social) {
       case 'whatsapp':
         fsm.shareToWhatsApp(msg: message);
         break;
-      case 'facebook':
-        fsm.shareToFacebook(
-            msg: message, url: 'google.com'); //add url to app store later
-        break;
-      case 'instagram':
+      case 'system':
+        fsm.shareToSystem(msg: message);
+        // fsm.shareToFacebook(
+        //     msg: message, url: 'google.com'); //add url to app store later
         break;
       case 'twitter':
         fsm.shareToTwitter(msg: message);
@@ -49,6 +52,18 @@ class SharingController {
         "Khulasa is great for summarising long articles to make them more readable."
         " Here's a summary I just generated: \n\n";
     return advert ? adText + summary : summary;
+  }
+
+  String getTranscriptMessage(
+      {required Transcript transcript, bool advert = true}) {
+    String adText =
+        "Khulasa can be used to transcribe Youtube videos and mp3 files in Urdu."
+        " Here's a transcription I just generated: \n\n";
+
+    String content = "Summary:\n ${transcript.summary}\n\n"
+        "Complete transcription:\n ${transcript.transcription}\n ";
+
+    return advert ? adText + content : content;
   }
 
   String getRSSMessage({

@@ -10,9 +10,15 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_share_me/flutter_share_me.dart';
 
 class ShareOptionsBox extends StatelessWidget {
-  ShareOptionsBox({super.key, required this.isRSSFeed, required this.content});
+  ShareOptionsBox({
+    super.key,
+    required this.isRSSFeed,
+    required this.content,
+    this.isTranscript = false,
+  });
 
   final bool isRSSFeed;
+  final bool isTranscript;
   var content;
 
   @override
@@ -33,9 +39,13 @@ class ShareOptionsBox extends StatelessWidget {
                   ? isEnglish
                       ? 'Share Article'
                       : ''
-                  : isEnglish
-                      ? 'Share Summary'
-                      : '',
+                  : isTranscript
+                      ? isEnglish
+                          ? 'Share Transcription'
+                          : ''
+                      : isEnglish
+                          ? 'Share Summary'
+                          : '',
               style: TextStyle(
                 color: colors.text,
                 fontSize: isEnglish ? headingFont : headingFont + 4,
@@ -53,21 +63,23 @@ class ShareOptionsBox extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
+                  // SharingOption(
+                  //   icon: FontAwesomeIcons.instagram,
+                  //   text: 'Instagram',
+                  //   onPress: () {},
+                  // ),
                   SharingOption(
-                    icon: FontAwesomeIcons.facebook,
-                    text: 'Facebook',
-                    onPress: () async {
+                    icon: FontAwesomeIcons.copy,
+                    text: 'Copy',
+                    onPress: () {
                       SharingController().shareOnSocial(
-                        social: 'facebook',
+                        social: 'copy',
                         content: content,
                         isRSSFeed: isRSSFeed,
+                        isTranscript: isTranscript,
+                        isAdvert: false,
                       );
                     },
-                  ),
-                  SharingOption(
-                    icon: FontAwesomeIcons.instagram,
-                    text: 'Instagram',
-                    onPress: () {},
                   ),
                   SharingOption(
                     icon: FontAwesomeIcons.twitter,
@@ -77,6 +89,7 @@ class ShareOptionsBox extends StatelessWidget {
                         social: 'twitter',
                         content: content,
                         isRSSFeed: isRSSFeed,
+                        isTranscript: isTranscript,
                         onlyLink: true,
                       );
                     },
@@ -89,21 +102,23 @@ class ShareOptionsBox extends StatelessWidget {
                         social: 'whatsapp',
                         content: content,
                         isRSSFeed: isRSSFeed,
+                        isTranscript: isTranscript,
                       );
                     },
                   ),
                   SharingOption(
-                    icon: FontAwesomeIcons.copy,
-                    text: 'Copy',
-                    onPress: () {
+                    icon: Icons.mobile_screen_share,
+                    text: 'Other',
+                    onPress: () async {
                       SharingController().shareOnSocial(
-                        social: 'copy',
+                        social: 'system',
                         content: content,
                         isRSSFeed: isRSSFeed,
-                        isAdvert: false,
+                        isTranscript: isTranscript,
                       );
                     },
                   ),
+
                   // SharingOption(icon: Icons),
                 ],
               ),

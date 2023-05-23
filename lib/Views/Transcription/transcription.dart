@@ -68,7 +68,11 @@ class _TranscriptionState extends State<Transcription> {
                           return ((value == null || value.isEmpty) &&
                                   !fileAttached)
                               ? 'Please enter link or attach a file'
-                              : null;
+                              : !RegExp(r"(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]+)\&?",
+                                          multiLine: true, caseSensitive: true)
+                                      .hasMatch(linkController.text)
+                                  ? 'Please enter a valid YouTube link'
+                                  : null;
                         },
                       ),
                       Btn(

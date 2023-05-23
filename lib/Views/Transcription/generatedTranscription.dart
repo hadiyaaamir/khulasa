@@ -30,7 +30,7 @@ class GeneratedTranscription extends StatelessWidget {
     bool isEnglish = context.watch<Language>().isEnglish;
     bool isDarkMode = context.watch<DarkMode>().isDarkMode;
 
-    print('generated: $user');
+    // print('generated: $user');
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
@@ -71,7 +71,7 @@ class GeneratedTranscription extends StatelessWidget {
                           transcription: transcription,
                           email: user.email,
                         )),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     ShareButton(
                         isRSSFeed: false, content: transcription.transcription),
                   ],

@@ -1,6 +1,7 @@
 // import 'dart:html';
 import 'dart:convert';
 
+import 'package:khulasa/Controllers/Backend/files.dart';
 import 'package:khulasa/Controllers/Config/languageprovider.dart';
 import 'package:pdf_text/pdf_text.dart';
 import 'package:flutter/foundation.dart';
@@ -62,13 +63,14 @@ class _TextSummaryState extends State<TextSummary> {
                       isLoading: true,
                     )
                   : textField(
-                      label: isEnglish ? "Enter text here" : 'اردو',
+                      label:
+                          isEnglish ? "Enter text here" : 'یہاں متن درج کریں',
                       controller: textController,
                       lines: 5,
                       textAlign: TextAlign.right,
                     ),
               Btn(
-                label: isEnglish ? "Attach file" : 'اردو',
+                label: isEnglish ? "Attach file" : 'منسلک کریں',
                 background: colors.secondary,
                 height: 30,
                 width: 130,
@@ -81,19 +83,7 @@ class _TextSummaryState extends State<TextSummary> {
                     scanning = true;
                   });
 
-                  // var result = await ImagePicker()
-                  //     .pickImage(source: ImageSource.gallery);
-
-                  // if (result != null) {
-                  //   imagePicked = result;
-
-                  //   var p = imagePicked.path;
-                  //   extractedText =
-                  //       await TesseractOcr.extractText(p, language: 'urd'
-                  //       );
-                  // }
-
-                  String? extractedText = await getText();
+                  String? extractedText = await Files().getText();
                   extractedText == null
                       ? null
                       : textController.text = extractedText;
@@ -104,7 +94,9 @@ class _TextSummaryState extends State<TextSummary> {
                 },
               ),
               Dropdown(
-                label: isEnglish ? "Summarising Algorithm" : 'اردو',
+                label: isEnglish
+                    ? "Summarising Algorithm"
+                    : 'خلاصہ کنندہ الگورتھم',
                 categories: [summaryChoice1, summaryChoice2],
                 paddingVert: 20,
                 setAlgo: (algorithm) => algo = algorithm,
@@ -113,7 +105,7 @@ class _TextSummaryState extends State<TextSummary> {
                 setSize: (String size) => ratio = getRatio(size),
               ),
               Btn(
-                label: isEnglish ? "GENERATE SUMMARY" : 'اردو',
+                label: isEnglish ? "GENERATE SUMMARY" : 'خلاصہ تشکیل دیں',
                 onPress: () async {
                   final FormState form =
                       _summaryFormKey.currentState as FormState;
@@ -138,41 +130,5 @@ class _TextSummaryState extends State<TextSummary> {
         ),
       ),
     );
-  }
-
-  Future<String?> getText() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: ['jpg', 'pdf', 'png', 'docx', 'txt'],
-    );
-
-    if (result != null) {
-      PlatformFile file = result.files.first;
-      String? p = file.path;
-      //image using flutter tesseract ocr
-      if ((file.extension == 'png' || file.extension == 'jpg') && p != null) {
-        return await FlutterTesseractOcr.extractText(p, language: 'urd+eng');
-      } else if (file.extension == 'pdf' && p != null) {
-        // pdf reader using syncfusion flutter pdf
-        // final ByteData data = await rootBundle.load(p);
-        // PdfDocument document = PdfDocument(
-        //     inputBytes: data.buffer
-        //         .asUint8List(data.offsetInBytes, data.lengthInBytes));
-
-        PDFDoc doc = await PDFDoc.fromPath(p);
-        String text = await doc.text;
-        // List<int> bytes = text.codeUnits;
-        // PdfDocument document = PdfDocument(inputBytes: bytes);
-
-        // return PdfTextExtractor(document).extractText();
-        return doc.text;
-      } else if ((file.extension == 'docx' ||
-              file.extension ==
-                  'txt') && //text or docx file read string using rootbundle
-          p != null) {
-        return await rootBundle.loadString(p);
-      }
-    }
-    return null;
   }
 }

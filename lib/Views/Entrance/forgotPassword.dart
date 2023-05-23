@@ -36,7 +36,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
       textDirection: isEnglish ? TextDirection.ltr : TextDirection.rtl,
       child: Scaffold(
         backgroundColor: colors.background,
-        appBar: CustomAppBar(title: isEnglish ? "Reset Password" : ""),
+        appBar: CustomAppBar(
+            title: isEnglish ? "Reset Password" : "پاس ورڈ دوبارہ ترتیب دیں"),
         body: Center(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 40),

@@ -59,8 +59,8 @@ class _SummaryState extends State<Summary> {
                         labelColor: colors.text,
                         unselectedLabelColor: colors.text2,
                         tabs: [
-                          Tab(text: isEnglish ? 'Text' : 'اردو'),
-                          Tab(text: isEnglish ? 'Link' : 'اردو'),
+                          Tab(text: isEnglish ? 'Text' : 'متن'),
+                          Tab(text: isEnglish ? 'Link' : 'لنک'),
                         ],
                         indicatorColor: colors.text,
                         indicatorWeight: 3,

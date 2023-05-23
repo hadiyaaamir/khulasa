@@ -51,13 +51,15 @@ class _LinkSummaryState extends State<LinkSummary> {
                 //   setAlgo: (source) => website = source,
                 // ),
                 textField(
-                  label: isEnglish ? "Link" : 'اردو',
+                  label: isEnglish ? "Link" : 'لنک',
                   controller: linkController,
                   lines: 1,
                   suffixIcon: LinkInfoButton(),
                 ),
                 Dropdown(
-                  label: isEnglish ? "Summarising Algorithm" : 'اردو',
+                  label: isEnglish
+                      ? "Summarising Algorithm"
+                      : 'خلاصہ کنندہ الگورتھم',
                   categories: [summaryChoice1, summaryChoice2],
                   setAlgo: (algorithm) => algo = algorithm,
                 ),
@@ -65,7 +67,7 @@ class _LinkSummaryState extends State<LinkSummary> {
                   setSize: (String size) => ratio = getRatio(size),
                 ),
                 Btn(
-                    label: isEnglish ? "GENERATE SUMMARY" : 'اردو',
+                    label: isEnglish ? "GENERATE SUMMARY" : 'خلاصہ تشکیل دیں',
                     onPress: () async {
                       final FormState form =
                           _summaryFormKey.currentState as FormState;

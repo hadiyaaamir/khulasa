@@ -43,7 +43,7 @@ class _SummarySizeState extends State<SummarySize> {
               child: Padding(
                 padding: const EdgeInsets.only(left: 10, top: 10),
                 child: Text(
-                  isEnglish ? 'Summary Size' : 'اردو',
+                  isEnglish ? 'Summary Size' : 'خلاصہ کا سائز',
                   style: TextStyle(color: colors.text, fontSize: buttonFont),
                 ),
               ),
@@ -61,7 +61,7 @@ class _SummarySizeState extends State<SummarySize> {
                     fillColor: MaterialStateProperty.all<Color>(colors.text2),
                   ),
                   Text(
-                    isEnglish ? "Short" : 'اردو',
+                    isEnglish ? "Short" : 'مختصر',
                     style: TextStyle(color: colors.text2),
                   )
                 ]),
@@ -75,7 +75,7 @@ class _SummarySizeState extends State<SummarySize> {
                     fillColor: MaterialStateProperty.all<Color>(colors.text2),
                   ),
                   Text(
-                    isEnglish ? "Medium" : 'اردو',
+                    isEnglish ? "Medium" : 'متوسط',
                     style: TextStyle(color: colors.text2),
                   )
                 ]),
@@ -90,7 +90,7 @@ class _SummarySizeState extends State<SummarySize> {
                       fillColor: MaterialStateProperty.all<Color>(colors.text2),
                     ),
                     Text(
-                      isEnglish ? "Long" : 'اردو',
+                      isEnglish ? "Long" : 'طویل',
                       style: TextStyle(color: colors.text2),
                     )
                   ],

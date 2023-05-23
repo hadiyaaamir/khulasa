@@ -48,7 +48,7 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   //Hello, person
                   Text(
-                    isEnglish ? 'Hello,' : 'hello urdu,',
+                    isEnglish ? 'Hello,' : 'سلام،',
                     style: TextStyle(
                       color: colors.text,
                       fontSize: largerFont,
@@ -80,7 +80,7 @@ class _HomePageState extends State<HomePage> {
                     child: Text(
                       isEnglish
                           ? 'What would you like to do today?'
-                          : 'urdu text',
+                          : 'آج آپ کیا کرنا چاہیں گے؟',
                       style: TextStyle(
                         color: colors.text,
                         fontSize: headingFont,
@@ -125,7 +125,7 @@ class _HomePageState extends State<HomePage> {
                       const SizedBox(width: 15),
                       OptionTile(
                         text:
-                            isEnglish ? "View Saved Items" : "محفوظ کردہ اشیاء",
+                            isEnglish ? "View Saved Items" : "محفوظ شدہ اشیاء",
                         navTo: const SavedMain(),
                         imgPath: 'assets/images/saved.png',
                       ),

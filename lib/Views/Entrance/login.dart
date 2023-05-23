@@ -15,6 +15,8 @@ import 'package:khulasa/Views/Widgets/button.dart';
 import 'package:khulasa/Views/Widgets/textfield.dart';
 import 'package:khulasa/Views/Entrance/option.dart';
 import 'package:khulasa/Views/apicall.dart';
+import 'package:khulasa/Views/gpt2.dart';
+import 'package:khulasa/Views/transcription.dart';
 import 'package:khulasa/constants/colors.dart';
 import 'package:khulasa/constants/sizes.dart';
 import 'package:provider/provider.dart';
@@ -190,15 +192,15 @@ class _LoginState extends State<Login> {
                                       : colors.secondary,
                                   fontWeight: FontWeight.bold),
                               recognizer: TapGestureRecognizer()
-                                ..onTap = () => Navigation()
-                                    .navigation(context, const SignUp()),
+                                ..onTap = () => Navigation().navigation(
+                                    context,
+                                    //const Chatgpt()
+                                    const Transcription()),
                             ),
                           ],
                           recognizer: TapGestureRecognizer()
-                            ..onTap = () => {
-                                  Navigation()
-                                      .navigation(context, const SignUp()),
-                                },
+                            ..onTap = () => Navigation()
+                                .navigation(context, const SignUp()),
                         ),
                       ),
                     ],

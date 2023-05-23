@@ -3,7 +3,6 @@ import 'package:khulasa/Controllers/Config/darkMode.dart';
 import 'package:khulasa/Controllers/Config/languageprovider.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Models/savedArticle.dart';
-import 'package:khulasa/Models/savedSummary.dart';
 import 'package:khulasa/Views/Widgets/IconButtons/Share/shareButton.dart';
 import 'package:khulasa/Views/Widgets/IconButtons/deleteButton.dart';
 import 'package:provider/provider.dart';

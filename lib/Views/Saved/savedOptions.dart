@@ -6,8 +6,6 @@ import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Views/Entrance/homePage.dart';
 import 'package:khulasa/Views/Saved/saved.dart';
 import 'package:khulasa/Views/Widgets/NavBar/AppBarPage.dart';
-import 'package:khulasa/Views/Summary/linkSummary.dart';
-import 'package:khulasa/Views/Summary/textSummary.dart';
 import 'package:khulasa/Views/Widgets/NavBar/customAppBar.dart';
 import 'package:provider/provider.dart';
 
@@ -32,7 +30,7 @@ class _SavedMainState extends State<SavedMain> {
       child: Directionality(
         textDirection: isEnglish ? TextDirection.ltr : TextDirection.rtl,
         child: Scaffold(
-          appBar: CustomAppBar(title: isEnglish ? 'Saved' : 'Urdu Saved'),
+          appBar: CustomAppBar(title: isEnglish ? 'Saved' : 'محفوظ'),
           drawer: const Drawer(child: Draw()),
           backgroundColor: colors.background,
           body: Center(
@@ -60,12 +58,9 @@ class _SavedMainState extends State<SavedMain> {
                           labelColor: colors.text,
                           unselectedLabelColor: colors.text2,
                           tabs: [
-                            Tab(text: isEnglish ? 'Summaries' : 'urdu summ'),
-                            Tab(text: isEnglish ? 'Articles' : 'urdu art'),
-                            Tab(
-                                text: isEnglish
-                                    ? 'Transcriptions'
-                                    : 'urdu transc'),
+                            Tab(text: isEnglish ? 'Summaries' : 'خلاصے'),
+                            Tab(text: isEnglish ? 'Articles' : 'خبریں'),
+                            Tab(text: isEnglish ? 'Transcripts' : 'تحریریں'),
                           ],
                           indicatorColor: colors.text,
                           indicatorWeight: 3),

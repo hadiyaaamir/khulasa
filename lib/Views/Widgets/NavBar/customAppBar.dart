@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:khulasa/Controllers/Config/darkMode.dart';
 import 'package:khulasa/Controllers/HelperFunctions/navigation.dart';
 import 'package:khulasa/Models/colorTheme.dart';
+import 'package:khulasa/Views/Entrance/login.dart';
 import 'package:provider/provider.dart';
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
@@ -11,6 +12,7 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
     this.foreground,
     this.title = "",
     this.fakeRTL = false,
+    this.toLogin = false,
     this.trailing,
   })  : preferredSize = Size.fromHeight(kToolbarHeight),
         super(key: key);
@@ -22,6 +24,8 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final Color? foreground;
   final bool fakeRTL;
   final Widget? trailing;
+  final bool toLogin;
+
   @override
   State<CustomAppBar> createState() => _CustomAppBarState();
 }
@@ -49,7 +53,9 @@ class _CustomAppBarState extends State<CustomAppBar> {
       actions: [
         if (widget.fakeRTL) ...[
           IconButton(
-            onPressed: () => Navigation().navigationPop(context),
+            onPressed: () => widget.toLogin
+                ? Navigation().navigation(context, const Login())
+                : Navigation().navigationPop(context),
             icon: const Icon(Icons.arrow_forward),
           )
         ],

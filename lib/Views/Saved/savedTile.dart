@@ -4,7 +4,6 @@ import 'package:khulasa/Controllers/Config/darkMode.dart';
 import 'package:khulasa/Controllers/Config/languageprovider.dart';
 import 'package:khulasa/Controllers/HelperFunctions/navigation.dart';
 import 'package:khulasa/Models/colorTheme.dart';
-import 'package:khulasa/Views/Saved/savedSummary.dart';
 import 'package:khulasa/Views/Saved/summaryView.dart';
 import 'package:khulasa/Views/Saved/transcriptView.dart';
 import 'package:provider/provider.dart';

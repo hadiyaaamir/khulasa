@@ -37,7 +37,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
       child: Scaffold(
         backgroundColor: colors.background,
         appBar: CustomAppBar(
-            title: isEnglish ? "Reset Password" : "پاس ورڈ دوبارہ ترتیب دیں"),
+          title: isEnglish ? "Reset Password" : "پاس ورڈ دوبارہ ترتیب دیں",
+        ),
         body: Center(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 40),
@@ -46,7 +47,9 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  isEnglish ? "Enter your email to reset password" : "",
+                  isEnglish
+                      ? "Enter your email to reset password"
+                      : "پاس ورڈ دوبارہ ترتیب دینے کے لئے اپنا ای میل درج کریں",
                   style: TextStyle(
                       color: colors.text,
                       fontSize: buttonFont,
@@ -54,7 +57,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 ),
                 //email textfield
                 textField(
-                  label: isEnglish ? "Email" : "",
+                  label: isEnglish ? "Email" : "ای میل",
                   icon: Icons.email,
                   paddingHor: 0,
                   paddingVert: 20,
@@ -63,7 +66,9 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                     return (value == null ||
                             value.isEmpty ||
                             !EmailValidator.validate(value.trim()))
-                        ? 'Invalid Email'
+                        ? isEnglish
+                            ? 'Invalid Email'
+                            : 'غلط ای میل'
                         : null;
                   },
                 ),
@@ -71,15 +76,18 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 Text(
                   isEnglish
                       ? "An email will be sent to your account. Follow the link to reset your password."
-                      : "",
+                      : "ایک ای میل آپ کے اکاؤنٹ پر بھیجا جائے گا۔ پاس ورڈ دوبارہ ترتیب دینے کے لئے لنک پر جائیں۔",
                   style: TextStyle(color: colors.text),
                 ),
                 Btn(
-                    label: isEnglish ? 'Reset Password' : "",
+                    label: isEnglish ? 'Reset Password' : "پاس ورڈ ریسٹ",
                     paddingHor: 0,
                     onPress: () async {
                       await sendResetEmail();
-                      Fluttertoast.showToast(msg: 'Email sent!');
+                      Fluttertoast.showToast(
+                          msg: isEnglish
+                              ? 'Email sent!'
+                              : 'ای میل بھیج دی گئی ہے');
                       Navigation().navigationReplace(context, Login());
                     }),
               ],

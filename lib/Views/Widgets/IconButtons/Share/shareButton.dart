@@ -8,9 +8,15 @@ import 'package:khulasa/constants/sizes.dart';
 import 'package:provider/provider.dart';
 
 class ShareButton extends StatelessWidget {
-  ShareButton({super.key, this.isRSSFeed = true, required this.content});
+  ShareButton({
+    super.key,
+    this.isRSSFeed = true,
+    required this.content,
+    this.isTranscript = false,
+  });
 
   final bool isRSSFeed;
+  final bool isTranscript;
   var content;
 
   @override
@@ -27,8 +33,11 @@ class ShareButton extends StatelessWidget {
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(40.0)),
           ),
-          builder: (BuildContext context) =>
-              ShareOptionsBox(isRSSFeed: isRSSFeed, content: content),
+          builder: (BuildContext context) => ShareOptionsBox(
+            isRSSFeed: isRSSFeed,
+            content: content,
+            isTranscript: isTranscript,
+          ),
           isScrollControlled: true,
           // constraints: BoxConstraints(maxHeight: screenHeight * 2 / 3),
         );

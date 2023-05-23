@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:khulasa/Controllers/Backend/api.dart';
+import 'package:khulasa/Controllers/Config/darkMode.dart';
 import 'package:khulasa/Controllers/Config/languageprovider.dart';
 import 'package:khulasa/Controllers/Backend/webScraping.dart';
+import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Models/source.dart';
 import 'package:khulasa/Views/Widgets/IconButtons/linkInfoButton.dart';
 import 'package:khulasa/Views/Widgets/button.dart';
@@ -32,10 +34,12 @@ class _LinkSummaryState extends State<LinkSummary> {
 
   final GlobalKey<FormState> _summaryFormKey = GlobalKey<FormState>();
   bool isError = false;
+  bool isGenerating = false;
 
   @override
   Widget build(BuildContext context) {
     bool isEnglish = context.watch<Language>().isEnglish;
+    ColorTheme colors = context.watch<DarkMode>().mode;
 
     return Directionality(
       textDirection: isEnglish ? TextDirection.ltr : TextDirection.rtl,
@@ -54,7 +58,7 @@ class _LinkSummaryState extends State<LinkSummary> {
                   label: isEnglish ? "Link" : 'لنک',
                   controller: linkController,
                   lines: 1,
-                  suffixIcon: LinkInfoButton(),
+                  suffixIcon: const LinkInfoButton(),
                 ),
                 Dropdown(
                   label: isEnglish
@@ -69,6 +73,8 @@ class _LinkSummaryState extends State<LinkSummary> {
                 Btn(
                     label: isEnglish ? "GENERATE SUMMARY" : 'خلاصہ تشکیل دیں',
                     onPress: () async {
+                      setState(() => isGenerating = true);
+
                       final FormState form =
                           _summaryFormKey.currentState as FormState;
                       if (form.validate()) {
@@ -91,26 +97,44 @@ class _LinkSummaryState extends State<LinkSummary> {
                           isError = false;
                           await Api()
                               .generateSummary(
-                                algo: getAlgorithm(algo),
-                                text: article.content,
-                                ratio: ratio,
-                              )
-                              .then((value) => {
-                                    summaryText = value.summary.isNotEmpty
-                                        ? value.summary
-                                        : article.content
-                                  });
+                            algo: getAlgorithm(algo),
+                            text: article.content,
+                            ratio: ratio,
+                          )
+                              .then((value) async {
+                            if (value.summary.isEmpty) {
+                              await Api()
+                                  .generateSummary(
+                                    algo: getAlgorithm(algo),
+                                    text: article.content,
+                                    ratio: ratio + 0.1,
+                                  )
+                                  .then((value) => summaryText =
+                                      value.summary.isNotEmpty
+                                          ? value.summary
+                                          : article.content);
+                            } else {
+                              summaryText = value.summary;
+                            }
+                          });
                           title = article.title;
                         }
                         // summaryText = article.content;
-                        setState(() {});
+                        setState(() => isGenerating = false);
+                      } else {
+                        setState(() => isGenerating = false);
                       }
                     }),
-                GeneratedSummary(
-                  summaryText: summaryText,
-                  title: title,
-                  alignment: isError ? TextAlign.left : TextAlign.right,
-                ),
+
+                isGenerating
+                    ? Padding(
+                        padding: const EdgeInsets.only(top: 20),
+                        child: CircularProgressIndicator(color: colors.primary))
+                    : GeneratedSummary(
+                        summaryText: summaryText,
+                        title: title,
+                        alignment: isError ? TextAlign.left : TextAlign.right,
+                      ),
               ],
             ),
           ),

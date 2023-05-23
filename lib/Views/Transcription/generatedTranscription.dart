@@ -73,7 +73,10 @@ class GeneratedTranscription extends StatelessWidget {
                         )),
                     const SizedBox(width: 10),
                     ShareButton(
-                        isRSSFeed: false, content: transcription.transcription),
+                      isRSSFeed: false,
+                      content: transcription,
+                      isTranscript: true,
+                    ),
                   ],
                 )
               ],

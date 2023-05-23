@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:khulasa/Controllers/Backend/api.dart';
 import 'package:khulasa/Controllers/Backend/files.dart';
@@ -13,7 +15,6 @@ import 'package:khulasa/Views/Widgets/NavBar/AppBarPage.dart';
 import 'package:khulasa/Views/Widgets/NavBar/customAppBar.dart';
 import 'package:khulasa/Views/Widgets/button.dart';
 import 'package:khulasa/Views/Widgets/textfield.dart';
-import 'package:khulasa/constants/api.dart';
 import 'package:khulasa/constants/sizes.dart';
 import 'package:provider/provider.dart';
 import 'package:khulasa/Controllers/Backend/openAi.dart';
@@ -39,6 +40,7 @@ class _TranscriptionState extends State<Transcription> {
     Transcript transcript = context.watch<TranscriptionController>().transcript;
     bool isGenerating = context.watch<TranscriptionController>().isGenerating;
     bool fileAttached = context.watch<TranscriptionController>().fileAttatched;
+    var file = context.watch<TranscriptionController>().file;
     // bool isGenerating = false;
 
     return WillPopScope(
@@ -60,19 +62,29 @@ class _TranscriptionState extends State<Transcription> {
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       textField(
-                        label: isEnglish ? "Youtube Link" : 'اردو',
+                        label: isEnglish ? "Youtube Link" : 'یوٹیوب لنک',
                         controller: linkController,
                         lines: 1,
                         allowEmpty: true,
                         validate: (value) {
                           return ((value == null || value.isEmpty) &&
                                   !fileAttached)
-                              ? 'Please enter link or attach a file'
-                              : null;
+                              ? isEnglish
+                                  ? 'Please enter link or attach a file'
+                                  : 'لنک درج کریں یا فائل منسلک کریں'
+                              : !RegExp(r"(?:https?:\/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w\-_]+)\&?",
+                                              multiLine: true,
+                                              caseSensitive: true)
+                                          .hasMatch(linkController.text) &&
+                                      !fileAttached
+                                  ? isEnglish
+                                      ? 'Please enter a valid YouTube link'
+                                      : 'درست یوٹیوب لنک درج کریں'
+                                  : null;
                         },
                       ),
                       Btn(
-                        label: isEnglish ? "Attach mp3" : 'اردو',
+                        label: isEnglish ? "Attach mp3" : 'فائل منسلک',
                         background: colors.secondary,
                         height: 30,
                         width: 130,
@@ -89,8 +101,17 @@ class _TranscriptionState extends State<Transcription> {
                           // setState(() {});
                         },
                       ),
+                      if (fileAttached) ...[
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              right: 40, left: 40, top: 10),
+                          child: Text((file as File).path,
+                              style: TextStyle(
+                                  color: colors.text, fontSize: smallFont)),
+                        ),
+                      ],
                       Btn(
-                        label: isEnglish ? "TRANSCRIBE" : 'اردو',
+                        label: isEnglish ? "TRANSCRIBE" : 'تحریر کریں',
                         onPress: () async {
                           context.read<TranscriptionController>().isGenerating =
                               true;

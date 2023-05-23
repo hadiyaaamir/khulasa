@@ -24,7 +24,8 @@ class _LanguageSettingState extends State<LanguageSetting> {
       textDirection: isEnglish ? TextDirection.ltr : TextDirection.rtl,
       child: Scaffold(
         backgroundColor: colors.background,
-        appBar: CustomAppBar(title: isEnglish ? 'Language Settings' : ''),
+        appBar: CustomAppBar(
+            title: isEnglish ? 'Language Settings' : 'زبان کی ترتیبات'),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
           child: Column(

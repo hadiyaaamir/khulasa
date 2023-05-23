@@ -39,6 +39,8 @@ class _TextSummaryState extends State<TextSummary> {
   String algo = "";
   double ratio = 0;
 
+  bool isGenerating = false;
+
   @override
   Widget build(BuildContext context) {
     ColorTheme colors = context.watch<DarkMode>().mode;
@@ -107,24 +109,58 @@ class _TextSummaryState extends State<TextSummary> {
               Btn(
                 label: isEnglish ? "GENERATE SUMMARY" : 'خلاصہ تشکیل دیں',
                 onPress: () async {
+                  setState(() => isGenerating = true);
+
                   final FormState form =
                       _summaryFormKey.currentState as FormState;
                   if (form.validate()) {
                     // generate summary
-                    var summary = await Api().generateSummary(
+                    await Api()
+                        .generateSummary(
                       algo: getAlgorithm(algo),
                       text: textController.text,
                       ratio: ratio,
-                    );
+                    )
+                        .then((value) async {
+                      if (value.summary.isEmpty) {
+                        await Api()
+                            .generateSummary(
+                          algo: getAlgorithm(algo),
+                          text: textController.text,
+                          ratio: ratio + 0.1,
+                        )
+                            .then((value) async {
+                          if (value.summary.isEmpty) {
+                            await Api()
+                                .generateSummary(
+                                  algo: getAlgorithm(algo),
+                                  text: textController.text,
+                                  ratio: ratio + 0.2,
+                                )
+                                .then((value) => summaryText =
+                                    value.summary.isNotEmpty
+                                        ? value.summary
+                                        : textController.text);
+                          } else {
+                            summaryText = value.summary;
+                          }
+                        });
+                      } else {
+                        summaryText = value.summary;
+                      }
+                    });
 
-                    summaryText = summary.summary.isNotEmpty
-                        ? summary.summary
-                        : textController.text;
-                    setState(() {});
+                    setState(() => isGenerating = false);
+                  } else {
+                    setState(() => isGenerating = false);
                   }
                 },
               ),
-              GeneratedSummary(summaryText: summaryText)
+              isGenerating
+                  ? Padding(
+                      padding: const EdgeInsets.only(top: 20),
+                      child: CircularProgressIndicator(color: colors.primary))
+                  : GeneratedSummary(summaryText: summaryText)
             ],
           ),
         ),

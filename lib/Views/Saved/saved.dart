@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:khulasa/Controllers/Backend/dateFormat.dart';
 import 'package:khulasa/Controllers/userController.dart';
 import 'package:khulasa/Controllers/Config/darkMode.dart';
 import 'package:khulasa/Controllers/Config/languageprovider.dart';
-import 'package:khulasa/Controllers/HelperFunctions/navigation.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Views/RSS/rssTile.dart';
 import 'package:khulasa/Views/Saved/savedTile.dart';
-import 'package:khulasa/Views/Saved/summaryView.dart';
 import 'package:provider/provider.dart';
 
 class Saved extends StatefulWidget {
@@ -33,7 +30,6 @@ class _SavedState extends State<Saved> {
             ? context.watch<UserController>().savdTranscripts
             : context.watch<UserController>().savdArticles;
     ColorTheme colors = context.watch<DarkMode>().mode;
-    bool isDarkMode = context.watch<DarkMode>().isDarkMode;
     bool isEnglish = context.watch<Language>().isEnglish;
 
     return Directionality(

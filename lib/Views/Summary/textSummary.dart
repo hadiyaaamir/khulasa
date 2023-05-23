@@ -1,6 +1,7 @@
 // import 'dart:html';
 import 'dart:convert';
 
+import 'package:khulasa/Controllers/Backend/files.dart';
 import 'package:khulasa/Controllers/Config/languageprovider.dart';
 import 'package:pdf_text/pdf_text.dart';
 import 'package:flutter/foundation.dart';
@@ -82,7 +83,7 @@ class _TextSummaryState extends State<TextSummary> {
                     scanning = true;
                   });
 
-                  String? extractedText = await getText();
+                  String? extractedText = await Files().getText();
                   extractedText == null
                       ? null
                       : textController.text = extractedText;
@@ -129,41 +130,5 @@ class _TextSummaryState extends State<TextSummary> {
         ),
       ),
     );
-  }
-
-  Future<String?> getText() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: ['jpg', 'pdf', 'png', 'docx', 'txt'],
-    );
-
-    if (result != null) {
-      PlatformFile file = result.files.first;
-      String? p = file.path;
-      //image using flutter tesseract ocr
-      if ((file.extension == 'png' || file.extension == 'jpg') && p != null) {
-        return await FlutterTesseractOcr.extractText(p, language: 'urd+eng');
-      } else if (file.extension == 'pdf' && p != null) {
-        // pdf reader using syncfusion flutter pdf
-        // final ByteData data = await rootBundle.load(p);
-        // PdfDocument document = PdfDocument(
-        //     inputBytes: data.buffer
-        //         .asUint8List(data.offsetInBytes, data.lengthInBytes));
-
-        PDFDoc doc = await PDFDoc.fromPath(p);
-        String text = await doc.text;
-        // List<int> bytes = text.codeUnits;
-        // PdfDocument document = PdfDocument(inputBytes: bytes);
-
-        // return PdfTextExtractor(document).extractText();
-        return doc.text;
-      } else if ((file.extension == 'docx' ||
-              file.extension ==
-                  'txt') && //text or docx file read string using rootbundle
-          p != null) {
-        return await rootBundle.loadString(p);
-      }
-    }
-    return null;
   }
 }

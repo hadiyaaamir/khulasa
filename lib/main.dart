@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:khulasa/Controllers/transcriptionController.dart';
 import 'package:khulasa/Controllers/userController.dart';
 import 'package:khulasa/Controllers/Backend/categoryExcel.dart';
 import 'package:khulasa/Controllers/articleprovider.dart';
@@ -25,8 +26,7 @@ Future<void> main() async {
   runApp(
     MultiProvider(
       providers: [
-        // ChangeNotifierProvider(create: (context) => Language()),
-        // ChangeNotifierProvider(create: (context) => DarkMode()),
+        ChangeNotifierProvider(create: (context) => TranscriptionController()),
         ChangeNotifierProvider(create: (context) => articleprovider()),
         ChangeNotifierProvider(create: (context) => UserController()),
 
@@ -89,7 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
 
     // CategoryExcel().toExcel();
-    // TODO: implement initState  
+    // TODO: implement initState
 
     startTime();
   }

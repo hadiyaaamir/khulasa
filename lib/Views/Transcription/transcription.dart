@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:khulasa/Controllers/Backend/api.dart';
+import 'package:khulasa/Controllers/Backend/files.dart';
 import 'package:khulasa/Controllers/Config/darkMode.dart';
 import 'package:khulasa/Controllers/Config/languageprovider.dart';
 import 'package:khulasa/Controllers/HelperFunctions/navigation.dart';
+import 'package:khulasa/Controllers/transcriptionController.dart';
 import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Models/transcript.dart';
 import 'package:khulasa/Views/Entrance/homePage.dart';
@@ -27,12 +29,17 @@ class _TranscriptionState extends State<Transcription> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController linkController = TextEditingController();
 
-  Transcript transcript = Transcript(transcription: "", summary: "");
+  // var file;
 
   @override
   Widget build(BuildContext context) {
     ColorTheme colors = context.watch<DarkMode>().mode;
     bool isEnglish = context.watch<Language>().isEnglish;
+
+    Transcript transcript = context.watch<TranscriptionController>().transcript;
+    bool isGenerating = context.watch<TranscriptionController>().isGenerating;
+    bool fileAttached = context.watch<TranscriptionController>().fileAttatched;
+    // bool isGenerating = false;
 
     return WillPopScope(
       onWillPop: () async =>
@@ -50,14 +57,22 @@ class _TranscriptionState extends State<Transcription> {
                 key: _formKey,
                 child: Center(
                   child: Column(
+                    mainAxisSize: MainAxisSize.max,
                     children: [
                       textField(
                         label: isEnglish ? "Youtube Link" : 'اردو',
                         controller: linkController,
                         lines: 1,
+                        allowEmpty: true,
+                        validate: (value) {
+                          return ((value == null || value.isEmpty) &&
+                                  !fileAttached)
+                              ? 'Please enter link or attach a file'
+                              : null;
+                        },
                       ),
                       Btn(
-                        label: isEnglish ? "Attach file" : 'اردو',
+                        label: isEnglish ? "Attach mp3" : 'اردو',
                         background: colors.secondary,
                         height: 30,
                         width: 130,
@@ -65,56 +80,51 @@ class _TranscriptionState extends State<Transcription> {
                         paddingVert: 0,
                         align: Alignment.centerRight,
                         font: largerSmallFont,
-                        onPress: () {},
+                        onPress: () async {
+                          context.read<TranscriptionController>().file =
+                              await Files().getMp3();
+                          context
+                              .read<TranscriptionController>()
+                              .fileAttatched = true;
+                          // setState(() {});
+                        },
                       ),
                       Btn(
                         label: isEnglish ? "TRANSCRIBE" : 'اردو',
                         onPress: () async {
+                          context.read<TranscriptionController>().isGenerating =
+                              true;
+
                           final FormState form =
                               _formKey.currentState as FormState;
                           if (form.validate()) {
-                            //call transcription function here
+                            if (linkController.text.isNotEmpty) {
+                              context.read<TranscriptionController>().file =
+                                  await OpenAi()
+                                      .youtubeToAudio(linkController.text);
 
-                            await OpenAi()
-                                .youtubeToAudio(linkController.text)
-                                .then(
-                                  (file) async =>
-                                      await OpenAi().transcription(file).then(
-                                    (result) async {
-                                      transcript.transcription = result;
+                              context
+                                  .read<TranscriptionController>()
+                                  .fileAttatched = false;
+                            }
 
-                                      //get summary
-                                      await Api()
-                                          .generateSummary(
-                                              algo: summaryType1,
-                                              ratio: 0.2,
-                                              text: result)
-                                          .then(
-                                        (value) async {
-                                          transcript.summary = value.summary;
-                                          if (transcript.summary.isEmpty) {
-                                            await Api()
-                                                .generateSummary(
-                                                    algo: summaryType1,
-                                                    ratio: 0.3,
-                                                    text: result)
-                                                .then((value) =>
-                                                    transcript.summary =
-                                                        value.summary.isNotEmpty
-                                                            ? value.summary
-                                                            : result);
-                                          }
-                                        },
-                                      );
-                                    },
-                                  ),
-                                );
-
-                            setState(() {});
+                            //   //call transcription function here
+                            await context
+                                .read<TranscriptionController>()
+                                .getTranscription();
+                          } else {
+                            context
+                                .read<TranscriptionController>()
+                                .isGenerating = false;
                           }
                         },
                       ),
-                      GeneratedTranscription(transcription: transcript),
+                      isGenerating
+                          ? Padding(
+                              padding: const EdgeInsets.only(top: 20),
+                              child: CircularProgressIndicator(
+                                  color: colors.primary))
+                          : GeneratedTranscription(transcription: transcript),
                     ],
                   ),
                 ),

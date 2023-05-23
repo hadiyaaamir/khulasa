@@ -8,6 +8,7 @@ import 'package:khulasa/Views/Settings/settings.dart';
 import 'package:khulasa/Views/RSS/categories.dart';
 import 'package:khulasa/Views/Summary/summary.dart';
 import 'package:khulasa/Controllers/HelperFunctions/navigation.dart';
+import 'package:khulasa/Views/Transcription/transcription.dart';
 import 'package:khulasa/Views/Widgets/NavBar/themeRow.dart';
 import 'package:khulasa/constants/sizes.dart';
 import 'package:provider/provider.dart';
@@ -71,6 +72,14 @@ class _DrawState extends State<Draw> {
                       Navigation().navigationReplace(context, const Summary());
                     },
                     icon: Icons.text_fields,
+                  ),
+                  DrawerOption(
+                    text: isEnglish ? 'Transcription' : "تحریر",
+                    onPress: () {
+                      Navigation()
+                          .navigationReplace(context, const Transcription());
+                    },
+                    icon: Icons.mic_none_outlined,
                   ),
                   DrawerOption(
                     text: isEnglish ? 'Saved' : 'محفوظ شدہ اشیاء',

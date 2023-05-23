@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:dart_openai/openai.dart';
+import 'package:khulasa/Controllers/Backend/files.dart';
+import 'package:khulasa/constants/apiKeys.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
@@ -38,14 +40,23 @@ class OpenAi {
   }
 
   Future<String> transcription(File file) async {
+    OpenAI.apiKey = Chatgptapi;
+
     // OpenAIAudioModel
     String transcription = await OpenAI.instance.audio
         .createTranscription(
-          file: file,
-          model: "whisper-1",
-          responseFormat: OpenAIAudioResponseFormat.json,
-        )
-        .then((value) async => await formatTranscription(value.text));
+      file: file,
+      model: "whisper-1",
+      responseFormat: OpenAIAudioResponseFormat.json,
+    )
+        .then((value) async {
+      print(value);
+      try {
+        return await formatTranscription(value.text);
+      } catch (e) {
+        return value.text;
+      }
+    });
     // var tran = await formatTranscription(transcription.text)
     return transcription;
   }
@@ -68,7 +79,7 @@ class OpenAi {
     String text = "";
 
     List messages = fragmentString(t);
-
+    OpenAI.apiKey = Chatgptapi;
     for (var message in messages) {
       OpenAIChatCompletionModel chatCompletion =
           await OpenAI.instance.chat.create(
@@ -81,7 +92,8 @@ class OpenAi {
           ),
         ],
       );
-      print(chatCompletion.toString());
+      print(message);
+      // print(chatCompletion.toString());
 
       text += "${chatCompletion.choices[0].message.content} ";
     }

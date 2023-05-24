@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:khulasa/Controllers/Config/languageprovider.dart';
 import 'package:khulasa/Controllers/HelperFunctions/navigation.dart';
 import 'package:khulasa/Controllers/userController.dart';
 import 'package:khulasa/Views/Saved/savedOptions.dart';
@@ -17,9 +18,11 @@ class DeleteButton extends StatelessWidget {
   var ss;
   @override
   Widget build(BuildContext context) {
+    bool isEnglish = context.watch<Language>().isEnglish;
+
     return LabelIcon(
       icon: Icons.delete_forever,
-      label: "Delete",
+      label: isEnglish ? "Delete" : "حذف",
       onPress: () {
         isSummary
             ? context.read<UserController>().removeSummary(ss)

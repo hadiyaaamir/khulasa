@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:khulasa/Controllers/Config/languageprovider.dart';
 import 'package:khulasa/Controllers/Dialogs/saveSummaryPopup.dart';
 import 'package:khulasa/Controllers/userController.dart';
 import 'package:khulasa/Models/savedArticle.dart';
@@ -19,9 +20,10 @@ class SaveButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isEnglish = context.watch<Language>().isEnglish;
     return LabelIcon(
       icon: Icons.save,
-      label: "Save",
+      label: isEnglish ? "Save" : "محفوظ",
       onPress: () {
         isSummary
             ? showSummarySavePopup(context: context, ss: ss)

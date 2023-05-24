@@ -38,14 +38,14 @@ class ShareOptionsBox extends StatelessWidget {
               isRSSFeed
                   ? isEnglish
                       ? 'Share Article'
-                      : ''
+                      : 'خبر کا اشتراک کریں'
                   : isTranscript
                       ? isEnglish
                           ? 'Share Transcription'
-                          : ''
+                          : 'تحریر کا اشتراک کریں'
                       : isEnglish
                           ? 'Share Summary'
-                          : '',
+                          : 'خلاصے کا اشتراک کریں',
               style: TextStyle(
                 color: colors.text,
                 fontSize: isEnglish ? headingFont : headingFont + 4,

@@ -61,7 +61,7 @@ class _SummaryViewState extends State<SummaryView> {
                   children: [
                     SpeakIconButton(
                       speakText:
-                          "${(widget.summary as savedSummary).title}.${(widget.summary as savedSummary).summary}",
+                          "${(widget.summary as savedSummary).summary}",
                       vertPadding: 0,
                       iconSize: iconLarge,
                       iconColor: isDarkMode ? colors.text2 : colors.secondary,

@@ -7,6 +7,35 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:205344781166:android:95c9b35179193a094b077f",
+        "android_client_info": {
+          "package_name": "com.cngs.khulasa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "205344781166-osjli4f2om7nq1d2jhbkpmfv9m6hq37s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA12Ezdvea8R1ef_VFauUsAzTLpd7nN1p4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "205344781166-osjli4f2om7nq1d2jhbkpmfv9m6hq37s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:205344781166:android:a85502ff532fc9284b077f",
         "android_client_info": {
           "package_name": "com.example.khulasa"

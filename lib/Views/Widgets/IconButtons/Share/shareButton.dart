@@ -22,10 +22,11 @@ class ShareButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ColorTheme colors = context.watch<DarkMode>().mode;
+    bool isEnglish = context.watch<Language>().isEnglish;
 
     return LabelIcon(
       icon: Icons.share_rounded,
-      label: "Share",
+      label: isEnglish ? "Share" : "اشتراک",
       onPress: () async {
         await showModalBottomSheet(
           context: context,

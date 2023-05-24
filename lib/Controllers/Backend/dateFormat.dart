@@ -32,6 +32,16 @@ class DateFormatter {
     'دسمبر',
   ];
 
+  List<String> urduDays = [
+    'پیر',
+    'منگل',
+    'بدھ',
+    'جمعرات',
+    'جمعہ',
+    'ہفتہ',
+    'اتوار',
+  ];
+
   List<String> urduNumbers = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
 
   toDateTime(String date, bool isDateTime) {
@@ -41,7 +51,7 @@ class DateFormatter {
           DateTime d = DateTime.parse(date);
           return DateTime(d.year, d.month, d.day);
         }
-        return DateTime(2000);
+        return DateTime.now();
       }
 
       //remove kachra
@@ -55,6 +65,12 @@ class DateFormatter {
       remove = RegExp(r"\|(.*):(.*)", multiLine: true, caseSensitive: true);
       date = date.replaceAll(remove, '');
 
+      //remove weekdays
+      for (String word in urduDays) {
+        date = date.replaceAll(word, '');
+      }
+
+      date.replaceAll(':', '');
       date = date.trim();
 
       //if now in date format but string, return datetime
@@ -83,9 +99,11 @@ class DateFormatter {
       if (day != null) {
         dayText = day.group(0).toString();
       }
+
       String monthDate = date.replaceAll(expDay, ''); //remove year from date
       monthDate = monthDate.replaceAll(',', '');
       monthDate = monthDate.replaceAll('،', '');
+      monthDate = monthDate.replaceAll(':', '');
       monthDate = monthDate.trim(); //remove spaces
 
       int monthIndex = urduMonths.indexOf(monthDate);
@@ -113,12 +131,12 @@ class DateFormatter {
           return formatter
               .parse('${int.parse(yearText)}-$monthDate-${int.parse(dayText)}');
         } catch (e) {
-          return DateTime(1998);
+          return DateTime.now();
           // return 'date: $date   year: $yearText   day: $dayText   rmaining: $monthDate';
         }
       }
     } catch (e) {
-      return DateTime(1999);
+      return DateTime.now();
     }
   }
 

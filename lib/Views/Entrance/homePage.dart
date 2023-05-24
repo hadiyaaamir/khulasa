@@ -117,7 +117,7 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       OptionTile(
                         text: isEnglish
-                            ? "Transcribe an Audio or Video"
+                            ? "Transcribe an Audio/Video"
                             : "تقریر کی تحریر",
                         navTo: const Transcription(),
                         imgPath: 'assets/images/transcribe.png',

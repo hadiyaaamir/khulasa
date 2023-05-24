@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:khulasa/Controllers/Config/darkMode.dart';
 import 'package:khulasa/Controllers/Config/languageprovider.dart';
+import 'package:khulasa/Controllers/transcriptionController.dart';
 import 'package:khulasa/Controllers/userController.dart';
 import 'package:khulasa/Models/colorTheme.dart';
+import 'package:khulasa/Models/transcript.dart';
 import 'package:khulasa/Views/Saved/savedOptions.dart';
 import 'package:khulasa/Views/Settings/settings.dart';
 import 'package:khulasa/Views/RSS/categories.dart';
@@ -126,6 +128,10 @@ class _DrawState extends State<Draw> {
                     text: isEnglish ? 'Logout' : 'لاگ آؤٹ',
                     onPress: () {
                       context.read<UserController>().setSignOut(context);
+                      context.read<TranscriptionController>().transcript =
+                          Transcript(transcription: "", summary: "");
+                      context.read<TranscriptionController>().isGenerating =
+                          false;
                       // Navigation().navigationReplace(context, const Login());
                     },
                     icon: Icons.logout_outlined,

@@ -69,7 +69,7 @@ class appUser {
           u = appUser(email: 'noUser');
         }
       },
-    ).catchError((e) => {u = appUser(email: 'issue')});
+    ).catchError((e) => e);
     print("from db: ${u.toString()}");
     return u;
   }
@@ -77,9 +77,11 @@ class appUser {
   //update user
   Future<void> updateInDB({required String label, required var data}) async {
     await userlist.where('email', isEqualTo: email).get().then((value) {
-      userlist.doc(value.docs[0].id).update({label: data}).then((value) {
-        print("$label set to $data!");
-      });
+      if (value.docs.isNotEmpty) {
+        userlist.doc(value.docs[0].id).update({label: data}).then((value) {
+          print("$label set to $data!");
+        });
+      }
     });
   }
 

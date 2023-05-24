@@ -15,6 +15,7 @@ import 'package:khulasa/Views/Entrance/verifyEmail.dart';
 import 'package:khulasa/Views/Widgets/NavBar/Toggle.dart';
 import 'package:khulasa/Views/Widgets/button.dart';
 import 'package:khulasa/Views/Widgets/textfield.dart';
+import 'package:khulasa/Views/apicall.dart';
 import 'package:khulasa/constants/colors.dart';
 import 'package:provider/provider.dart';
 
@@ -210,10 +211,10 @@ class _LoginState extends State<Login> {
                                             : colors.secondary,
                                         fontWeight: FontWeight.bold),
                                     recognizer: TapGestureRecognizer()
-                                      ..onTap = () => Navigation().navigation(
-                                          context,
-                                          //const Chatgpt()
-                                          const SignUp()),
+                                      ..onTap = () => Navigation()
+                                          .navigation(context, const ApiCall()
+                                              // const SignUp()
+                                              ),
                                   ),
                                 ],
                                 recognizer: TapGestureRecognizer()

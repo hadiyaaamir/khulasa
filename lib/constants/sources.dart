@@ -96,4 +96,16 @@ List<NewsSource> sources = [
     webLink: 'https://dailypakistan.com.pk/latest',
     rssSummaryRatio: 0.4,
   ),
+  NewsSource(
+    source: 'Independent',
+    sourceUrdu: 'انڈیپینڈنٹ',
+    titleTag: 'h1',
+    titleTagType: 'tag',
+    contentTag: 'field-items',
+    contentTagType: 'paragraph',
+    dateTag: 'entry-meta-field entry-meta-publish-date',
+    isDateTime: false,
+    webLink: 'https://www.independenturdu.com/',
+    rssSummaryRatio: 0.05,
+  ),
 ];

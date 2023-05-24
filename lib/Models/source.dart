@@ -171,6 +171,14 @@ class NewsSource {
       return exp.hasMatch(l);
     }
 
+    //Independent
+    if (source == 'Independent') {
+      RegExp exp = RegExp(r"https://www.independenturdu.com/node/(.*)",
+          multiLine: true, caseSensitive: true);
+      RegExp exp2 = RegExp(r"/node/(.*)", multiLine: true, caseSensitive: true);
+      return exp.hasMatch(l) || exp2.hasMatch(l);
+    }
+
     return false;
   }
 
@@ -178,6 +186,9 @@ class NewsSource {
     if (source == 'BBC Urdu' && !l.contains(webLink)) {
       var arr = l.split('urdu');
       return webLink + arr[1];
+    }
+    if (source == 'Independent' && !l.contains(webLink)) {
+      return webLink + l.substring(1);
     }
     return l;
   }

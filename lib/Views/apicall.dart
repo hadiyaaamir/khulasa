@@ -119,8 +119,7 @@ class _ApiCallState extends State<ApiCall> {
                 // }
 
                 //web scraping
-                String link =
-                    'https://www.nawaiwaqt.com.pk/25-Mar-2023/1695681';
+                String link = 'https://www.independenturdu.com/node/137531';
                 final response = await http.Client().get(Uri.parse(link),
                     headers: {'User-Agent': 'Mozilla/5.0'});
                 if (response.statusCode == 200) {
@@ -143,10 +142,11 @@ class _ApiCallState extends State<ApiCall> {
                   //date formatter code
                   // var d = DateFormatter().toDateTime(date, false);
 
-                  // var date = index != -1
-                  //     ? sources[index].getDate(document)
-                  //     : DateTime(2001);
-                  article = '${index == -1 ? -1 : sources[index]}';
+                  var date = index != -1
+                      ? sources[index].getDate(document)
+                      : DateTime(2001);
+                  // article = '${index == -1 ? -1 : sources[index]}';
+                  article = '$date';
                   setState(() {});
                 } else {
                   article = '${response.statusCode}';
@@ -154,17 +154,15 @@ class _ApiCallState extends State<ApiCall> {
                 }
 
                 //  rss feed
-                // for (var element in sources) {
-                // var l = await WebScraping().getLinksFromLink(sources[5]);
+                // // for (var element in sources) {
+                // int index = sources
+                //     .indexWhere((element) => element.source == 'Independent');
+                // var l = await WebScraping().getLinksFromLink(sources[index]);
                 // print(l);
                 // links.addAll(l);
-                // }
-                // if (links.isNotEmpty) {
-                //   var a = await WebScraping().getArticleFromLink(
-                //       source: links[0].source.source, link: links[0].link);
-                //   print(a);
-                // }
-                // setState(() {});
+                // // }
+
+                setState(() {});
               },
               child: const Text("API Call"),
             ),

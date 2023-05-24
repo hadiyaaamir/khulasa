@@ -11,6 +11,7 @@ import 'package:khulasa/Models/colorTheme.dart';
 import 'package:khulasa/Models/transcript.dart';
 import 'package:khulasa/Views/Entrance/homePage.dart';
 import 'package:khulasa/Views/Transcription/generatedTranscription.dart';
+import 'package:khulasa/Views/Widgets/IconButtons/linkInfoButton.dart';
 import 'package:khulasa/Views/Widgets/NavBar/AppBarPage.dart';
 import 'package:khulasa/Views/Widgets/NavBar/customAppBar.dart';
 import 'package:khulasa/Views/Widgets/button.dart';
@@ -64,6 +65,7 @@ class _TranscriptionState extends State<Transcription> {
                       textField(
                         label: isEnglish ? "Youtube Link" : 'یوٹیوب لنک',
                         controller: linkController,
+                        suffixIcon: const LinkInfoButton(isTranscript: true),
                         lines: 1,
                         allowEmpty: true,
                         validate: (value) {

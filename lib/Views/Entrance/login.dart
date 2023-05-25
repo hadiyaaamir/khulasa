@@ -212,8 +212,7 @@ class _LoginState extends State<Login> {
                                         fontWeight: FontWeight.bold),
                                     recognizer: TapGestureRecognizer()
                                       ..onTap = () => Navigation()
-                                          .navigation(context, const ApiCall()
-                                              // const SignUp()
+                                          .navigation(context,  const SignUp()
                                               ),
                                   ),
                                 ],
